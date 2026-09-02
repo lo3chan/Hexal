@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-    flatDir { dirs 'libs' }
+        flatDir { dirs 'libs' }
         mavenCentral()
     }
 
@@ -9,26 +9,23 @@ buildscript {
     }
 }
 
-//import com.diluv.schoomp.Webhook
-//import com.diluv.schoomp.message.Message
-
 plugins {
     id 'java'
     id "org.jetbrains.kotlin.jvm"
     id 'idea'
     id 'hexal.publish'
-    id 'fabric-loom' version "$loomVersion" apply false
+    id 'fabric-loom' version "1.8-SNAPSHOT" apply false
 }
 
 String getArtifactID(String platform) {
-    return "$modID-$platform-$minecraftVersion"
+    return "hexal-$platform-1.21.1"
 }
 
 void setupJar(Object project) {
     project.jar {
         manifest {
             attributes([
-                    'Specification-Title'     : modID,
+                    'Specification-Title'     : "hexal",
                     'Specification-Vendor'    : "talia",
                     'Specification-Version'   : project.jar.archiveVersion,
                     'Implementation-Title'    : project.name,
@@ -37,7 +34,7 @@ void setupJar(Object project) {
                     'Implementation-Timestamp': new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                     'Timestamp'               : System.currentTimeMillis(),
                     'Built-On-Java'           : "${System.getProperty('java.vm.version')} (${System.getProperty('java.vm.vendor')})",
-                    'Built-On-Minecraft'      : minecraftVersion
+                    'Built-On-Minecraft'      : "1.21.1"
             ])
         }
     }
@@ -108,7 +105,7 @@ subprojects {
 
     tasks.withType(JavaCompile).configureEach {
         it.options.encoding = 'UTF-8'
-        it.options.release = 17
+        it.options.release = 21
     }
 
     // Disables Gradle's custom module metadata from being published to maven. The
@@ -121,7 +118,7 @@ subprojects {
     sourceSets.main.kotlin.srcDirs += 'src/main/java'
 
     java.toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
+        languageVersion = JavaLanguageVersion.of(21)
         vendor = null // TODO: Not sure why this works or whether it will work on anyone else's computer
     }
     java.withSourcesJar()
@@ -145,8 +142,8 @@ subprojects {
 }
 
 allprojects {
-    group = "ram.talia.$modID" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-    version = "$modVersion"
+    group = "ram.talia.hexal" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+    version = "0.3.1"
     // archivesBaseName set in each gradle
 
     gradle.projectsEvaluated {
@@ -158,28 +155,22 @@ allprojects {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
-tasks.register("runAllDatagen") {
-    dependsOn ":NeoForge:runXplatDatagen"
-    dependsOn ":NeoForge:runForgeDatagen"
-    dependsOn ":Fabric:runDatagen"
-}
-
 publishMods {
-    displayName = "v$modVersion"
+    displayName = "v0.3.1"
 
     github {
         repository = System.getenv("GITHUB_REPOSITORY") ?: ""
         commitish = System.getenv("GITHUB_SHA") ?: ""
-        tagName = modVersion
+        tagName = "0.3.1"
         allowEmptyFiles = true
     }
 }
