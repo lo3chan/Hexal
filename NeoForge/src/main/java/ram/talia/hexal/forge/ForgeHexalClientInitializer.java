@@ -17,7 +17,7 @@ import ram.talia.hexal.common.lib.HexalBlockEntities;
 import ram.talia.hexal.common.lib.HexalItems;
 import ram.talia.hexal.forge.client.blocks.BlockEntityRelayRenderer;
 import ram.talia.hexal.forge.client.items.ItemRelayRenderer;
-import ram.talia.hexal.forge.client.items.IRenderPropertiesSetter;
+import net.neoforged.neoforge.client.extensions.common.RegisterClientExtensionsEvent;
 import thedarkcolour.kotlinforforge.KotlinModLoadingContext;
 
 public class ForgeHexalClientInitializer {
@@ -26,25 +26,22 @@ public class ForgeHexalClientInitializer {
 	public static void clientInit(FMLClientSetupEvent event) {
 		event.enqueueWork(RegisterClientStuff::init);
 
-		if (FMLEnvironment.dist == Dist.CLIENT)
-			cursedItemPropertiesNonsense();
 		NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post tickEvent)-> {
 			Everbook.checkSaveTime();
 		});
 	}
 
 	@OnlyIn(Dist.CLIENT)
-	private static void cursedItemPropertiesNonsense() {
-		// this is *so* dumb
-		//noinspection DataFlowIssue
-		((IRenderPropertiesSetter) HexalItems.RELAY).setRenderProperties(new IClientItemExtensions() {
+	@SubscribeEvent
+	public static void registerClientExtensions(RegisterClientExtensionsEvent event) {
+		event.registerItem(new IClientItemExtensions() {
 			private final BlockEntityWithoutLevelRenderer renderer = new ItemRelayRenderer();
 
 			@Override
 			public BlockEntityWithoutLevelRenderer getCustomRenderer() {
 				return renderer;
 			}
-		});
+		}, HexalItems.RELAY);
 	}
 	
 	@OnlyIn(Dist.CLIENT)
