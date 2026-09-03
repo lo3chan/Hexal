@@ -7,6 +7,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import kotlin.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.UUIDUtil;
@@ -103,15 +104,15 @@ public class GateIota extends Iota {
     }
 
     public void mark(Entity entity) {
-        GateManager.mark(this.getGateIndex(), entity);
+        GateManager.mark(this.getGateIndex(), entity.getUUID());
     }
 
     public void unmark(Entity entity) {
-        GateManager.unmark(this.getGateIndex(), entity);
+        GateManager.unmark(this.getGateIndex(), entity.getUUID());
     }
 
     public void clearMarked() {
-        GateManager.clear(this.getGateIndex());
+        GateManager.clearMarked(this.getGateIndex());
     }
 
     public int getNumMarked() {
@@ -160,8 +161,8 @@ public class GateIota extends Iota {
         }
 
         @Override
-        public StreamCodec<ByteBuf, GateIota> streamCodec() {
-            return ByteBufCodecs.fromCodec(Payload.CODEC).map(GateIota::new, g -> g.payload);
+        public StreamCodec<RegistryFriendlyByteBuf, GateIota> streamCodec() {
+            return ByteBufCodecs.fromCodecWithRegistries(Payload.CODEC).map(GateIota::new, g -> g.payload);
         }
 
         @Override

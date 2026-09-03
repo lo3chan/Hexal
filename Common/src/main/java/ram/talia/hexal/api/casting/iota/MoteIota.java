@@ -6,6 +6,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
@@ -140,8 +141,8 @@ public class MoteIota extends Iota {
         }
 
         @Override
-        public StreamCodec<ByteBuf, MoteIota> streamCodec() {
-            return ByteBufCodecs.fromCodec(INDEX_CODEC).map(MoteIota::new, m -> m.itemIndex);
+        public StreamCodec<RegistryFriendlyByteBuf, MoteIota> streamCodec() {
+            return ByteBufCodecs.fromCodecWithRegistries(INDEX_CODEC).map(MoteIota::new, m -> m.itemIndex);
         }
 
         @Override

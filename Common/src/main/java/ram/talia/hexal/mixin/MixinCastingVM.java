@@ -31,7 +31,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import ram.talia.hexal.api.HexalAPI;
 import ram.talia.hexal.api.linkable.ILinkable;
 import ram.talia.hexal.api.linkable.PlayerLinkstore;
-import ram.talia.hexal.common.lib.HexalActions;
+import ram.talia.hexal.common.lib.hex.HexalActions;
 import ram.talia.hexal.xplat.IXplatAbstractions;
 
 import java.util.ArrayList;

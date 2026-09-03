@@ -30,6 +30,7 @@ object GateManager {
         return allMarked[gateIndex]?.contains(entity.uuid) ?: false
     }
 
+    @JvmStatic
     fun mark(gate: Int, entity: Entity) = mark(gate, entity.uuid)
 
     @JvmStatic

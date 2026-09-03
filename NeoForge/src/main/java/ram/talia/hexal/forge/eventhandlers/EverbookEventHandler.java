@@ -55,7 +55,7 @@ public class EverbookEventHandler {
 		if (everbooks.get(player.getUUID()) == null)
 			return;
 		everbooks.get(player.getUUID()).setIota(key, iota);
-		IXplatAbstractions.INSTANCE.sendPacketToPlayer(player, new MsgSetEverbookS2C(key, IotaType.serialize(iota)));
+		IXplatAbstractions.INSTANCE.sendPacketToPlayer(player, new MsgSetEverbookS2C(key, ram.talia.hexal.api.HexCasting121AdaptersKt.toNbt(iota)));
 	}
 	
 	public static void removeIota (ServerPlayer player, HexPattern key) {
