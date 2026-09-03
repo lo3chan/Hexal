@@ -85,6 +85,10 @@ dependencies {
 }
 
 
+tasks.withType(ProcessResources).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
 }
