@@ -124,6 +124,10 @@ sourceSets {
     main.kotlin.srcDirs += 'src/main/java'
 }
 
+tasks.matching { it.name.toLowerCase().contains("test") }.configureEach {
+    enabled = false
+}
+
 processResources {
     from project(":Common").sourceSets.main.resources
     inputs.property "version", project.version

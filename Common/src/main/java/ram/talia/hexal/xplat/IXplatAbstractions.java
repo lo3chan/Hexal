@@ -164,7 +164,7 @@ public interface IXplatAbstractions {
                 "There should be exactly one IXplatAbstractions implementation on the classpath. Found: " + names);
         } else {
             var provider = providers.get(0);
-            HexAPI.LOGGER.debug("Instantiating xplat impl: " + provider.type().getName());
+            ram.talia.hexal.api.HexalAPI.LOGGER.debug("Instantiating xplat impl: " + provider.type().getName());
             return provider.get();
         }
     }
