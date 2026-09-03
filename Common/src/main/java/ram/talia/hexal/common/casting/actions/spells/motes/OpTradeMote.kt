@@ -61,10 +61,6 @@ object OpTradeMote : VarargConstMediaAction {
             throw MishapStorageFull(storage)
 
 
-        if (villager.offers.isEmpty())
-            return emptyList<Iota>().asActionResult
-
-        (env.castingEntity as? ServerPlayer)?.let { villager.updateSpecialPrices(it) }
         villager.tradingPlayer = env.castingEntity as? ServerPlayer
 
         var outRecord: ItemRecord? = null
@@ -108,7 +104,7 @@ object OpTradeMote : VarargConstMediaAction {
 
         } while (!merchantoffer.isOutOfStock)
 
-        villager.stopTrading()
+        villager.tradingPlayer = null
 
         return outRecord?.let { record -> MoteIota.makeIfStorageLoaded(record, storage)?.let{ listOf(it) } } ?: null.asActionResult
     }

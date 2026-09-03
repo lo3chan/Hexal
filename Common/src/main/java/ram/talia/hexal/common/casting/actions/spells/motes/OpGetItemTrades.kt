@@ -15,7 +15,6 @@ object OpGetItemTrades : ConstMediaAction {
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
         val villager = args.getVillager(0, argc)
 
-        env.caster?.let { villager.updateSpecialPrices(it) }
         villager.tradingPlayer = env.caster
 
         val result = villager.offers.map { offer ->
@@ -31,7 +30,7 @@ object OpGetItemTrades : ConstMediaAction {
             ListIota(offerList)
         }
 
-        villager.stopTrading()
+        villager.tradingPlayer = null
 
         return result.asActionResult
     }
