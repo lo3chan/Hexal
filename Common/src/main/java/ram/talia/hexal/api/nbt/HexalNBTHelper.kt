@@ -155,7 +155,7 @@ fun ByteArray.decompressToNBT(maxSize : Long) : CompoundTag {
 	}
 }
 
-class SlightlyBetterNbtAccounter(max: Long) : NbtAccounter(max) {
+class SlightlyBetterNbtAccounter(max: Long, maxDepth: Int = 512) : NbtAccounter(max, maxDepth) {
 	override fun accountBytes(added : Long){
 		try {
 			super.accountBytes(added)

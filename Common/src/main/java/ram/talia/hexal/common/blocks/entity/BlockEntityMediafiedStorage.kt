@@ -70,7 +70,7 @@ class BlockEntityMediafiedStorage(pos: BlockPos, val state: BlockState) : HexBlo
     }
 
     fun getItemRecordsMatching(itemRecord: ItemRecord): Map<Int, ItemRecord> {
-        return storedItems.filter { (_, record) -> record.item == itemRecord.item && record.tag == itemRecord.tag }
+        return storedItems.filter { (_, record) -> record.typeMatches(itemRecord) }
     }
 
     fun serverTick() {
@@ -105,7 +105,7 @@ class BlockEntityMediafiedStorage(pos: BlockPos, val state: BlockState) : HexBlo
     /**
      * When sending a sync packet to the client, only include this boolean rather than all the save data.
      */
-    override fun getUpdateTag() = CompoundTag().also { it.putBoolean(TAG_HAS_ITEMS, _storedItems.isNotEmpty()) }
+    override fun getUpdateTag(registries: net.minecraft.core.HolderLookup.Provider) = CompoundTag().also { it.putBoolean(TAG_HAS_ITEMS, _storedItems.isNotEmpty()) }
 
     override fun saveModData(tag: CompoundTag) {
         tag.putUUID(TAG_UUID, uuid)

@@ -34,13 +34,12 @@ class BlockEntityMediafiedStorageRenderer : BlockEntityRenderer<BlockEntityMedia
         //define the drawing utils
         fun vertex(x: Float, y: Float, z: Float, normX: Float, normY: Float, normZ: Float, u: Float, v: Float) {
             buffer
-                .vertex(poseMatrix, x, y, z)
-                .color(0xFFFFFFFFu.toInt())
-                .uv(u / TEXTURE_SIZE, v / TEXTURE_SIZE)
-                .overlayCoords(OverlayTexture.NO_OVERLAY)
-                .uv2(light)
-                .normal(normalMatrix, normX, normY, normZ)
-                .endVertex()
+                .addVertex(poseMatrix, x, y, z)
+                .setColor(0xFFFFFFFFu.toInt())
+                .setUv(u / TEXTURE_SIZE, v / TEXTURE_SIZE)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setUv2(light)
+                .setNormal(normalMatrix, normX, normY, normZ)
         }
 
         fun drawHorizontalQuad(radius: Float, u: Float, v: Float, yNormal: Float) {

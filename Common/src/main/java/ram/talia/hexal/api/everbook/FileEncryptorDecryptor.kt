@@ -86,7 +86,7 @@ internal class FileEncrypterDecrypter(private val secretKey: SecretKey, cipher: 
 			cipher.init(Cipher.DECRYPT_MODE, secretKey, IvParameterSpec(fileIv))
 
 			try {
-				content = NbtIo.readCompressed(CipherInputStream(fileIn, cipher))
+				content = NbtIo.readCompressed(CipherInputStream(fileIn, cipher), net.minecraft.nbt.NbtAccounter.unlimitedHeap())
 			} catch (e: ZipException) {
 				content = null // HACKS - this makes it so that if the player ends up with a compound file encrypted with the wrong key it doesn't crash
 			}

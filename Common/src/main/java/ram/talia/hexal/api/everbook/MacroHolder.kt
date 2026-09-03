@@ -115,7 +115,7 @@ class MacroHolder(val everbook: Everbook) {
 	}
 
 	private fun extractList(spellListTag: CompoundTag): MutableList<CompoundTag>? {
-		return when (HexIotaTypes.REGISTRY[ResourceLocation(spellListTag.getString(HexIotaTypes.KEY_TYPE))]) {
+		return when (HexIotaTypes.REGISTRY[ResourceLocation.parse(spellListTag.getString(HexIotaTypes.KEY_TYPE))]) {
 			HexIotaTypes.LIST -> spellListTag.getList(HexIotaTypes.KEY_DATA, Tag.TAG_COMPOUND.toInt()).toCompoundTagList()
 			else -> null
 		}

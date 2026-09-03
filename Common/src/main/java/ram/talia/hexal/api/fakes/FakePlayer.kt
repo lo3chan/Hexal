@@ -63,7 +63,7 @@ class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.ser
 
 	@ParametersAreNonnullByDefault
 	private class FakePlayerNetHandler(server: MinecraftServer, player: ServerPlayer) :
-		ServerGamePacketListenerImpl(server, DUMMY_CONNECTION, player, net.minecraft.server.network.CommonListenerCookie.createInitial(player.gameProfile)) {
+		ServerGamePacketListenerImpl(server, DUMMY_CONNECTION, player, net.minecraft.server.network.CommonListenerCookie.createInitial(player.gameProfile, false)) {
 		override fun tick() {}
 		override fun resetPosition() {}
 		override fun disconnect(message: Component) {}
