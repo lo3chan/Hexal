@@ -38,8 +38,8 @@ class BlockEntityMediafiedStorageRenderer : BlockEntityRenderer<BlockEntityMedia
                 .setColor(0xFFFFFFFFu.toInt())
                 .setUv(u / TEXTURE_SIZE, v / TEXTURE_SIZE)
                 .setOverlay(OverlayTexture.NO_OVERLAY)
-                .setUv2(light)
-                .setNormal(normalMatrix, normX, normY, normZ)
+                .setLight(light)
+                .setNormal(entry, normX, normY, normZ)
         }
 
         fun drawHorizontalQuad(radius: Float, u: Float, v: Float, yNormal: Float) {

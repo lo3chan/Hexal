@@ -165,7 +165,7 @@ class TickingWisp : BaseCastingWisp {
 
 		// multiplied by min(distToStep, diffVec.length()) rather than just distToStep so that if the player sets the
 		// move speed multiplier high enough to overshoot the target, the wisp instead jumps to the target.
-		val step = maxMove(diffVec.normalize() * min(distToStep, diffVec.length()))
+		val step = maxMove(diffVec.normalize().scale(min(distToStep, diffVec.length())))
 
 		setPos(position() + step)
 	}

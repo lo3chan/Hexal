@@ -61,7 +61,7 @@ object OpFallingBlock : SpellAction {
 				&& blockstate.getDestroySpeed(env.world, pos) >= 0f // fix being able to break bedrock &c
 				&& env.world.getBlockEntity(pos) == null
 				&& IXplatAbstractions.INSTANCE.isCorrectTierForDrops(tier, blockstate)
-				&& canSilkTouch(env.world, pos, blockstate, tier.level, env.caster)
+				&& canSilkTouch(env.world, pos, blockstate, 0, env.caster)
 			) {
 				val falling: FallingBlockEntity = FallingBlockEntity.fall(env.world, pos, blockstate)
 				falling.time = 1
@@ -84,7 +84,8 @@ object OpFallingBlock : SpellAction {
 			if (harvestToolStack.isEmpty) {
 				return false
 			}
-			harvestToolStack.enchant(Enchantments.SILK_TOUCH, 1)
+			val silkTouch = level.registryAccess().lookupOrThrow(net.minecraft.core.registries.Registries.ENCHANTMENT).getOrThrow(Enchantments.SILK_TOUCH)
+			harvestToolStack.enchant(silkTouch, 1)
 			val drops: List<ItemStack> = Block.getDrops(state, level, pos, null, owner, harvestToolStack)
 			val blockItem: Item = state.block.asItem()
 			return drops.any { s -> s.item === blockItem }

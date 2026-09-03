@@ -23,6 +23,6 @@ object OpGetContainedItemTypes : UserDataConstMediaAction {
         if (!MediafiedItemManager.isStorageLoaded(storage))
             throw MishapNoBoundStorage("storage_unloaded")
 
-        return MediafiedItemManager.getAllContainedItemTypes(storage)?.toList()?.asActionResult ?: null.asActionResult
+        return listOf(ListIota(MediafiedItemManager.getAllContainedItemTypes(storage)?.map { NullIota() } ?: listOf()))
     }
 }
