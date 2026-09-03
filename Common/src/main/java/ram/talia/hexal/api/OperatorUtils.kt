@@ -10,7 +10,7 @@ import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.iota.Vec3Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughArgs
-import at.petrak.hexcasting.api.casting.SpellList
+import at.petrak.hexcasting.api.utils.TreeList
 import com.mojang.datafixers.util.Either
 import net.minecraft.core.BlockPos
 import net.minecraft.world.entity.Entity
@@ -282,7 +282,7 @@ fun List<Iota>.getMoteOrItemType(idx: Int, argc: Int = 0): Either<MoteIota, Item
     throw MishapInvalidIota.of(x, if (argc == 0) idx else argc - (idx + 1), "moteitemtype")
 }
 
-fun List<Iota>.getMoteOrList(idx: Int, argc: Int = 0): Either<MoteIota, SpellList>? {
+fun List<Iota>.getMoteOrList(idx: Int, argc: Int = 0): Either<MoteIota, TreeList<Iota>>? {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     return when (x) {
         is MoteIota -> Either.left(x)
@@ -292,7 +292,7 @@ fun List<Iota>.getMoteOrList(idx: Int, argc: Int = 0): Either<MoteIota, SpellLis
     }
 }
 
-fun List<Iota>.getItemIotaOrMoteOrList(idx: Int, argc: Int = 0): Anyone<EntityIota, MoteIota, SpellList>? {
+fun List<Iota>.getItemIotaOrMoteOrList(idx: Int, argc: Int = 0): Anyone<EntityIota, MoteIota, TreeList<Iota>>? {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     return when (x) {
         is EntityIota -> null // Removed for now due to moreiotas removal

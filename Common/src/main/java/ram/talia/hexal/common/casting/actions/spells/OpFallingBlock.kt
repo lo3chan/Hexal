@@ -61,7 +61,7 @@ object OpFallingBlock : SpellAction {
 				&& !blockstate.isAir
 				&& blockstate.getDestroySpeed(env.world, pos) >= 0f // fix being able to break bedrock &c
 				&& env.world.getBlockEntity(pos) == null
-				&& at.petrak.hexcasting.xplat.at.petrak.hexcasting.xplat.IXplatAbstractions.INSTANCE.isCorrectTierForDrops(tier, blockstate)
+				&& at.petrak.hexcasting.xplat.IXplatAbstractions.INSTANCE.isCorrectTierForDrops(tier, blockstate)
 				&& canSilkTouch(env.world, pos, blockstate, 0, env.caster)
 			) {
 				val falling: FallingBlockEntity = FallingBlockEntity.fall(env.world, pos, blockstate)
