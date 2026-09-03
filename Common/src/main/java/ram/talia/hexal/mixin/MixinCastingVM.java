@@ -114,13 +114,13 @@ public abstract class MixinCastingVM {
 		var ret = harness.queueExecuteAndWrapIotas(toExecute, world);
 		if (isExecutingMacro){
 			Vec3 soundPos = env.getCaster().position();
-			SoundEvent sound = HexSounds.ADD_TO_PATTERN; //I don't think this will ever actually be played, but might as well have it be something that isn't completely out of place
+			SoundEvent sound = HexSounds.ADD_TO_PATTERN.value(); //I don't think this will ever actually be played, but might as well have it be something that isn't completely out of place
 			float pitch = 1f;
 			if (ret.getResolutionType() == ResolvedPatternType.EVALUATED) {
-				sound = HexSounds.CAST_SPELL;
+				sound = HexSounds.CAST_SPELL.value();
 				pitch = 0.9f;
 			} else if (ret.getResolutionType() == ResolvedPatternType.ESCAPED){
-				sound = HexSounds.CAST_NORMAL;
+				sound = HexSounds.CAST_NORMAL.value();
 			}
 			env.getWorld().playSound((Player) null, soundPos.x, soundPos.y, soundPos.z, sound, SoundSource.PLAYERS, 1f, pitch);
 		}

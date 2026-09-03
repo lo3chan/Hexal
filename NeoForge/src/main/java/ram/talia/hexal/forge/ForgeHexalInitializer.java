@@ -92,8 +92,8 @@ public class ForgeHexalInitializer {
 			 }));
 
 		modBus.addListener((BuildCreativeModeTabContentsEvent evt) -> {
-			HexalBlocks.registerBlockCreativeTab(evt::accept, evt.getTab());
-			HexalItems.registerItemCreativeTab(evt, evt.getTab());
+			HexalBlocks.registerBlockCreativeTab(evt::accept, evt.getTabKey());
+			HexalItems.registerItemCreativeTab(evt, evt.getTabKey());
 		});
 
 		evBus.addListener((ServerStartedEvent event)->{

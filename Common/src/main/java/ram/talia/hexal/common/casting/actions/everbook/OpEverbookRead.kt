@@ -49,7 +49,7 @@ object OpEverbookRead : SpellAction {
 		override fun cast(env: CastingEnvironment) {
 			record.addNewDatum(recordPos, env.world, key, datum)
 
-			env.world.playSound(null, recordPos, HexSounds.SCROLL_SCRIBBLE, SoundSource.BLOCKS, 1f, 0.8f)
+			env.world.playSound(null, recordPos, HexSounds.SCROLL_SCRIBBLE.value(), SoundSource.BLOCKS, 1f, 0.8f)
 		}
 	}
 }

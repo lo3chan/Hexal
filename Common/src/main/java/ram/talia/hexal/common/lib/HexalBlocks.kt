@@ -39,15 +39,15 @@ class HexalBlocks {
 		}
 
 		@JvmStatic
-		fun registerBlockCreativeTab(r: Consumer<Block>, tab: CreativeModeTab) {
-			for (block in BLOCK_TABS.getOrDefault(tab, mutableListOf())) {
+		fun registerBlockCreativeTab(r: Consumer<Block>, tabKey: net.minecraft.resources.ResourceKey<CreativeModeTab>) {
+			for (block in BLOCK_TABS.getOrDefault(tabKey, mutableListOf())) {
 				r.accept(block)
 			}
 		}
 
         private val BLOCKS: MutableMap<ResourceLocation, Block> = LinkedHashMap()
 		private val BLOCK_ITEMS: MutableMap<ResourceLocation, Pair<Block, Item.Properties>> = LinkedHashMap()
-		private val BLOCK_TABS: MutableMap<CreativeModeTab, MutableList<Block>> = LinkedHashMap()
+		private val BLOCK_TABS: MutableMap<net.minecraft.resources.ResourceKey<CreativeModeTab>, MutableList<Block>> = LinkedHashMap()
 
 		@JvmField
 		val SLIPWAY = blockNoItem("slipway", BlockSlipway(
@@ -64,7 +64,7 @@ class HexalBlocks {
 		@JvmField
 		val MEDIAFIED_STORAGE = blockItem("mediafied_storage", BlockMediafiedStorage(
 			BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).sound(SoundType.AMETHYST).noOcclusion().strength(30.0f)
-		), HexCreativeTabs.HEX)
+		), HexCreativeTabs.HEX_KEY)
 
 		val RELAY = blockNoItem("relay", BlockRelay(
 			BlockBehaviour.Properties.of().mapColor(MapColor.COLOR_PURPLE).sound(SoundType.AMETHYST).noOcclusion().strength(3.0f)
@@ -77,16 +77,16 @@ class HexalBlocks {
 			return block
 		}
 
-		private fun <T : Block> blockItem(name: String, block: T, tab: CreativeModeTab?): T {
+		private fun <T : Block> blockItem(name: String, block: T, tab: net.minecraft.resources.ResourceKey<CreativeModeTab>?): T {
 			return blockItem(name, block, HexItems.props(), tab)
 		}
 
-		private fun <T : Block> blockItem(name: String, block: T, props: Item.Properties, tab: CreativeModeTab?): T {
+		private fun <T : Block> blockItem(name: String, block: T, props: Item.Properties, tab: net.minecraft.resources.ResourceKey<CreativeModeTab>?): T {
 			blockNoItem(name, block)
 			val old = BLOCK_ITEMS.put(modLoc(name), Pair(block, props))
 			require(old == null) { "Typo? Duplicate id $name" }
 			if (tab != null) {
-				BLOCK_TABS.computeIfAbsent(tab) { t -> ArrayList() }.add(block)
+				BLOCK_TABS.computeIfAbsent(tab) { ArrayList() }.add(block)
 			}
 			return block
 		}
