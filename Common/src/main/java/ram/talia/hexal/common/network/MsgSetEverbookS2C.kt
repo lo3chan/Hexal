@@ -13,7 +13,7 @@ import ram.talia.hexal.xplat.IClientXplatAbstractions
 
 data class MsgSetEverbookS2C(val key: HexPattern, val iota: CompoundTag) : IMessage {
 	override fun serialize(buf: FriendlyByteBuf) {
-		buf.writeNbt(key.serializeToNBT())
+		HexPattern.STREAM_CODEC.encode(buf, key)
 		buf.writeNbt(iota)
 	}
 
@@ -26,7 +26,7 @@ data class MsgSetEverbookS2C(val key: HexPattern, val iota: CompoundTag) : IMess
 		@JvmStatic
 		fun deserialise(buffer: ByteBuf): MsgSetEverbookS2C {
 			val buf = FriendlyByteBuf(buffer)
-			return MsgSetEverbookS2C(HexPattern.fromNBT(buf.readNbt()!!), buf.readNbt()!!)
+			return MsgSetEverbookS2C(HexPattern.STREAM_CODEC.decode(buf), buf.readNbt()!!)
 		}
 
 		@JvmStatic

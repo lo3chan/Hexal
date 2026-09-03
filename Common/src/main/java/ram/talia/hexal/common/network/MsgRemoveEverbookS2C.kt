@@ -15,7 +15,7 @@ import ram.talia.hexal.xplat.IClientXplatAbstractions
  */
 data class MsgRemoveEverbookS2C(val key: HexPattern) : IMessage {
 	override fun serialize(buf: FriendlyByteBuf) {
-		buf.writeNbt(key.serializeToNBT())
+		HexPattern.STREAM_CODEC.encode(buf, key)
 	}
 
 	override fun getFabricId() = ID
@@ -27,7 +27,7 @@ data class MsgRemoveEverbookS2C(val key: HexPattern) : IMessage {
 		@JvmStatic
 		fun deserialise(buffer: ByteBuf): MsgRemoveEverbookS2C {
 			val buf = FriendlyByteBuf(buffer)
-			return MsgRemoveEverbookS2C(HexPattern.fromNBT(buf.readNbt()!!))
+			return MsgRemoveEverbookS2C(HexPattern.STREAM_CODEC.decode(buf))
 		}
 
 		@JvmStatic
