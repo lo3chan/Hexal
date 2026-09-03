@@ -2,16 +2,17 @@ package ram.talia.hexal.api.casting.iota;
 
 import at.petrak.hexcasting.api.casting.iota.Iota;
 import at.petrak.hexcasting.api.casting.iota.IotaType;
-import at.petrak.hexcasting.api.casting.iota.NullIota;
-import at.petrak.hexcasting.api.utils.HexUtils;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.ChatFormatting;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
+import net.minecraft.core.UUIDUtil;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.ServerLevel;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ram.talia.hexal.api.mediafieditems.ItemRecord;
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager;
@@ -21,158 +22,95 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
-/**
- * Similar to GateIotas, stores a reference to an item stored in the
- * media. When the item is used up, all references to it become null.
- */
 public class MoteIota extends Iota {
-    static final String TAG_DISPLAY_NAME = "name";
-    static final String TAG_COUNT = "count";
-
-    /**
-     * Used to get the UUID of the temporarily bound storage from userData, if one exists.
-     */
     public static final String TAG_TEMP_STORAGE = "hexal:temp_storage";
 
-    public MoteIota(MediafiedItemManager.Index payload) {
-        super(HexalIotaTypes.MOTE, payload);
+    private final MediafiedItemManager.Index itemIndex;
+
+    public MoteIota(MediafiedItemManager.Index itemIndex) {
+        super(() -> HexalIotaTypes.MOTE);
+        this.itemIndex = itemIndex;
     }
 
     public static @Nullable MoteIota makeIfStorageLoaded(ItemStack stack, UUID storageUUID) {
         var index = MediafiedItemManager.assignItem(stack, storageUUID);
-
-        if (index != null)
-            return new MoteIota(index);
-        else
-            return null;
+        return index != null ? new MoteIota(index) : null;
     }
 
     public static @Nullable MoteIota makeIfStorageLoaded(ItemRecord record, UUID storageUUID) {
         var index = MediafiedItemManager.assignItem(record, storageUUID);
-
-        if (index != null)
-            return new MoteIota(index);
-        else
-            return null;
+        return index != null ? new MoteIota(index) : null;
     }
 
-    /**
-     * Returns the MoteIota if its item still exists, or null otherwise. SHOULD ALWAYS
-     * BE CALLED BEFORE MAKING USE OF AN ITEM IOTA {@literal (built into List<Iota>.getItem)}.
-     */
     public @Nullable MoteIota selfOrNull() {
-        if (MediafiedItemManager.contains(this.getItemIndex()))
-            return this;
-        return null;
-    }
-
-    public boolean isEmpty() {
-        return MediafiedItemManager.isEmpty(this.getItemIndex());
+        return this.isEmpty() ? null : this;
     }
 
     public MediafiedItemManager.Index getItemIndex() {
-        return (MediafiedItemManager.Index) payload;
+        return this.itemIndex;
     }
 
     public @Nullable ItemRecord getRecord() {
-        var record = MediafiedItemManager.getRecord(this.getItemIndex());
-        if (record == null)
-            return null;
-        return record.get();
+        var rec = MediafiedItemManager.getRecord(this.itemIndex);
+        return rec != null ? rec.get() : null;
     }
 
-    public Item getItem() {
-        return Objects.requireNonNull(MediafiedItemManager.getItem(this.getItemIndex()), "MediafiedItemManager returned null for Item that has existing MoteIota.");
-    }
-
-    public net.minecraft.core.component.DataComponentPatch getComponents() {
-        return MediafiedItemManager.getComponents(this.getItemIndex());
-    }
-
-    public void setComponents(net.minecraft.core.component.DataComponentPatch components) {
-        MediafiedItemManager.setComponents(this.getItemIndex(), components);
+    public @Nullable Item getItem() {
+        var rec = this.getRecord();
+        return rec != null ? rec.getItem() : null;
     }
 
     public long getCount() {
-        return Objects.requireNonNull(MediafiedItemManager.getCount(this.getItemIndex()), "MediafiedItemManager returned null for Item that has existing MoteIota.");
+        var rec = this.getRecord();
+        return rec != null ? rec.getCount() : 0L;
     }
 
-    public void absorb(MoteIota other) {
-        MediafiedItemManager.merge(this.getItemIndex(), other.getItemIndex());
+    public boolean isEmpty() {
+        return this.getRecord() == null || this.getCount() <= 0L;
     }
 
-    public int absorb(ItemStack other) {
-        return MediafiedItemManager.merge(this.getItemIndex(), other);
+    public List<ItemStack> getStacksToDrop(int maxStackSize) {
+        return MediafiedItemManager.getStacksToDrop(this.itemIndex, maxStackSize);
     }
 
-    public boolean typeMatches(MoteIota other) {
-        return MediafiedItemManager.typeMatches(this.getItemIndex(), other.getItemIndex());
+    public List<ItemStack> getStacksToDrop(int count, int maxStackSize) {
+        return MediafiedItemManager.getStacksToDrop(this.itemIndex, count, maxStackSize);
     }
 
-    public boolean typeMatches(ItemStack other) {
-        return MediafiedItemManager.typeMatches(this.getItemIndex(), other);
+    public long absorb(MoteIota other) {
+        return MediafiedItemManager.mergeStores(this.itemIndex, other.itemIndex);
     }
 
-    public @Nullable MoteIota splitOff(long amount, @Nullable UUID storage) {
-        var newIndex = MediafiedItemManager.splitOff(this.getItemIndex(), amount, storage);
-        if (newIndex == null)
-            return null;
-
-        return new MoteIota(newIndex);
+    public long absorb(MoteIota other, long count) {
+        return MediafiedItemManager.mergeStores(this.itemIndex, other.itemIndex, count);
     }
 
-    public List<ItemStack> getStacksToDrop(int count) {
-        return MediafiedItemManager.getStacksToDrop(this.getItemIndex(), count);
+    public @Nullable MoteIota split(long count) {
+        var index = MediafiedItemManager.splitStore(this.itemIndex, count);
+        return index != null ? new MoteIota(index) : null;
     }
 
-    public long removeItems(int count) {
-        return removeItems((long) count);
+    public @Nullable MoteIota template() {
+        var index = MediafiedItemManager.templateIndex(this.itemIndex);
+        return index != null ? new MoteIota(index) : null;
     }
 
-    public long removeItems(long count) {
-        return MediafiedItemManager.removeItems(this.getItemIndex(), count);
+    public boolean isTemplate() {
+        return this.itemIndex.getUuid().equals(MediafiedItemManager.TEMPLATE_STORAGE);
     }
 
-    /**
-     * Takes a template ItemStack and sets the item and tag of the referenced ItemRecord to that item and tag, while leaving the count the same.
-     */
-    public void templateOff(@NotNull ItemStack template) {
-        MediafiedItemManager.templateOff(this.getItemIndex(), template, null);
+    public boolean isSameType(MoteIota other) {
+        var rec1 = this.getRecord();
+        var rec2 = other.getRecord();
+        return rec1 != null && rec2 != null && rec1.itemEquals(rec2);
     }
 
-    /**
-     * Takes a template ItemStack and sets the item and tag of the referenced ItemRecord to that item and tag, as well as overriding the count to newCount.
-     */
-    public void templateOff(@NotNull ItemStack template, long newCount) {
-        MediafiedItemManager.templateOff(this.getItemIndex(), template, newCount);
+    public boolean isSameStorage(MoteIota other) {
+        return this.itemIndex.getUuid().equals(other.itemIndex.getUuid());
     }
 
-    public MoteIota copy() {
-        return new MoteIota(this.getItemIndex());
-    }
-
-    public @Nullable MoteIota setStorage(@NotNull UUID uuid) {
-        var storageFull = MediafiedItemManager.isStorageFull(uuid);
-        if (storageFull == null || storageFull) // isStorageFull can return null
-            return null;
-
-        var record = getRecord();
-        MediafiedItemManager.removeRecord(this.getItemIndex());
-        if (record == null)
-            return null;
-
-        var newIndex = MediafiedItemManager.assignItem(record, uuid);
-        return new MoteIota(newIndex);
-    }
-
-    @Override
-    protected boolean toleratesOther(Iota that) {
-        return (typesMatch(this, that) &&
-                that instanceof MoteIota ithat &&
-                this.getItemIndex().equals(ithat.getItemIndex())) ||
-                (this.isEmpty() && (that instanceof NullIota ||
-                        (that instanceof MoteIota ithat2 &&
-                                ithat2.isEmpty())));
+    public boolean isSameStorage(UUID storageUUID) {
+        return this.itemIndex.getUuid().equals(storageUUID);
     }
 
     @Override
@@ -181,52 +119,40 @@ public class MoteIota extends Iota {
     }
 
     @Override
-    public @NotNull Tag serialize() {
-        // needs to contain both the index and the current contents
-        // of the referenced item, since the same serialised is
-        // used for both storage and for sending to the client
-        // to display.
-
-        var tag = new CompoundTag();
-        this.getItemIndex().writeToNbt(tag);
-
-        var record = MediafiedItemManager.getRecord(this.getItemIndex());
-
-        ItemRecord rec;
-
-        if (record == null || (rec = record.get()) == null)
-            return tag;
-
-
-        tag.putString(TAG_DISPLAY_NAME, rec.getDisplayName().getString());
-        tag.putLong(TAG_COUNT, rec.getCount());
-
-        return tag;
+    public boolean toleratesOther(Iota that) {
+        return typesMatch(this, that) && that instanceof MoteIota m && m.itemIndex.equals(this.itemIndex);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.getType(), this.itemIndex);
+    }
+
+    @Override
+    public Component display() {
+        var rec = this.getRecord();
+        if (rec == null) {
+            return Component.translatable("hexcasting.tooltip.null_iota").withStyle(ChatFormatting.GRAY);
+        }
+        return Component.translatable("hexal.spelldata.mote", rec.getDisplayName().getString(), rec.getCount()).withStyle(ChatFormatting.YELLOW);
+    }
+
+    public static final Codec<MediafiedItemManager.Index> INDEX_CODEC = RecordCodecBuilder.create(instance -> instance.group(
+            UUIDUtil.CODEC.fieldOf("storage").forGetter(MediafiedItemManager.Index::getUuid),
+            Codec.INT.fieldOf("index").forGetter(MediafiedItemManager.Index::getIndex)
+    ).apply(instance, MediafiedItemManager.Index::new));
+
     public static IotaType<MoteIota> TYPE = new IotaType<>() {
+        private final MapCodec<MoteIota> CODEC = INDEX_CODEC.xmap(MoteIota::new, m -> m.itemIndex).fieldOf("mote");
+
         @Override
-        public MoteIota deserialize(Tag tag, ServerLevel world) throws IllegalArgumentException {
-            var ctag = HexUtils.downcast(tag, CompoundTag.TYPE);
-
-            var index = MediafiedItemManager.Index.readFromNbt(ctag);
-
-            if (!MediafiedItemManager.contains(index))
-                return null;
-
-            return new MoteIota(index);
+        public MapCodec<MoteIota> codec() {
+            return CODEC;
         }
 
         @Override
-        public Component display(Tag tag) {
-            if (!(tag instanceof CompoundTag ctag)) {
-                return Component.translatable("hexcasting.spelldata.unknown");
-            }
-
-            if (!ctag.contains(TAG_DISPLAY_NAME) || !ctag.contains(TAG_COUNT))
-                return Component.translatable("hexcasting.tooltip.null_iota").withStyle(ChatFormatting.GRAY);
-
-            return Component.translatable("hexal.spelldata.mote", ctag.getString(TAG_DISPLAY_NAME), ctag.getLong(TAG_COUNT)).withStyle(ChatFormatting.YELLOW);
+        public StreamCodec<ByteBuf, MoteIota> streamCodec() {
+            return ByteBufCodecs.fromCodec(INDEX_CODEC).map(MoteIota::new, m -> m.itemIndex);
         }
 
         @Override
