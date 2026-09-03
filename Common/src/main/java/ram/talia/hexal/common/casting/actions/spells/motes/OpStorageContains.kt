@@ -7,6 +7,7 @@ import at.petrak.hexcasting.api.casting.getBlockPos
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import net.minecraft.core.Direction
+import ram.talia.hexal.api.caster
 import ram.talia.hexal.api.getMoteOrItemType
 import ram.talia.hexal.common.blocks.entity.BlockEntityMediafiedStorage
 import ram.talia.hexal.xplat.IXplatAbstractions

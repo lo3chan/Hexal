@@ -171,7 +171,7 @@ class TickingWisp : BaseCastingWisp {
 	}
 
 	// Seon wisps have the same max range as the caster.
-	override fun maxSqrCastingDistance() = if (seon) { PlayerBasedCastEnv.AMBIT_RADIUS * PlayerBasedCastEnv.AMBIT_RADIUS } else { CASTING_RADIUS * CASTING_RADIUS }
+	override fun maxSqrCastingDistance() = if (seon) { 32.0 * 32.0 } else { CASTING_RADIUS * CASTING_RADIUS }
 
 	override fun canScheduleCast(): Boolean {
 		return super.canScheduleCast() && !isDebuggingAndPaused

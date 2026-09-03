@@ -41,7 +41,7 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
             throw MishapExcessiveReproduction(env.wisp) // wisps can only summon one child per cast.
 
         val ravenmind = if (userData.contains(HexAPI.RAVENMIND_USERDATA)) {
-            IotaType.deserialize(userData.getCompound(HexAPI.RAVENMIND_USERDATA), env.world)
+            ram.talia.hexal.api.parseIota(userData.getCompound(HexAPI.RAVENMIND_USERDATA))
         } else {
             NullIota()
         }

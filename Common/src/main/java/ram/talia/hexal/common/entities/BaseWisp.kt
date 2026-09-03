@@ -33,7 +33,7 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 
 	override fun get() = this
 
-	override fun pigment(): FrozenPigment = FrozenPigment.fromNBT(entityData.get(PIGMENT))
+	override fun pigment(): FrozenPigment = ram.talia.hexal.api.parseFrozenPigment(entityData.get(PIGMENT))
 
 
 	override fun makeBoundingBox(): AABB {
@@ -118,7 +118,7 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	fun setPigment(pigment: FrozenPigment): FrozenPigment {
-		entityData.set(PIGMENT, pigment.serializeToNBT())
+		entityData.set(PIGMENT, ram.talia.hexal.api.toNbt(pigment))
 		return pigment
 	}
 
@@ -140,7 +140,7 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	override fun defineSynchedData(builder: net.minecraft.network.syncher.SynchedEntityData.Builder) {
-		builder.define(PIGMENT, FrozenPigment.DEFAULT.get().serializeToNBT())
+		builder.define(PIGMENT, ram.talia.hexal.api.toNbt(FrozenPigment.DEFAULT.get()))
 		builder.define(MEDIA, 20L * MediaConstants.DUST_UNIT)
 	}
 

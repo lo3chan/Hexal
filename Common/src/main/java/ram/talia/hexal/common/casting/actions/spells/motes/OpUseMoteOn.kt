@@ -43,7 +43,7 @@ object OpUseMoteOn : VarargSpellAction {
 
         if (argc == 2) {
             // Entity Version
-            val target = args.getEntity(1, argc)
+            val target = args.getEntity(env.world, 1, argc)
 
             env.assertEntityInRange(target)
 

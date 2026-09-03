@@ -22,7 +22,7 @@ class MsgParticleLinesAck(val locs: List<Vec3>, val colouriser: FrozenPigment): 
             buf.writeDouble(loc.y)
             buf.writeDouble(loc.z)
         }
-        buf.writeNbt(colouriser.serializeToNBT())
+        buf.writeNbt(ram.talia.hexal.api.toNbt(colouriser))
     }
 
     override fun getFabricId() = ID
@@ -41,7 +41,7 @@ class MsgParticleLinesAck(val locs: List<Vec3>, val colouriser: FrozenPigment): 
                 locs.add(Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble()))
             }
 
-            return MsgParticleLinesAck(locs, FrozenPigment.fromNBT(buf.readNbt()!!))
+            return MsgParticleLinesAck(locs, ram.talia.hexal.api.parseFrozenPigment(buf.readNbt()!!))
         }
 
         @JvmStatic

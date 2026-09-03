@@ -19,11 +19,11 @@ object OpSplitMote : UserDataConstMediaAction {
         val item = args.getMote(0, argc) ?: return listOf(NullIota())
         val toSplitOff = args.getStrictlyPositiveLong(1, argc)
 
-        val storage = if (userData.contains(MoteIota.TAG_TEMP_STORAGE))
-                userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
-            else
-                env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
-            ?: throw MishapNoBoundStorage()
+        val storage: java.util.UUID = if (userData.contains(MoteIota.TAG_TEMP_STORAGE)) {
+            userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
+        } else {
+            env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
+        } ?: throw MishapNoBoundStorage()
         if (!MediafiedItemManager.isStorageLoaded(storage))
             throw MishapNoBoundStorage("storage_unloaded")
         if (MediafiedItemManager.isStorageFull(storage) != false) // if this is somehow null we should still throw an error here, things have gone pretty wrong

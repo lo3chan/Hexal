@@ -71,7 +71,7 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 		move()
 
 		if (level().isClientSide) {
-			val pigment = FrozenPigment.fromNBT(entityData.get(PIGMENT))
+			val pigment = pigment()
 			playWispParticles(pigment)
 			playTrailParticles(pigment)
 			clientLinkableHolder!!.renderLinks()

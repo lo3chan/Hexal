@@ -15,7 +15,7 @@ object OpWispHex : ConstMediaAction {
 	override val argc = 1
 
 	override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-		val wisp = args.getEntity(0, argc)
+		val wisp = args.getEntity(env.world, 0, argc)
 
 		if (wisp !is BaseCastingWisp)
 			throw MishapInvalidIota.ofType(args[0], 0, "wisp")

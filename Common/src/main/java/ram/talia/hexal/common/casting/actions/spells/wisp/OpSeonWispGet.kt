@@ -4,6 +4,7 @@ import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.NullIota
+import ram.talia.hexal.api.caster
 import ram.talia.hexal.xplat.IXplatAbstractions
 
 object OpSeonWispGet : ConstMediaAction {
