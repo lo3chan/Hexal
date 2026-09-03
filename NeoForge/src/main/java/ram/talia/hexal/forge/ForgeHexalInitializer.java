@@ -79,9 +79,12 @@ public class ForgeHexalInitializer {
 	private static void initListeners () {
 		IEventBus modBus = getModEventBus();
 		IEventBus evBus = NeoForge.EVENT_BUS;
-		
-		modBus.register(ForgeHexalClientInitializer.class);
-		
+
+		if (net.neoforged.fml.loading.FMLEnvironment.dist == net.neoforged.api.distmarker.Dist.CLIENT) {
+			modBus.register(ForgeHexalClientInitializer.class);
+			evBus.register(RenderLinkEventHandler.class);
+		}
+
 		modBus.addListener((FMLCommonSetupEvent evt) ->
 			 evt.enqueueWork(() -> {
 				 //noinspection Convert2MethodRef
@@ -97,21 +100,11 @@ public class ForgeHexalInitializer {
 			//rule them out like this so that it doesn't try to access client-only stuff on a dedicated server
             MsgSendEverbookC2S.isSingleplayer = !(event.getServer() instanceof DedicatedServer || event.getServer() instanceof GameTestServer);
 		});
-		
-
-		// We have to do these at some point when the registries are still open
-//		modBus.addGenericListener(Item.class, (GenericEvent<Item> evt) -> HexalRecipeSerializers.registerTypes());
-//		modBus.addListener((RegisterEvent evt) -> {
-//			if (evt.getRegistryKey().equals(Registry.ITEM_REGISTRY)) {
-//				HexalRecipeSerializers.registerTypes();
-//			}
-//		});
 
 		evBus.register(BoundStorageEventHandler.class);
 		evBus.register(EverbookEventHandler.class);
 		evBus.register(GateEventHandler.class);
 		evBus.register(PlayerLinkstoreEventHandler.class);
-		evBus.register(RenderLinkEventHandler.class); // client only, might move into ForgeHexalClientInitializer if possible?
 		evBus.register(WispCastingMangerEventHandler.class);
 	}
 	
