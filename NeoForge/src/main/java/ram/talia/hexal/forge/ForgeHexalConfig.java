@@ -3,7 +3,7 @@ package ram.talia.hexal.forge;
 
 import at.petrak.hexcasting.api.misc.MediaConstants;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.jetbrains.annotations.NotNull;
 import ram.talia.hexal.api.config.HexalConfig;
 
@@ -12,15 +12,15 @@ import java.util.List;
 import static ram.talia.hexal.api.config.HexalConfig.noneMatch;
 
 public class ForgeHexalConfig implements HexalConfig.CommonConfigAccess {
-    public ForgeHexalConfig(ForgeConfigSpec.Builder builder) {
+    public ForgeHexalConfig(ModConfigSpec.Builder builder) {
 
     }
 
     public static class Client implements HexalConfig.ClientConfigAccess {
 
-        private static ForgeConfigSpec.LongValue everbookSaveDelay;
+        private static ModConfigSpec.LongValue everbookSaveDelay;
 
-        public Client(ForgeConfigSpec.Builder builder) {
+        public Client(ModConfigSpec.Builder builder) {
             builder.translation("text.autoconfig.hexal.option.client.miscValues").push("miscValues");
             everbookSaveDelay = builder.translation("text.autoconfig.hexal.option.client.miscValues.everbookSaveDelay")
                     .defineInRange("everbookSaveDelay", DEFAULT_EVERBOOK_SAVE_DELAY, 1L, Long.MAX_VALUE);
@@ -34,67 +34,67 @@ public class ForgeHexalConfig implements HexalConfig.CommonConfigAccess {
     }
 
     public static class Server implements HexalConfig.ServerConfigAccess {
-        private static ForgeConfigSpec.BooleanValue generateSlipwayGeodes;
+        private static ModConfigSpec.BooleanValue generateSlipwayGeodes;
 
-        private static ForgeConfigSpec.LongValue everbookMaxSize;
+        private static ModConfigSpec.LongValue everbookMaxSize;
 
         // costs of misc spells
-        private static ForgeConfigSpec.DoubleValue fallingBlockCost;
-        private static ForgeConfigSpec.DoubleValue freezeCost;
-        private static ForgeConfigSpec.DoubleValue particlesCost;
-        private static ForgeConfigSpec.DoubleValue placeTypeCost;
-        private static ForgeConfigSpec.DoubleValue smeltCost;
+        private static ModConfigSpec.DoubleValue fallingBlockCost;
+        private static ModConfigSpec.DoubleValue freezeCost;
+        private static ModConfigSpec.DoubleValue particlesCost;
+        private static ModConfigSpec.DoubleValue placeTypeCost;
+        private static ModConfigSpec.DoubleValue smeltCost;
 
         // costs of wisp spells
-        private static ForgeConfigSpec.DoubleValue moveSpeedSetCost;
-        private static ForgeConfigSpec.DoubleValue summonTickingWispCost;
-        private static ForgeConfigSpec.DoubleValue summonProjectileWispCost;
-        private static ForgeConfigSpec.DoubleValue summonProjectileWispMinCost;
+        private static ModConfigSpec.DoubleValue moveSpeedSetCost;
+        private static ModConfigSpec.DoubleValue summonTickingWispCost;
+        private static ModConfigSpec.DoubleValue summonProjectileWispCost;
+        private static ModConfigSpec.DoubleValue summonProjectileWispMinCost;
 
         // costs of wisp upkeep
-        private static ForgeConfigSpec.DoubleValue tickingWispUpkeepPerTick;
-        private static ForgeConfigSpec.DoubleValue projectileWispUpkeepPerTick;
-        private static ForgeConfigSpec.DoubleValue untriggeredWispUpkeepDiscount;
-        private static ForgeConfigSpec.DoubleValue linkUpkeepPerTick;
-        private static ForgeConfigSpec.DoubleValue seonDiscountFactor;
-        private static ForgeConfigSpec.DoubleValue storingPlayerCostScaleFactor;
-        private static ForgeConfigSpec.DoubleValue mediaFlowRateOverLink;
+        private static ModConfigSpec.DoubleValue tickingWispUpkeepPerTick;
+        private static ModConfigSpec.DoubleValue projectileWispUpkeepPerTick;
+        private static ModConfigSpec.DoubleValue untriggeredWispUpkeepDiscount;
+        private static ModConfigSpec.DoubleValue linkUpkeepPerTick;
+        private static ModConfigSpec.DoubleValue seonDiscountFactor;
+        private static ModConfigSpec.DoubleValue storingPlayerCostScaleFactor;
+        private static ModConfigSpec.DoubleValue mediaFlowRateOverLink;
 
         // costs of link spells
-        private static ForgeConfigSpec.DoubleValue linkCost;
-        private static ForgeConfigSpec.DoubleValue sendIotaCost;
-        private static ForgeConfigSpec.DoubleValue unlinkCost;
+        private static ModConfigSpec.DoubleValue linkCost;
+        private static ModConfigSpec.DoubleValue sendIotaCost;
+        private static ModConfigSpec.DoubleValue unlinkCost;
 
         // costs of gate spells
-        private static ForgeConfigSpec.DoubleValue makeGateCost;
-        private static ForgeConfigSpec.DoubleValue markGateCost;
-        private static ForgeConfigSpec.DoubleValue closeGateCost;
-        private static ForgeConfigSpec.DoubleValue closeGateDistanceCostFactor;
-        private static ForgeConfigSpec.DoubleValue maxGateOffset;
+        private static ModConfigSpec.DoubleValue makeGateCost;
+        private static ModConfigSpec.DoubleValue markGateCost;
+        private static ModConfigSpec.DoubleValue closeGateCost;
+        private static ModConfigSpec.DoubleValue closeGateDistanceCostFactor;
+        private static ModConfigSpec.DoubleValue maxGateOffset;
 
         // costs of item spells
-        private static ForgeConfigSpec.DoubleValue bindStorageCost;
-        private static ForgeConfigSpec.DoubleValue bindTemporaryStorageCost;
-        private static ForgeConfigSpec.DoubleValue makeItemCost;
-        private static ForgeConfigSpec.DoubleValue returnItemCost;
-        private static ForgeConfigSpec.DoubleValue craftItemCost;
-        private static ForgeConfigSpec.DoubleValue tradeItemCost;
-        private static ForgeConfigSpec.DoubleValue useItemOnCost;
-        private static ForgeConfigSpec.IntValue maxItemsReturned;
-        private static ForgeConfigSpec.IntValue maxRecordsInMediafiedStorage;
+        private static ModConfigSpec.DoubleValue bindStorageCost;
+        private static ModConfigSpec.DoubleValue bindTemporaryStorageCost;
+        private static ModConfigSpec.DoubleValue makeItemCost;
+        private static ModConfigSpec.DoubleValue returnItemCost;
+        private static ModConfigSpec.DoubleValue craftItemCost;
+        private static ModConfigSpec.DoubleValue tradeItemCost;
+        private static ModConfigSpec.DoubleValue useItemOnCost;
+        private static ModConfigSpec.IntValue maxItemsReturned;
+        private static ModConfigSpec.IntValue maxRecordsInMediafiedStorage;
 
 
         // costs of great spells
-        private static ForgeConfigSpec.DoubleValue consumeWispOwnCost;
-        private static ForgeConfigSpec.DoubleValue consumeWispOthersCostPerMedia;
-        private static ForgeConfigSpec.DoubleValue seonWispSetCost;
-        private static ForgeConfigSpec.DoubleValue tickConstantCost;
-        private static ForgeConfigSpec.DoubleValue tickCostPerTicked;
-        private static ForgeConfigSpec.IntValue tickRandomTickIProb;
+        private static ModConfigSpec.DoubleValue consumeWispOwnCost;
+        private static ModConfigSpec.DoubleValue consumeWispOthersCostPerMedia;
+        private static ModConfigSpec.DoubleValue seonWispSetCost;
+        private static ModConfigSpec.DoubleValue tickConstantCost;
+        private static ModConfigSpec.DoubleValue tickCostPerTicked;
+        private static ModConfigSpec.IntValue tickRandomTickIProb;
 
-        private static ForgeConfigSpec.ConfigValue<List<? extends String>> accelerateDenyList;
+        private static ModConfigSpec.ConfigValue<List<? extends String>> accelerateDenyList;
 
-        public Server(ForgeConfigSpec.Builder builder) {
+        public Server(ModConfigSpec.Builder builder) {
             builder.translation("text.autoconfig.hexal.option.server.terrainGeneration").push("terrainGeneration");
             generateSlipwayGeodes = builder.translation("text.autoconfig.hexal.option.server.generateSlipwayGeodes")
                     .define("generateSlipwayGeodes", DEFAULT_GENERATE_SLIPWAY_GEODES);
@@ -258,7 +258,7 @@ public class ForgeHexalConfig implements HexalConfig.CommonConfigAccess {
         }
 
         private static boolean isValidReslocArg(Object o) {
-            return o instanceof String s && ResourceLocation.isValidResourceLocation(s);
+            return o instanceof String s && ResourceLocation.tryParse(s) != null;
         }
 
         //region getters

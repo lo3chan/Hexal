@@ -7,16 +7,16 @@ import net.minecraft.gametest.framework.GameTestServer;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.dedicated.DedicatedServer;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
-import net.minecraftforge.event.server.ServerStartedEvent;
-import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.fml.ModLoadingContext;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.registries.RegisterEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.server.ServerStartedEvent;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.RegisterEvent;
 import org.apache.commons.lang3.tuple.Pair;
 import ram.talia.hexal.api.HexalAPI;
 import ram.talia.hexal.api.config.HexalConfig;
@@ -47,16 +47,16 @@ public class ForgeHexalInitializer {
 	}
 	
 	private static void initConfig () {
-		Pair<ForgeHexalConfig, ForgeConfigSpec> config = (new ForgeConfigSpec.Builder()).configure(ForgeHexalConfig::new);
-		Pair<ForgeHexalConfig.Client, ForgeConfigSpec> clientConfig = (new ForgeConfigSpec.Builder()).configure(ForgeHexalConfig.Client::new);
-		Pair<ForgeHexalConfig.Server, ForgeConfigSpec> serverConfig = (new ForgeConfigSpec.Builder()).configure(ForgeHexalConfig.Server::new);
+		Pair<ForgeHexalConfig, ModConfigSpec> config = (new ModConfigSpec.Builder()).configure(ForgeHexalConfig::new);
+		Pair<ForgeHexalConfig.Client, ModConfigSpec> clientConfig = (new ModConfigSpec.Builder()).configure(ForgeHexalConfig.Client::new);
+		Pair<ForgeHexalConfig.Server, ModConfigSpec> serverConfig = (new ModConfigSpec.Builder()).configure(ForgeHexalConfig.Server::new);
 		HexalConfig.setCommon(config.getLeft());
 		HexalConfig.setClient(clientConfig.getLeft());
 		HexalConfig.setServer(serverConfig.getLeft());
-		ModLoadingContext mlc = ModLoadingContext.get();
-		mlc.registerConfig(ModConfig.Type.COMMON, config.getRight());
-		mlc.registerConfig(ModConfig.Type.CLIENT, clientConfig.getRight());
-		mlc.registerConfig(ModConfig.Type.SERVER, serverConfig.getRight());
+		var container = ModLoadingContext.get().getActiveContainer();
+		container.registerConfig(ModConfig.Type.COMMON, config.getRight());
+		container.registerConfig(ModConfig.Type.CLIENT, clientConfig.getRight());
+		container.registerConfig(ModConfig.Type.SERVER, serverConfig.getRight());
 	}
 	
 	private static void initRegistry () {
@@ -79,7 +79,7 @@ public class ForgeHexalInitializer {
 	
 	private static void initListeners () {
 		IEventBus modBus = getModEventBus();
-		IEventBus evBus = MinecraftForge.EVENT_BUS;
+		IEventBus evBus = NeoForge.EVENT_BUS;
 		
 		modBus.register(ForgeHexalClientInitializer.class);
 		
@@ -107,8 +107,6 @@ public class ForgeHexalInitializer {
 //				HexalRecipeSerializers.registerTypes();
 //			}
 //		});
-		
-		modBus.register(HexalForgeDataGenerators.class);
 
 		evBus.register(BoundStorageEventHandler.class);
 		evBus.register(EverbookEventHandler.class);
@@ -133,6 +131,6 @@ public class ForgeHexalInitializer {
 	}
 	
 	private static IEventBus getModEventBus () {
-		return KotlinModLoadingContext.Companion.get().getKEventBus();
+		return ModLoadingContext.get().getActiveContainer().getEventBus();
 	}
 }

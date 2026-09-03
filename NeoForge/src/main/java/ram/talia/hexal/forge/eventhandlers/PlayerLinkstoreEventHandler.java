@@ -3,13 +3,13 @@ package ram.talia.hexal.forge.eventhandlers;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import ram.talia.hexal.api.linkable.ILinkable;
 import ram.talia.hexal.api.linkable.PlayerLinkstore;
 
@@ -109,11 +109,11 @@ public class PlayerLinkstoreEventHandler {
 	 * Ticks each player's {@link PlayerLinkstore}, server to clean up removed links, client to render.
 	 */
 	@SubscribeEvent
-	public static void playerTick(TickEvent.PlayerTickEvent event) throws Exception {
-		if (event.side == LogicalSide.CLIENT)
-			clientTick(event.player);
+	public static void playerTick(PlayerTickEvent.Post event) throws Exception {
+		if (event.getEntity().level().isClientSide)
+			clientTick(event.getEntity());
 		else
-			serverTick((ServerPlayer) event.player);
+			serverTick((ServerPlayer) event.getEntity());
 	}
 	
 	private static void serverTick(ServerPlayer player) {

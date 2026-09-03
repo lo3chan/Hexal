@@ -6,13 +6,14 @@ import at.petrak.hexcasting.api.casting.iota.NullIota;
 import at.petrak.hexcasting.api.casting.math.HexPattern;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.ClientPlayerNetworkEvent;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.bus.api.SubscribeEvent;
 import ram.talia.hexal.api.everbook.Everbook;
 import ram.talia.hexal.common.network.MsgRemoveEverbookS2C;
 import ram.talia.hexal.common.network.MsgSendEverbookC2S;
@@ -94,15 +95,14 @@ public class EverbookEventHandler {
 	 */
 	@OnlyIn(Dist.CLIENT)
 	@SubscribeEvent
-	public static void clientPlayerTick(TickEvent.PlayerTickEvent event) {
-		if (event.player == null || event.side == LogicalSide.SERVER || syncedLocalToServer)
+	public static void clientPlayerTick(PlayerTickEvent.Post event) {
+		if (event.getEntity() == null || !event.getEntity().level().isClientSide || syncedLocalToServer)
 			return;
 		
 		syncedLocalToServer = true;
 		
-		localEverbook = Everbook.fromDisk(event.player.getUUID());
-		// Doesn't work for SOME REASON with IClientXplatAbstractions.INSTANCE.sendPacketToServer
-		ForgePacketHandler.getNetwork().sendToServer(new MsgSendEverbookC2S(localEverbook));
+		localEverbook = Everbook.fromDisk(event.getEntity().getUUID());
+		PacketDistributor.sendToServer(new MsgSendEverbookC2S(localEverbook));
 	}
 	
 	@OnlyIn(Dist.CLIENT)

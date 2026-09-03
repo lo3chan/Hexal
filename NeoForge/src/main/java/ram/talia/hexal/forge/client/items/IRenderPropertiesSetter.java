@@ -1,6 +1,6 @@
 package ram.talia.hexal.forge.client.items;
 
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
 
 public interface IRenderPropertiesSetter {
     // AHHHHHHHHHHHHHH

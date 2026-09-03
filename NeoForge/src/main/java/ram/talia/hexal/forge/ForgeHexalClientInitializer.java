@@ -1,16 +1,16 @@
 package ram.talia.hexal.forge;
 
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.client.event.EntityRenderersEvent;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.loading.FMLEnvironment;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.api.distmarker.OnlyIn;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.fml.loading.FMLLoader;
 import ram.talia.hexal.api.everbook.Everbook;
 import ram.talia.hexal.client.RegisterClientStuff;
 import ram.talia.hexal.common.lib.HexalBlockEntities;
@@ -26,9 +26,9 @@ public class ForgeHexalClientInitializer {
 	public static void clientInit(FMLClientSetupEvent event) {
 		event.enqueueWork(RegisterClientStuff::init);
 
-		if (FMLEnvironment.dist == Dist.CLIENT && !FMLLoader.getLaunchHandler().isData())
+		if (FMLEnvironment.dist == Dist.CLIENT)
 			cursedItemPropertiesNonsense();
-		MinecraftForge.EVENT_BUS.addListener((TickEvent tickEvent)-> {
+		NeoForge.EVENT_BUS.addListener((ClientTickEvent.Post tickEvent)-> {
 			Everbook.checkSaveTime();
 		});
 	}

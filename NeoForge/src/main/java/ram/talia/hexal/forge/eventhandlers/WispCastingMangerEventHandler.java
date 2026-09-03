@@ -2,10 +2,9 @@ package ram.talia.hexal.forge.eventhandlers;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraftforge.event.TickEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.LogicalSide;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
+import net.neoforged.bus.api.SubscribeEvent;
 import org.jetbrains.annotations.Nullable;
 import ram.talia.hexal.api.casting.wisp.WispCastingManager;
 import ram.talia.hexal.common.entities.BaseCastingWisp;
