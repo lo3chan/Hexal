@@ -29,9 +29,9 @@ object OpEverbookWrite : ConstMediaAction {
 
 		val iota = record.lookupPattern(pos, key, env.world) ?: NullIota()
 
-		val trueName = MishapOthersName.getTrueNameFromDatum(iota, env.caster)
-		if (trueName != null)
-			throw MishapOthersName(trueName)
+		val trueNameMishap = MishapOthersName.getTrueNameMishapFromDatum(env.world, iota, env.caster)
+		if (trueNameMishap != null)
+			throw trueNameMishap
 		val illegalInterworldIota = MishapIllegalInterworldIota.getFromNestedIota(iota)
 		if (illegalInterworldIota != null)
 			throw MishapIllegalInterworldIota(illegalInterworldIota)

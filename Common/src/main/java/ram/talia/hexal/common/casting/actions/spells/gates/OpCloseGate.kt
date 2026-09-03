@@ -96,7 +96,7 @@ object OpCloseGate : VarargSpellAction {
 
             teleportRespectSticky(teleportee, allTeleportees, delta)
 
-            if (teleportee is ServerPlayer && teleportee == env.caster && distance < PlayerBasedCastEnv.AMBIT_RADIUS && dropItems) {
+            if (teleportee is ServerPlayer && teleportee == env.caster && distance < 32.0 && dropItems) {
                 // Drop items conditionally, based on distance teleported.
                 // MOST IMPORTANT: Never drop main hand item, since if it's a trinket, it will get duplicated later.
 
