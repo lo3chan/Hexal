@@ -60,22 +60,29 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 		return FMLLoader.getDist() == Dist.CLIENT;
 	}
 
+	private CustomPacketPayload wrap(IMessage packet) {
+		if (packet instanceof CustomPacketPayload payload)
+			return payload;
+		net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+		packet.serialize(buf);
+		byte[] data = new byte[buf.readableBytes()];
+		buf.readBytes(data);
+		return new ram.talia.hexal.forge.network.HexalPacketPayload(packet.getFabricId(), data);
+	}
+
 	@Override
 	public void sendPacketToPlayer(ServerPlayer target, IMessage packet) {
-		if (packet instanceof CustomPacketPayload payload)
-			PacketDistributor.sendToPlayer(target, payload);
+		PacketDistributor.sendToPlayer(target, wrap(packet));
 	}
 	
 	@Override
 	public void sendPacketNear(Vec3 pos, double radius, ServerLevel dimension, IMessage packet) {
-		if (packet instanceof CustomPacketPayload payload)
-			PacketDistributor.sendToPlayersNear(dimension, null, pos.x, pos.y, pos.z, radius, payload);
+		PacketDistributor.sendToPlayersNear(dimension, null, pos.x, pos.y, pos.z, radius, wrap(packet));
 	}
 
 	@Override
 	public void sendPacketTracking(Entity entity, IMessage packet) {
-		if (packet instanceof CustomPacketPayload payload)
-			PacketDistributor.sendToPlayersTrackingEntity(entity, payload);
+		PacketDistributor.sendToPlayersTrackingEntity(entity, wrap(packet));
 	}
 
 	@Override
@@ -85,14 +92,12 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 
 	@Override
 	public void sendPacketTracking(BlockPos pos, ServerLevel dimension, IMessage packet) {
-		if (packet instanceof CustomPacketPayload payload)
-			PacketDistributor.sendToPlayersTrackingChunk(dimension, new ChunkPos(pos), payload);
+		PacketDistributor.sendToPlayersTrackingChunk(dimension, new ChunkPos(pos), wrap(packet));
 	}
 
 	@Override
 	public void sendPacketTracking(ChunkPos pos, ServerLevel dimension, IMessage packet) {
-		if (packet instanceof CustomPacketPayload payload)
-			PacketDistributor.sendToPlayersTrackingChunk(dimension, pos, payload);
+		PacketDistributor.sendToPlayersTrackingChunk(dimension, pos, wrap(packet));
 	}
 
 	@Override

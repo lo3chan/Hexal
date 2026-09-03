@@ -27,8 +27,15 @@ import java.util.function.Function;
 public class ForgeClientXplatImpl implements IClientXplatAbstractions {
 	@Override
 	public void sendPacketToServer (IMessage packet) {
-		if (packet instanceof net.minecraft.network.protocol.common.custom.CustomPacketPayload payload)
+		if (packet instanceof net.minecraft.network.protocol.common.custom.CustomPacketPayload payload) {
 			PacketDistributor.sendToServer(payload);
+		} else {
+			net.minecraft.network.FriendlyByteBuf buf = new net.minecraft.network.FriendlyByteBuf(io.netty.buffer.Unpooled.buffer());
+			packet.serialize(buf);
+			byte[] data = new byte[buf.readableBytes()];
+			buf.readBytes(data);
+			PacketDistributor.sendToServer(new ram.talia.hexal.forge.network.HexalPacketPayload(packet.getFabricId(), data));
+		}
 	}
 	
 	@Override

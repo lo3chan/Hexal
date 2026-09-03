@@ -90,6 +90,7 @@ public class ForgeHexalInitializer {
 				 //noinspection Convert2MethodRef
 				 ForgePacketHandler.init();
 			 }));
+		modBus.addListener(ForgePacketHandler::register);
 
 		modBus.addListener((BuildCreativeModeTabContentsEvent evt) -> {
 			HexalBlocks.registerBlockCreativeTab(evt::accept, evt.getTabKey());

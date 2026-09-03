@@ -20,11 +20,17 @@ data class ItemRecord(var item: Item, var components: net.minecraft.core.compone
     constructor(stack: ItemStack) : this(stack.item, stack.componentsPatch, stack.count.toLong())
 
     fun typeMatches(other: ItemRecord): Boolean {
-        return item == other.item && components == other.components
+        if (item != other.item) return false
+        val c1 = if (components == null || components!!.isEmpty) net.minecraft.core.component.DataComponentPatch.EMPTY else components
+        val c2 = if (other.components == null || other.components!!.isEmpty) net.minecraft.core.component.DataComponentPatch.EMPTY else other.components
+        return c1 == c2
     }
 
     fun typeMatches(other: ItemStack): Boolean {
-        return item == other.item && components == other.componentsPatch
+        if (item != other.item) return false
+        val c1 = if (components == null || components!!.isEmpty) net.minecraft.core.component.DataComponentPatch.EMPTY else components
+        val c2 = if (other.componentsPatch.isEmpty) net.minecraft.core.component.DataComponentPatch.EMPTY else other.componentsPatch
+        return c1 == c2
     }
 
     fun addCount(toAdd: Long) {
@@ -121,7 +127,7 @@ data class ItemRecord(var item: Item, var components: net.minecraft.core.compone
         fun readFromTag(tag: CompoundTag): ItemRecord? {
             return try {
                 val item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(tag.getString(TAG_ITEM_ID))).orElseThrow { IllegalArgumentException("Unknown item id.") }
-                val extraTag = if (tag.contains(TAG_COMPONENTS)) net.minecraft.core.component.DataComponentPatch.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, tag.get(TAG_COMPONENTS)).getOrThrow { IllegalStateException(it) } else null
+                val extraTag = if (tag.contains(TAG_COMPONENTS)) net.minecraft.core.component.DataComponentPatch.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, tag.get(TAG_COMPONENTS)).result().orElse(null) else null
                 val count = tag.getLong(TAG_COUNT)
                 ItemRecord(item, extraTag, count)
             } catch (e: Exception) {
