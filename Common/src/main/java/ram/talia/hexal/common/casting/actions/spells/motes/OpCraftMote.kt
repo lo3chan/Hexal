@@ -2,6 +2,7 @@
 
 package ram.talia.hexal.common.casting.actions.spells.motes
 
+import ram.talia.hexal.api.getBoundStorage
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota

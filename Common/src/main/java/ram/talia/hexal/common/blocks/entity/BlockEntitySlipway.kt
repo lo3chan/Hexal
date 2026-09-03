@@ -81,12 +81,12 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 		}
 	}
 
-	override fun saveModData(tag: CompoundTag) {
+	override fun saveModData(tag: CompoundTag, holderLookup: net.minecraft.core.HolderLookup.Provider) {
 		tag.putBoolean(TAG_IS_ACTIVE, isActive)
 		tag.putLong(TAG_NEXT_SPAWN_TICK, nextSpawnTick)
 	}
 
-	override fun loadModData(tag: CompoundTag) {
+	override fun loadModData(tag: CompoundTag, holderLookup: net.minecraft.core.HolderLookup.Provider) {
 		isActive = tag.getBoolean(TAG_IS_ACTIVE)
 		nextSpawnTick = tag.getLong(TAG_NEXT_SPAWN_TICK)
 	}
@@ -104,7 +104,7 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 		private val RANDOM = Random()
 
 		fun getRandomPigment(): FrozenPigment {
-			return FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS.values.elementAt(RANDOM.nextInt(HexItems.DYE_PIGMENTS.size))), Util.NIL_UUID)
+			return FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS.values.elementAt(RANDOM.nextInt(HexItems.DYE_PIGMENTS.size)).value()), Util.NIL_UUID)
 		}
 
 		private val colours = makeColours()
@@ -115,7 +115,7 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 
 			for (i in 0..32) {
 				for (colouriser in HexItems.DYE_PIGMENTS.values) {
-					val frozenColouriser = FrozenPigment(ItemStack(colouriser), Util.NIL_UUID)
+					val frozenColouriser = FrozenPigment(ItemStack(colouriser.value()), Util.NIL_UUID)
 					coloursList.add(frozenColouriser.nextColour(random))
 				}
 			}

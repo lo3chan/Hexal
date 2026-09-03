@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.casting.actions.spells.gates
 
+import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.getEntity
 import at.petrak.hexcasting.api.casting.getVec3

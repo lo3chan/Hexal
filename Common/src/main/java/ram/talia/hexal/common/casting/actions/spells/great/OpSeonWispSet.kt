@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.casting.actions.spells.great
 
+import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.SpellAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment

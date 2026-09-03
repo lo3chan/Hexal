@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.casting.actions.spells.link
 
+import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota

@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.entities
 
+import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota

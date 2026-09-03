@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.casting.actions.spells.motes
 
+import ram.talia.hexal.api.getBoundStorage
 import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.*
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment

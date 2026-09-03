@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.casting.actions.spells.motes
 
+import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.casting.ParticleSpray
 import at.petrak.hexcasting.api.casting.RenderedSpell
 import at.petrak.hexcasting.api.casting.castables.SpellAction

@@ -1,6 +1,7 @@
 
 package ram.talia.hexal.common.casting.actions.spells.motes
 
+import ram.talia.hexal.api.getBoundStorage
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota

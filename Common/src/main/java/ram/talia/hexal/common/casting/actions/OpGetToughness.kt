@@ -11,6 +11,6 @@ object OpGetToughness : ConstMediaAction {
     override val argc = 1
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        return args.getLivingEntityButNotArmorStand(0, argc).getAttributeValue(Attributes.ARMOR_TOUGHNESS).asActionResult
+        return args.getLivingEntityButNotArmorStand(env.world, 0, argc).getAttributeValue(Attributes.ARMOR_TOUGHNESS).asActionResult
     }
 }

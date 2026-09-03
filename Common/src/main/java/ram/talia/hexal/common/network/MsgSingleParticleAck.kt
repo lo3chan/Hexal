@@ -1,5 +1,7 @@
 package ram.talia.hexal.common.network
 
+import ram.talia.hexal.api.toNbt
+import ram.talia.hexal.api.parseFrozenPigment
 import at.petrak.hexcasting.api.HexAPI.modLoc
 import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.common.msgs.IMessage

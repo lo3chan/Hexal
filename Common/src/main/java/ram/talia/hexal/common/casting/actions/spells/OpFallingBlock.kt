@@ -1,5 +1,6 @@
 package ram.talia.hexal.common.casting.actions.spells
 
+import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.mod.HexConfig
 import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.SpellAction
@@ -60,7 +61,7 @@ object OpFallingBlock : SpellAction {
 				&& !blockstate.isAir
 				&& blockstate.getDestroySpeed(env.world, pos) >= 0f // fix being able to break bedrock &c
 				&& env.world.getBlockEntity(pos) == null
-				&& at.petrak.hexcasting.xplat.IXplatAbstractions.INSTANCE.isCorrectTierForDrops(tier, blockstate)
+				&& at.petrak.hexcasting.xplat.at.petrak.hexcasting.xplat.IXplatAbstractions.INSTANCE.isCorrectTierForDrops(tier, blockstate)
 				&& canSilkTouch(env.world, pos, blockstate, 0, env.caster)
 			) {
 				val falling: FallingBlockEntity = FallingBlockEntity.fall(env.world, pos, blockstate)
