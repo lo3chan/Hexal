@@ -1,21 +1,15 @@
 plugins {
     id 'hexal.platform'
-    id 'net.neoforged.moddev' version '2.0.74-beta'
+    id 'net.neoforged.moddev' version '2.0.74'
 }
 
-apply plugin: 'org.spongepowered.mixin'
 
 archivesBaseName = getArtifactID("neoforge")
 
-jarJar.enable()
 
 neoForge {
     version = project.neoForgeVersion
 
-    parchment {
-        mappingsVersion = "2024.07.28"
-        minecraftVersion = "1.21.1"
-    }
 
     accessTransformers.from(file('src/main/resources/META-INF/accesstransformer.cfg'))
 
@@ -83,12 +77,6 @@ dependencies {
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
 
-mixin {
-    add sourceSets.main, "hexal.mixins.refmap.json"
-    add sourceSets.test, "hexal.test.mixins.refmap.json"
-    config "hexalplat.mixins.json"
-    config "hexal_forge.mixins.json"
-}
 
 tasks.withType(JavaCompile) {
     source(project(":Common").sourceSets.main.allSource)
@@ -100,7 +88,7 @@ compileTestKotlin {
     source(project(":Common").sourceSets.test.kotlin)
 }
 
-tasks.jarJar {
+tasks.jar {
     archiveClassifier = ""
 }
 
@@ -109,7 +97,7 @@ jar {
 }
 
 tasks.register("ciArtifacts", Copy) {
-    from tasks.jarJar
+    from tasks.jar
     into rootProject.file("build/ciArtifacts")
 }
 
@@ -150,7 +138,7 @@ processTestResources {
 }
 
 publishMods {
-    file = tasks.jarJar.archiveFile
+    file = tasks.jar.archiveFile
 }
 
 setupJar(this)
@@ -158,7 +146,7 @@ setupJar(this)
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact tasks.jarJar
+            artifact tasks.jar
         }
     }
 }

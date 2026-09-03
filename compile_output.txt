@@ -1,0 +1,496 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.10/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build
+> Task :buildSrc:checkKotlinGradlePluginConfigurationErrors
+> Task :buildSrc:generateExternalPluginSpecBuilders UP-TO-DATE
+> Task :buildSrc:extractPrecompiledScriptPluginPlugins UP-TO-DATE
+> Task :buildSrc:compilePluginsBlocks UP-TO-DATE
+> Task :buildSrc:generatePrecompiledScriptPluginAccessors UP-TO-DATE
+> Task :buildSrc:generateScriptPluginAdapters UP-TO-DATE
+> Task :buildSrc:compileKotlin UP-TO-DATE
+> Task :buildSrc:compileJava NO-SOURCE
+> Task :buildSrc:compileGroovy NO-SOURCE
+> Task :buildSrc:pluginDescriptors UP-TO-DATE
+> Task :buildSrc:processResources UP-TO-DATE
+> Task :buildSrc:classes UP-TO-DATE
+> Task :buildSrc:jar UP-TO-DATE
+
+> Configure project :Common
+SpongePowered Vanilla 'GRADLE' Toolset Version '0.2.1-SNAPSHOT'
+Targeting Minecraft '1.21.1' on a 'JOINED' platform
+
+> Configure project :NeoForge
+Forcing re-compile of Java to include refmap
+
+> Task :clean
+> Task :Common:clean
+> Task :NeoForge:clean
+> Task :checkKotlinGradlePluginConfigurationErrors
+> Task :compileKotlin NO-SOURCE
+> Task :compileJava NO-SOURCE
+> Task :processResources NO-SOURCE
+> Task :classes UP-TO-DATE
+> Task :jar
+> Task :assemble
+> Task :compileTestKotlin NO-SOURCE
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+> Task :Common:checkKotlinGradlePluginConfigurationErrors
+> Task :Common:processResources
+> Task :Common:sourcesJar
+> Task :Common:processTestResources
+> Task :NeoForge:checkKotlinGradlePluginConfigurationErrors
+
+> Task :NeoForge:createMinecraftArtifacts
+Loaded 110 artifacts from /app/NeoForge/build/tmp/createMinecraftArtifacts/nfrt_artifact_manifest.properties
+[1m*** Started working on [4mdownloadJson[0m[0m
+  ↓ https://launchermeta.mojang.com/mc/game/version_manifest_v2.json
+  ↓ https://piston-meta.mojang.com/v1/packages/f291c8193228de9a1eef964aa05586bd920967e4/1.21.1.json
+ [1m[92m✓[0m Completed [4mdownloadJson[0m in 1.00s
+[1m*** Started working on [4mdownloadServer[0m[0m
+[1m*** Started working on [4mdownloadClient[0m[0m
+[1m*** Started working on [4mdownloadClientMappings[0m[0m
+[1m*** Started working on [4mlistLibraries[0m[0m
+  ↓ https://piston-data.mojang.com/v1/objects/30c73b1c5da787909b2f73340419fdf13b9def88/client.jar
+  ↓ https://piston-data.mojang.com/v1/objects/59353fb40c36d304f2035d51e7d6e6baa98dc05c/server.jar
+  ↓ https://piston-data.mojang.com/v1/objects/2244b6f072256667bcd9a73df124d6c58de77992/client.txt
+ [1m[92m✓[0m Completed [4mlistLibraries[0m in 0.07s
+ [1m[92m✓[0m Completed [4mdownloadClientMappings[0m in 1.25s
+[1m*** Started working on [4mmergeMappings[0m[0m
+ ↳ Running external tool net.neoforged.installertools:installertools:2.1.2:fatjar
+ [1m[92m✓[0m Completed [4mdownloadClient[0m in 1.90s
+[1m*** Started working on [4mstripClient[0m[0m
+ [1m[92m✓[0m Completed [4mdownloadServer[0m in 2.60s
+[1m*** Started working on [4mextractServer[0m[0m
+ ↳ Running external tool net.neoforged.installertools:installertools:2.1.2:fatjar
+ [1m[92m✓[0m Completed [4mextractServer[0m in 1.23s
+[1m*** Started working on [4mstripServer[0m[0m
+ [1m[92m✓[0m Completed [4mmergeMappings[0m in 7.47s
+ [1m[92m✓[0m Completed [4mstripServer[0m in 4.37s
+ [1m[92m✓[0m Completed [4mstripClient[0m in 6.98s
+[1m*** Started working on [4mmerge[0m[0m
+ ↳ Running external tool net.neoforged:mergetool:2.0.3:fatjar
+ [1m[92m✓[0m Completed [4mmerge[0m in 6.16s
+[1m*** Started working on [4mrename[0m[0m
+ ↳ Running external tool net.neoforged:AutoRenamingTool:2.0.3:all
+
+> Task :Common:compileKotlin
+
+> Task :NeoForge:createMinecraftArtifacts
+ [1m[92m✓[0m Completed [4mrename[0m in 10.61s
+[1m*** Started working on [4mdecompile[0m[0m
+ ↳ Running external tool org.vineflower:vineflower:1.10.1
+
+> Task :Common:compileKotlin
+e: Supertypes of the following classes cannot be resolved. Please make sure you have the required dependencies in the classpath:
+    class at.petrak.hexcasting.interop.patchouli.AbstractPatternComponent, unresolved supertypes: vazkii.patchouli.api.ICustomComponent
+Adding -Xextended-compiler-checks argument might provide additional information.
+
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:26:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:27:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:243:14 Unresolved reference: ItemTypeIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:244:18 Unresolved reference: block
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:244:44 Expression expected, but a package name found
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:245:14 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:246:18 Unresolved reference: itemStack
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:246:42 Unresolved reference: item
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:246:75 Expression expected, but a package name found
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:276:14 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:277:32 Unresolved reference: itemStack
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:293:14 Unresolved reference: ItemTypeIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:294:31 Unresolved reference: item
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:311:78 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt:314:12 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/mishaps/MishapNoWisp.kt:37:23 Unresolved reference: hasBindingCurse
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/mishaps/MishapStorageFull.kt:27:53 Unresolved reference: maxStackSize
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/WispCastingManager.kt:10:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/WispCastingManager.kt:11:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/WispCastingManager.kt:140:24 Not enough information to infer type variable R
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/WispCastingManager.kt:143:6 Unresolved reference: HexDebugCoreAPI
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/WispCastingManager.kt:144:17 Unresolved reference: DebugException
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/WispCastingManager.kt:145:22 Overload resolution ambiguity:
+public abstract fun warn(message: Any!, throwable: Throwable!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun warn(message: CharSequence!, throwable: Throwable!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun warn(message: String!, p0: Any!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun warn(message: String!, vararg params: Any!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun warn(message: String!, vararg paramSuppliers: Supplier<*>!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun warn(message: String!, throwable: Throwable!): Unit defined in org.apache.logging.log4j.Logger
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/triggers/WispTriggerRegistry.kt:68:25 Unresolved reference: isValidResourceLocation
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/triggers/WispTriggerRegistry.kt:71:27 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/casting/wisp/triggers/WispTriggerRegistry.kt:71:44 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/config/HexalConfig.kt:189:34 Unresolved reference: isValidResourceLocation
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/config/HexalConfig.kt:190:26 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/config/HexalConfig.kt:190:43 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/everbook/FileEncryptorDecryptor.kt:89:21 None of the following functions can be called with the arguments supplied:
+public open fun readCompressed(p0: InputStream!, p1: NbtAccounter!): CompoundTag! defined in net.minecraft.nbt.NbtIo
+public open fun readCompressed(p0: Path!, p1: NbtAccounter!): CompoundTag! defined in net.minecraft.nbt.NbtIo
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/everbook/MacroHolder.kt:118:38 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/everbook/MacroHolder.kt:118:55 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:24:93 No value passed for parameter 'p3'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:45:34 Unresolved reference: ServerboundClientInformationPacket
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:67:58 No value passed for parameter 'p3'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:88:45 Unresolved reference: ServerboundEntityTagQuery
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:89:50 Unresolved reference: ServerboundBlockEntityTagQuery
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:96:51 Unresolved reference: ServerboundResourcePackPacket
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:98:3 'onDisconnect' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:112:40 Unresolved reference: ServerboundKeepAlivePacket
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:114:48 Unresolved reference: ServerboundClientInformationPacket
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/fakes/FakePlayer.kt:115:44 Unresolved reference: ServerboundCustomPayloadPacket
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:153:25 Unresolved reference: isValidResourceLocation
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:156:28 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:156:45 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:177:25 Unresolved reference: isValidResourceLocation
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:180:28 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:180:45 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:188:25 Unresolved reference: isValidResourceLocation
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:191:28 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/linkable/LinkableRegistry.kt:191:45 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:20:60 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:27:51 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:68:19 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:80:16 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:93:46 Unresolved reference: maxStackSize
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:123:63 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/ItemRecord.kt:123:80 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/mediafieditems/MediafiedItemManager.kt:173:28 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/api/nbt/HexalNBTHelper.kt:158:60 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/client/blocks/BlockEntityMediafiedStorageRenderer.kt:37:18 Unresolved reference: vertex
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/BlockRelay.kt:59:5 'use' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/BlockRelay.kt:102:45 Unresolved reference: isSameItemSameTags
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityMediafiedStorage.kt:108:5 'getUpdateTag' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:33:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:34:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:35:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:36:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:37:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:38:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:42:154 Unresolved reference: GeoBlockEntity
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:257:32 Unresolved reference: AnimatableInstanceCache
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:257:58 Unresolved reference: GeckoLibUtil
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:259:5 'getAnimatableInstanceCache' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:259:48 Unresolved reference: AnimatableInstanceCache
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:261:5 'registerControllers' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:261:44 Unresolved reference: AnimatableManager
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:262:18 Unresolved reference: AnimationController
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:267:22 Unresolved reference: GeoAnimatable
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:267:54 Unresolved reference: AnimationState
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:267:74 Unresolved reference: PlayState
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:269:17 Unresolved reference: RawAnimation
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:270:52 Unresolved reference: Animation
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:271:51 Unresolved reference: Animation
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:274:16 Unresolved reference: PlayState
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:280:24 Unresolved reference: offsetY
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:310:5 'getUpdateTag' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/blocks/entity/BlockEntityRelay.kt:311:37 No value passed for parameter 'p0'
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpFallingBlock.kt:64:54 Unresolved reference: level
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpFallingBlock.kt:87:29 Type mismatch: inferred type is ResourceKey<Enchantment!>! but Holder<Enchantment!>! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpFreeze.kt:55:42 Type mismatch: inferred type is Container! but RecipeInput! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpFreeze.kt:57:29 Type mismatch: inferred type is Unit but Boolean was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpFreeze.kt:57:34 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch:
+public inline infix fun CharSequence.matches(regex: Regex): Boolean defined in kotlin.text
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpFreeze.kt:60:87 Unresolved reference: result
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpPlaceType.kt:70:62 Type mismatch: inferred type is Unit but Boolean was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpPlaceType.kt:70:74 Unresolved reference: isSameItemSameTags
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpPlaceType.kt:101:36 Type mismatch: inferred type is Unit but Boolean was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpPlaceType.kt:101:48 Unresolved reference: isSameItemSameTags
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpSmelt.kt:90:54 Type mismatch: inferred type is Optional<RecipeHolder<SmeltingRecipe!>!>! but Optional<SmeltingRecipe> was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpSmelt.kt:90:78 Type mismatch: inferred type is Optional<RecipeHolder<SmeltingRecipe!>!>! but Optional<SmeltingRecipe> was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpSmelt.kt:91:42 Type mismatch: inferred type is SimpleContainer! but RecipeInput! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/OpSmelt.kt:91:42 Type mismatch: inferred type is SimpleContainer! but SingleRecipeInput! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/gates/OpCloseGate.kt:104:43 Unresolved reference: hasBindingCurse
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:71:98 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:72:107 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:83:35 Type mismatch: inferred type is Unit but Boolean was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:83:40 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch:
+public inline infix fun CharSequence.matches(regex: Regex): Boolean defined in kotlin.text
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:85:33 Unresolved reference: assemble
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:86:37 Unresolved reference: getRemainingItems
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMote.kt:86:75 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:17:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:38:27 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:39:51 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:45:48 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:50:20 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:50:57 Unresolved reference: itemStack
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:55:32 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpCraftMotePreview.kt:55:75 Unresolved reference: itemStack
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetContainedItemTypes.kt:12:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetContainedItemTypes.kt:26:82 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch:
+public val SpellList.asActionResult: List<ListIota> defined in at.petrak.hexcasting.api.casting
+public val HexPattern.asActionResult: List<PatternIota> defined in at.petrak.hexcasting.api.casting
+public val Boolean.asActionResult: List<BooleanIota> defined in at.petrak.hexcasting.api.casting
+public val Double.asActionResult: List<DoubleIota> defined in at.petrak.hexcasting.api.casting
+public val Number.asActionResult: List<DoubleIota> defined in at.petrak.hexcasting.api.casting
+public val List<Iota>.asActionResult: List<ListIota> defined in at.petrak.hexcasting.api.casting
+public val BlockPos.asActionResult: List<Vec3Iota> defined in at.petrak.hexcasting.api.casting
+public val Entity?.asActionResult: List<Iota> defined in at.petrak.hexcasting.api.casting
+public val Vec3.asActionResult: List<Vec3Iota> defined in at.petrak.hexcasting.api.casting
+public val Vector3f.asActionResult: List<Vec3Iota> defined in at.petrak.hexcasting.api.casting
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetItemTrades.kt:10:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetItemTrades.kt:23:58 Unresolved reference: ItemTypeIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetItemTrades.kt:25:46 Unresolved reference: ItemTypeIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetItemTrades.kt:29:37 Unresolved reference: ItemTypeIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpTradeMote.kt:74:87 Unresolved reference: maxStackSize
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpTradeMote.kt:98:111 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpTradeMote.kt:105:85 Unresolved reference: maxStackSize
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpTradeMote.kt:106:85 Unresolved reference: maxStackSize
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpUseMoteOn.kt:100:34 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpUseMoteOn.kt:125:34 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/wisp/OpSummonWisp.kt:12:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/wisp/OpSummonWisp.kt:13:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/wisp/OpSummonWisp.kt:93:17 Unresolved reference: HexDebugCoreAPI
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/wisp/OpSummonWisp.kt:96:21 Unresolved reference: HexDebugCoreAPI
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/wisp/OpSummonWisp.kt:97:29 Unresolved reference: DebugException
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/wisp/OpSummonWisp.kt:99:37 Overload resolution ambiguity:
+public abstract fun debug(message: Any!, throwable: Throwable!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun debug(message: CharSequence!, throwable: Throwable!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun debug(message: String!, p0: Any!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun debug(message: String!, vararg params: Any!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun debug(message: String!, vararg paramSuppliers: Supplier<*>!): Unit defined in org.apache.logging.log4j.Logger
+public abstract fun debug(message: String!, throwable: Throwable!): Unit defined in org.apache.logging.log4j.Logger
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/arithmetics/MoteArithmetic.kt:20:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/arithmetics/MoteArithmetic.kt:27:9 Unresolved reference: EXTRACT_ITEM
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/arithmetics/MoteArithmetic.kt:37:9 Unresolved reference: EXTRACT_ITEM
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/arithmetics/operator/mote/OperatorMoteExtractItem.kt:11:18 Unresolved reference: moreiotas
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/arithmetics/operator/mote/OperatorMoteExtractItem.kt:16:11 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/casting/arithmetics/operator/mote/OperatorMoteExtractItem.kt:18:12 Unresolved reference: ItemStackIota
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseCastingWisp.kt:445:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseCastingWisp.kt:446:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseCastingWisp.kt:451:43 Type mismatch: inferred type is Int but ServerEntity! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseWisp.kt:38:2 'getEyeHeight' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseWisp.kt:143:2 'defineSynchedData' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseWisp.kt:144:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/BaseWisp.kt:145:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/LinkableEntity.kt:60:2 'getAddEntityPacket' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/LinkableEntity.kt:68:10 Cannot access '<init>': it is private in 'ClientboundAddEntityPacket'
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/LinkableEntity.kt:68:37 Type mismatch: inferred type is LinkableEntity but RegistryFriendlyByteBuf! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/ProjectileWisp.kt:22:6 Class 'ProjectileWisp' is not abstract and does not implement abstract base class member protected/*protected and package*/ abstract fun defineSynchedData(p0: SynchedEntityData.Builder!): Unit defined in ram.talia.hexal.common.entities.BaseCastingWisp
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:8:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:32:1 Class 'TickingWisp' is not abstract and does not implement abstract base class member protected/*protected and package*/ abstract fun defineSynchedData(p0: SynchedEntityData.Builder!): Unit defined in ram.talia.hexal.common.entities.BaseCastingWisp
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:91:10 Unresolved reference: HexDebugCoreAPI
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:95:29 Unresolved reference: sessionId
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:239:25 Unresolved reference: HexDebugCoreAPI
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:297:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:298:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:299:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:300:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:301:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/TickingWisp.kt:302:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/WanderingWisp.kt:23:1 Class 'WanderingWisp' is not abstract and does not implement abstract base class member protected/*protected and package*/ abstract fun defineSynchedData(p0: SynchedEntityData.Builder!): Unit defined in ram.talia.hexal.common.entities.BaseWisp
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/WanderingWisp.kt:137:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/WanderingWisp.kt:138:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/entities/WanderingWisp.kt:139:14 Unresolved reference: define
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:5:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:6:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:7:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:8:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:9:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:10:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:11:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:12:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:13:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:14:8 Unresolved reference: software
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:16:94 Unresolved reference: GeoItem
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:17:25 Unresolved reference: GeckoLibUtil
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:19:5 'getAnimatableInstanceCache' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:19:48 Unresolved reference: AnimatableInstanceCache
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:23:5 'registerControllers' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:23:44 Unresolved reference: ControllerRegistrar
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:24:18 Unresolved reference: AnimationController
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:24:63 Cannot infer a type for this parameter. Please specify it explicitly.
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:24:72 Not enough information to infer type variable E
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:27:22 Unresolved reference: GeoAnimatable
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:27:55 Unresolved reference: AnimationState
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:27:75 Unresolved reference: PlayState
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:29:17 Unresolved reference: RawAnimation
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:30:54 Unresolved reference: Animation
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/items/ItemRelay.kt:32:16 Unresolved reference: PlayState
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/network/MsgSendEverbookC2S.kt:36:54 Only safe (?.) or non-null asserted (!!.) calls are allowed on a nullable receiver of type Component?
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:18:6 Class 'FreezeRecipe' is not abstract and does not implement abstract member public abstract fun assemble(p0: Container!, p1: HolderLookup.Provider!): ItemStack! defined in net.minecraft.world.item.crafting.Recipe
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:18:117 Type argument is not within its bounds: should be subtype of 'RecipeInput!'
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:23:2 'assemble' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:27:2 'getResultItem' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:29:2 'getId' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:35:2 Class 'Serializer' is not abstract and does not implement abstract base class member public abstract fun codec(): MapCodec<FreezeRecipe!>! defined in at.petrak.hexcasting.common.recipe.RecipeSerializerBase
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:36:3 'fromJson' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:42:3 'toNetwork' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/common/recipe/FreezeRecipe.kt:47:3 'fromNetwork' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalBlockTagProvider.kt:3:37 Unresolved reference: PaucalBlockTagProvider
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalBlockTagProvider.kt:12:102 Unresolved reference: PaucalBlockTagProvider
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalBlockTagProvider.kt:13:5 'addTags' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalBlockTagProvider.kt:14:13 Unresolved reference: tag
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalBlockTagProvider.kt:18:31 Unresolved reference: TagAppender
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalLootTables.kt:10:1 Class 'HexalLootTables' is not abstract and does not implement abstract base class member protected/*protected and package*/ abstract fun makeLootTables(p0: (Mutable)Map<Block!, LootTable.Builder!>!, p1: (Mutable)Map<ResourceKey<LootTable!>!, LootTable.Builder!>!): Unit defined in at.petrak.paucal.api.datagen.PaucalLootTableSubProvider
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/HexalLootTables.kt:11:5 'makeLootTables' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:11:37 Unresolved reference: PaucalRecipeProvider
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:15:35 Unresolved reference: FinishedRecipe
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:29:46 Unresolved reference: PaucalRecipeProvider
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:32:2 'buildRecipes' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:32:46 Unresolved reference: FinishedRecipe
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:40:28 Unresolved reference: hasItem
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:41:10 Type mismatch: inferred type is Consumer<[Error type: Unresolved type for FinishedRecipe]> but RecipeOutput! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:44:28 Unresolved reference: hasItem
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:45:19 Unresolved reference: modLoc
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:47:28 Unresolved reference: hasItem
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:48:19 Unresolved reference: modLoc
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:50:28 Unresolved reference: hasItem
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:51:19 Unresolved reference: modLoc
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:54:26 Unresolved reference: ANY
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:64:33 Type mismatch: inferred type is OvercastTrigger.Instance but Criterion<*>! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:65:5 None of the following functions can be called with the arguments supplied:
+public open fun save(p0: RecipeOutput!, p1: String!): Unit defined in net.minecraft.data.recipes.RecipeBuilder
+public abstract fun save(p0: RecipeOutput!, p1: ResourceLocation!): Unit defined in net.minecraft.data.recipes.RecipeBuilder
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/HexalplatRecipes.kt:65:19 Unresolved reference: modLoc
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:9:35 Unresolved reference: RequirementsStrategy
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:11:35 Unresolved reference: FinishedRecipe
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:20:1 Class 'FreezeRecipeBuilder' is not abstract and does not implement abstract member public abstract fun unlockedBy(p0: String!, p1: Criterion<*>!): RecipeBuilder! defined in net.minecraft.data.recipes.RecipeBuilder
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:24:2 'unlockedBy' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:25:44 Type mismatch: inferred type is CriterionTriggerInstance but Criterion<*>! was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:33:2 'save' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:33:54 Unresolved reference: FinishedRecipe
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:34:21 Cannot access 'criteria': it is private in 'Builder'
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:34:30 Unresolved reference. None of the following candidates is applicable because of receiver type mismatch:
+public inline fun <T> Array<out TypeVariable(T)>.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun BooleanArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun ByteArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun CharArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun CharSequence.isNotEmpty(): Boolean defined in kotlin.text
+public inline fun DoubleArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun FloatArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun IntArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun LongArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun ShortArray.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun <T> Collection<TypeVariable(T)>.isNotEmpty(): Boolean defined in kotlin.collections
+public inline fun <K, V> Map<out TypeVariable(K), TypeVariable(V)>.isNotEmpty(): Boolean defined in kotlin.collections
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:35:22 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:35:39 No value passed for parameter 'p1'
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:38:18 Unresolved reference: RequirementsStrategy
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:44:5 Cannot access '<init>': it is private in 'ResourceLocation'
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:55:6 Unresolved reference: FinishedRecipe
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:56:3 'serializeRecipeData' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:61:3 'getId' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:65:3 'getType' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:69:3 'serializeAdvancement' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:70:28 Unresolved reference: serializeToJson
+e: file:///app/Common/src/main/java/ram/talia/hexal/datagen/recipes/builders/FreezeRecipeBuilder.kt:73:3 'getAdvancementId' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:11:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:12:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:13:8 Unresolved reference: gay
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:24:5 Unresolved reference: DebugEnvironment
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:27:44 Unresolved reference: caster
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:29:5 'resume' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:39:5 'restart' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:49:9 Unresolved reference: HexDebugCoreAPI
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:52:5 'terminate' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:56:5 'isCasterInRange' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:57:16 Type mismatch: inferred type is Unit but Boolean was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:57:16 Type mismatch: inferred type is Unit but Boolean? was expected
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:57:28 Unresolved reference: caster
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:60:5 'getName' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:64:5 'postStep' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:64:81 Unresolved reference: StopReason
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/hexdebug/WispDebugEnv.kt:66:41 Unresolved reference: StopReason
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:24:8 Unresolved reference: vazkii
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:25:8 Unresolved reference: vazkii
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:26:8 Unresolved reference: vazkii
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:30:1 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:40:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:40:9 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'at.petrak.hexcasting.interop.patchouli.AbstractPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:41:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:44:49 Unresolved reference: IVariable
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:45:76 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:47:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:48:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:53:2 'onDisplayed' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:53:36 Unresolved reference: IComponentRenderContext
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:54:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'at.petrak.hexcasting.interop.patchouli.AbstractPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:54:26 Cannot access class 'vazkii.patchouli.api.IVariable'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:57:50 Unresolved reference: IComponentRenderContext
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:62:30 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:63:28 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:66:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:69:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:69:29 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:71:3 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:71:9 Cannot access class 'vazkii.patchouli.api.IComponentRenderContext'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:71:9 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'at.petrak.hexcasting.interop.patchouli.AbstractPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:89:18 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:89:47 Unresolved reference: GuiBook
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:106:26 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:108:26 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:110:48 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:110:63 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:111:10 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:127:58 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:127:73 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:178:8 Cannot access 'vazkii.patchouli.api.ICustomComponent' which is a supertype of 'ram.talia.hexal.interop.patchouli.EverbookPatternComponent'. Check your module classpath for missing or conflicting dependencies
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternComponent.kt:185:24 Unresolved reference: GuiBook
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:4:8 Unresolved reference: vazkii
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:5:8 Unresolved reference: vazkii
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:6:8 Unresolved reference: vazkii
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:8:34 Unresolved reference: IComponentProcessor
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:9:2 'setup' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:9:46 Unresolved reference: IVariableProvider
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:11:2 'process' overrides nothing
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:11:51 Unresolved reference: IVariable
+e: file:///app/Common/src/main/java/ram/talia/hexal/interop/patchouli/EverbookPatternProcessor.kt:11:63 Unresolved reference: IVariable
+
+> Task :NeoForge:createMinecraftArtifacts
+ [1m[92m✓[0m Completed [4mdecompile[0m in 96.27s
+[1m*** Started working on [4minject[0m[0m
+ [1m[92m✓[0m Completed [4minject[0m in 5.15s
+[1m*** Started working on [4mpatch[0m[0m
+ ↳ Running external tool io.codechicken:DiffPatch:2.0.0.36:all
+ [1m[92m✓[0m Completed [4mpatch[0m in 4.88s
+[1m*** Started working on [4mapplyNeoforgePatches[0m[0m
+ ↳ Running external tool io.codechicken:DiffPatch:2.0.0.36:all
+ [1m[92m✓[0m Completed [4mapplyNeoforgePatches[0m in 3.28s
+[1m*** Started working on [4mtransformSources[0m[0m
+ ↳ Running external tool net.neoforged.jst:jst-cli-bundle:1.0.66
+ [1m[92m✓[0m Completed [4mtransformSources[0m in 10.85s
+[1m*** Started working on [4mrecompile[0m[0m
+ 110 items on the compile classpath
+ 0 items on the sourcepath
+[1m*** Started working on [4msourcesWithNeoForge[0m[0m
+ Compiling 5364 source files
+ [1m[92m✓[0m Completed [4msourcesWithNeoForge[0m in 6.13s
+Copied 0 resource files
+ [1m[92m✓[0m Completed [4mrecompile[0m in 55.27s
+[1m*** Started working on [4mcompiledWithNeoForge[0m[0m
+Cannot inject duplicate file mcp/client/Start.class
+ [1m[92m✓[0m Completed [4mcompiledWithNeoForge[0m in 12.87s
+[1m*** Started working on [4msourcesAndCompiledWithNeoForge[0m[0m
+ [1m[92m✓[0m Completed [4msourcesAndCompiledWithNeoForge[0m in 3.86s
+Total runtime: 221.85s
+
+
+> Task :NeoForge:processResources
+> Task :NeoForge:jarJar NO-SOURCE
+> Task :NeoForge:sourcesJar
+> Task :NeoForge:processTestResources
+> Task :Common:compileKotlin FAILED
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':Common:compileKotlin'.
+> A failure occurred while executing org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.10/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD FAILED in 4m 2s
+25 actionable tasks: 16 executed, 9 up-to-date

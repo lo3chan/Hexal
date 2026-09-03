@@ -35,16 +35,16 @@ dependencies {
 
     compileOnly "at.petra-k.paucal:paucal-common-$minecraftVersion:$paucalVersion"
     compileOnly "at.petra-k.hexcasting:hexcasting-common-$minecraftVersion:$hexcastingVersion"
-    compileOnly "ram.talia.moreiotas:moreiotas-common-$minecraftVersion:$moreIotasVersion"
-    compileOnly "vazkii.patchouli:Patchouli-xplat:$minecraftVersion-$patchouliVersion-SNAPSHOT"
-    compileOnly "software.bernie.geckolib:geckolib-forge-$minecraftVersion:$geckolibVersion"
-    compileOnly "gay.object.hexdebug:hexdebug-core-common-mojmap:$hexdebugVersion+$minecraftVersion"
-    compileOnly "gay.object.hexdebug:hexdebug-common-mojmap:$hexdebugVersion+$minecraftVersion"
+    // compileOnly "ram.talia.moreiotas:moreiotas-common-$minecraftVersion:$moreIotasVersion"
+    // compileOnly "vazkii.patchouli:Patchouli-xplat:$minecraftVersion-$patchouliVersion-SNAPSHOT"
+    // compileOnly "software.bernie.geckolib:geckolib-forge-$minecraftVersion:$geckolibVersion"
+    // compileOnly "gay.object.hexdebug:hexdebug-core-common-mojmap:$hexdebugVersion+$minecraftVersion"
+    // compileOnly "gay.object.hexdebug:hexdebug-common-mojmap:$hexdebugVersion+$minecraftVersion"
 
     testImplementation "at.petra-k.paucal:paucal-common-$minecraftVersion:$paucalVersion"
     testImplementation "at.petra-k.hexcasting:hexcasting-common-$minecraftVersion:$hexcastingVersion"
-    testImplementation "ram.talia.moreiotas:moreiotas-common-$minecraftVersion:$moreIotasVersion"
-    testImplementation "vazkii.patchouli:Patchouli-xplat:$minecraftVersion-$patchouliVersion-SNAPSHOT"
+    // testImplementation "ram.talia.moreiotas:moreiotas-common-$minecraftVersion:$moreIotasVersion"
+    // testImplementation "vazkii.patchouli:Patchouli-xplat:$minecraftVersion-$patchouliVersion-SNAPSHOT"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
@@ -63,12 +63,12 @@ processResources {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "17"
+        jvmTarget = "21"
     }
 }
 
