@@ -33,7 +33,7 @@ data class MsgSendEverbookC2S(val everbook: Everbook) : IMessage {
 		server.execute {
 			IXplatAbstractions.INSTANCE.setFullEverbook(sender, everbook.filterIotasIllegalInterworld(server.overworld()))
 			if (wasTooBig){
-				HexalAPI.LOGGER.info("Player ${sender.displayName.string}'s everbook data exceeded the configured size limit of ${HexalConfig.server.everbookMaxSize}")
+				HexalAPI.LOGGER.info("Player ${sender.displayName?.string}'s everbook data exceeded the configured size limit of ${HexalConfig.server.everbookMaxSize}")
 				sender.sendSystemMessage(Component.translatable("hexal.everbook.sizewarning", HexalConfig.server.everbookMaxSize))
 			} else if (somethingWeirdHappened){
 				sender.sendSystemMessage(Component.translatable("hexal.everbook.unexpectederror"))

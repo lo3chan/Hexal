@@ -42,7 +42,7 @@ data class FreezeRecipe(val blockIn: StateIngredient, val result: BlockState) : 
 	class Serializer : RecipeSerializer<FreezeRecipe> {
 		private val CODEC: MapCodec<FreezeRecipe> = RecordCodecBuilder.mapCodec { instance ->
 			instance.group(
-				StateIngredientHelper.CODEC.fieldOf("blockIn").forGetter { it.blockIn },
+				StateIngredient.CODEC.fieldOf("blockIn").forGetter { it.blockIn },
 				BlockState.CODEC.fieldOf("result").forGetter { it.result }
 			).apply(instance, ::FreezeRecipe)
 		}
