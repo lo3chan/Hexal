@@ -87,17 +87,13 @@ object OpSmelt : SpellAction {
         }
 
         fun smeltResult(item: Item, env: CastingEnvironment): ItemStack? {
-            val optional: Optional<SmeltingRecipe> = env.world.recipeManager.getRecipeFor(
-                    RecipeType.SMELTING, SimpleContainer(ItemStack(item, 1)),
-                    env.world
-            )
+            val input = net.minecraft.world.item.crafting.SingleRecipeInput(ItemStack(item, 1))
+            val recipeHolder = env.world.recipeManager.getRecipeFor(
+                RecipeType.SMELTING, input, env.world
+            ).orElse(null) ?: return null
 
-            if (!optional.isPresent) return null
-
-            val result = optional.get().getResultItem(env.world.registryAccess()).copy()
-
+            val result = recipeHolder.value.assemble(input, env.world.registryAccess())
             if (result.isEmpty) return null
-
             return result
         }
     }

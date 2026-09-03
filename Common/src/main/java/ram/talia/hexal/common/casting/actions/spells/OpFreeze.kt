@@ -54,7 +54,7 @@ object OpFreeze : SpellAction {
 			val recman = env.world.recipeManager
 			val recipes = recman.getAllRecipesFor(HexalRecipeTypes.FREEZE_TYPE)
 
-			val recipe = recipes.find{ it.matches(blockState) }
+			val recipe = recipes.find { it.value.matches(blockState) }?.value
 
 			if (recipe != null)
 				env.world.setBlockAndUpdate(pos, CopyProperties.copyProperties(blockState, recipe.result))
