@@ -21,16 +21,15 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.extensions.common.IClientItemExtensions;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.util.FakePlayerFactory;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.level.BlockEvent;
-import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.network.NetworkDirection;
-import net.minecraftforge.network.PacketDistributor;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
+import net.neoforged.neoforge.common.CommonHooks;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.common.util.FakePlayerFactory;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
+import net.neoforged.fml.loading.FMLLoader;
+import net.neoforged.neoforge.network.PacketDistributor;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ram.talia.hexal.api.everbook.Everbook;
@@ -65,19 +64,17 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 
 	@Override
 	public void sendPacketToPlayer(ServerPlayer target, IMessage packet) {
-		ForgePacketHandler.getNetwork().send(PacketDistributor.PLAYER.with(() -> target), packet);
+		PacketDistributor.sendToPlayer(target, packet);
 	}
 	
 	@Override
 	public void sendPacketNear(Vec3 pos, double radius, ServerLevel dimension, IMessage packet) {
-		ForgePacketHandler.getNetwork().send(PacketDistributor.NEAR.with(() -> new PacketDistributor.TargetPoint(
-						pos.x, pos.y, pos.z, radius * radius, dimension.dimension()
-		)), packet);
+		PacketDistributor.sendToPlayersNear(dimension, null, pos.x, pos.y, pos.z, radius, packet);
 	}
 
 	@Override
 	public void sendPacketTracking(Entity entity, IMessage packet) {
-		ForgePacketHandler.getNetwork().send(PacketDistributor.TRACKING_ENTITY.with(() -> entity), packet);
+		PacketDistributor.sendToPlayersTrackingEntity(entity, packet);
 	}
 
 	@Override
@@ -87,23 +84,22 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 
 	@Override
 	public void sendPacketTracking(BlockPos pos, ServerLevel dimension, IMessage packet) {
-		ForgePacketHandler.getNetwork().send(PacketDistributor.TRACKING_CHUNK.with(() -> dimension.getChunkAt(pos)), packet);
+		PacketDistributor.sendToPlayersTrackingChunk(dimension, new ChunkPos(pos), packet);
 	}
 
 	@Override
 	public void sendPacketTracking(ChunkPos pos, ServerLevel dimension, IMessage packet) {
-		sendPacketTracking(pos.getWorldPosition(), dimension, packet);
+		PacketDistributor.sendToPlayersTrackingChunk(dimension, pos, packet);
 	}
 
 	@Override
 	public Packet<?> toVanillaClientboundPacket(IMessage message) {
-		return ForgePacketHandler.getNetwork().toVanillaPacket(message, NetworkDirection.PLAY_TO_CLIENT);
+		return null;
 	}
 
 	@Override
 	public boolean isInteractingAllowed(Level level, BlockPos pos, Direction direction, InteractionHand hand, Player player) {
-
-		return !MinecraftForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(player, hand, pos, new BlockHitResult(Vec3.atCenterOf(pos), direction, pos, true)));
+		return !NeoForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(player, hand, pos, new BlockHitResult(Vec3.atCenterOf(pos), direction, pos, true))).isCanceled();
 	}
 
 	@Override
@@ -236,7 +232,7 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 			player = FakePlayerFactory.get(level, HEXCASTING);
 		}
 
-		return !MinecraftForge.EVENT_BUS.post(new BlockEvent.BreakEvent(level, pos, state, player));
+		return !NeoForge.EVENT_BUS.post(new BlockEvent.BreakEvent(level, pos, state, player)).isCanceled();
 	}
 
 	public boolean isPlacingAllowed(ServerLevel level, BlockPos pos, ItemStack stack, @Nullable Player player) {
@@ -246,7 +242,7 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 
 		ItemStack cached = player.getMainHandItem();
 		player.setItemInHand(InteractionHand.MAIN_HAND, stack.copy());
-		PlayerInteractEvent.RightClickBlock evt = ForgeHooks.onRightClickBlock(player, InteractionHand.MAIN_HAND, pos, new BlockHitResult(Vec3.atCenterOf(pos), Direction.DOWN, pos, true));
+		PlayerInteractEvent.RightClickBlock evt = CommonHooks.onRightClickBlock(player, InteractionHand.MAIN_HAND, pos, new BlockHitResult(Vec3.atCenterOf(pos), Direction.DOWN, pos, true));
 		player.setItemInHand(InteractionHand.MAIN_HAND, cached);
 		return !evt.isCanceled();
 	}

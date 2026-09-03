@@ -2,7 +2,7 @@ package ram.talia.hexal.forge.xplat;
 
 import at.petrak.hexcasting.api.casting.math.HexPattern;
 import at.petrak.hexcasting.common.msgs.IMessage;
-import at.petrak.hexcasting.forge.network.ForgePacketHandler;
+import net.neoforged.neoforge.network.PacketDistributor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
@@ -27,7 +27,7 @@ import java.util.function.Function;
 public class ForgeClientXplatImpl implements IClientXplatAbstractions {
 	@Override
 	public void sendPacketToServer (IMessage packet) {
-		ForgePacketHandler.getNetwork().sendToServer(packet);
+		PacketDistributor.sendToServer(packet);
 	}
 	
 	@Override
