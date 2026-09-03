@@ -57,7 +57,7 @@ abstract class LinkableEntity(entityType: EntityType<*>, level: Level) : Entity(
 		compound.put(TAG_LINKABLE_HOLDER, linkableHolder!!.writeToNbt())
 	}
 
-	override fun getAddEntityPacket(): Packet<ClientGamePacketListener> {
+	override fun getAddEntityPacket(serverEntity: net.minecraft.server.level.ServerEntity): Packet<ClientGamePacketListener> {
 		if (linkableHolder == null) {
 			HexalAPI.LOGGER.warn("Trying to send linkable AddEntityPacket from client for $this.")
 		} else {
@@ -65,7 +65,7 @@ abstract class LinkableEntity(entityType: EntityType<*>, level: Level) : Entity(
 			linkableHolder!!.syncAll()
 		}
 
-		return ClientboundAddEntityPacket(this)
+		return ClientboundAddEntityPacket(this, serverEntity)
 	}
 
 	companion object {

@@ -23,8 +23,7 @@ import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.nbt.SerialisedIotaList
 import ram.talia.hexal.api.plus
 import ram.talia.hexal.api.times
-import ram.talia.hexal.common.lib.HexalEntities
-import ram.talia.hexal.interop.hexdebug.WispDebugEnv
+
 import java.lang.Double.min
 import java.util.UUID
 
@@ -79,20 +78,10 @@ class TickingWisp : BaseCastingWisp {
 	private var debugSessionId: UUID? = null
 
 	val isDebugging: Boolean
-		get() = debugSessionId != null
+		get() = false
 
 	private val isDebuggingAndPaused: Boolean
-		get() = isDebugging && getDebugEnv()?.isPaused != false
-
-	fun getDebugEnv(): WispDebugEnv? {
-		val debugSessionId = debugSessionId ?: return null
-		val caster = caster as? ServerPlayer ?: return null
-		return null
-	}
-
-	fun setDebugEnv(debugEnv: WispDebugEnv) {
-		debugSessionId = debugEnv.sessionId
-	}
+		get() = false
 
 	constructor(entityType: EntityType<out BaseCastingWisp>, world: Level) : super(entityType, world)
 	constructor(
