@@ -7,6 +7,8 @@ import at.petrak.hexcasting.api.casting.iota.DoubleIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
+import at.petrak.hexcasting.api.utils.TreeList
+import ram.talia.hexal.api.caster
 import ram.talia.hexal.api.getVillager
 
 object OpGetItemTrades : ConstMediaAction {
@@ -19,15 +21,15 @@ object OpGetItemTrades : ConstMediaAction {
 
         val result = villager.offers.map { offer ->
             // In 1.21 without moreiotas, replacing ItemTypeIota with something placeholder like NullIota or returning string for now
-            val costList = mutableListOf(ListIota(listOf(NullIota(), DoubleIota(offer.costA.count.toDouble()))))
+            val costList = mutableListOf(ListIota(TreeList.from(listOf(NullIota(), DoubleIota(offer.costA.count.toDouble())))))
             if (!offer.costB.isEmpty)
-                costList.add(ListIota(listOf(NullIota(), DoubleIota(offer.costB.count.toDouble()))))
+                costList.add(ListIota(TreeList.from(listOf(NullIota(), DoubleIota(offer.costB.count.toDouble())))))
 
             val offerList = listOf(
-                    ListIota(costList as List<Iota>),
-                    ListIota(listOf(NullIota(), DoubleIota(offer.result.count.toDouble())))
+                    ListIota(TreeList.from(costList as List<Iota>)),
+                    ListIota(TreeList.from(listOf(NullIota(), DoubleIota(offer.result.count.toDouble()))))
             )
-            ListIota(offerList)
+            ListIota(TreeList.from(offerList))
         }
 
         villager.tradingPlayer = null

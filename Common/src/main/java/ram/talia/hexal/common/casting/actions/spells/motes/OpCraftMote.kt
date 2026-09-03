@@ -2,13 +2,14 @@
 
 package ram.talia.hexal.common.casting.actions.spells.motes
 
-import at.petrak.hexcasting.api.casting.SpellList
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.ListIota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
+import at.petrak.hexcasting.api.utils.TreeList
+import ram.talia.hexal.api.caster
 import com.mojang.datafixers.util.Either
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.world.entity.player.Player
@@ -87,7 +88,7 @@ object OpCraftMote : UserDataConstMediaAction {
         return itemResult to remainingItems
     }
 
-    private fun makeMoteIotaCraftingGrid(input: Either<MoteIota, SpellList>): Array<MoteIota?> {
+    private fun makeMoteIotaCraftingGrid(input: Either<MoteIota, TreeList<Iota>>): Array<MoteIota?> {
         val out = Array<MoteIota?>(9) { _ -> null }
 
         for ((idy, iota) in input.map({ listOf(IndexedValue(0, it)) }, { it.withIndex() })) {
