@@ -22,7 +22,7 @@ object OpConsumeWisp : SpellAction {
 	override val argc = 1
 
 	override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
-		val consumed = args.getEntity(0, argc) as? IMediaEntity<*> ?: throw MishapInvalidIota.ofType(args[0], 0, "consumable_entity")
+		val consumed = args.getEntity(env.world, 0, argc) as? IMediaEntity<*> ?: throw MishapInvalidIota.ofType(args[0], 0, "consumable_entity")
 
 		env.assertEntityInRange(consumed.get())
 

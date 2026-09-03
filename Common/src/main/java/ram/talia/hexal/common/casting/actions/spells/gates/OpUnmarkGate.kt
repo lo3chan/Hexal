@@ -13,7 +13,7 @@ object OpUnmarkGate : SpellAction {
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
         val gate = args.getGate(0, OpMarkGate.argc)
-        val entity = args.getEntity(1, OpMarkGate.argc)
+        val entity = args.getEntity(env.world, 1, OpMarkGate.argc)
         env.assertEntityInRange(entity)
 
         return SpellAction.Result(

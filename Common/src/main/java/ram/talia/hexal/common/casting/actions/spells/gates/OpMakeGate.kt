@@ -35,7 +35,7 @@ object OpMakeGate : VarargConstMediaAction {
         val vec = args.getVec3(0, argc)
 
         if (argc == 2) {
-            val entity = args.getEntity(1, argc)
+            val entity = args.getEntity(env.world, 1, argc)
 
             if (entity is ServerPlayer && entity != env.caster)
                 throw MishapOthersName(entity)

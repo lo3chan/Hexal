@@ -12,7 +12,7 @@ object OpGetMarkedGate : ConstMediaAction {
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
         val gate = args.getGate(0, argc)
-        val entity = args.getEntity(1, argc)
+        val entity = args.getEntity(env.world, 1, argc)
         return gate.isMarked(entity).asActionResult
     }
 }

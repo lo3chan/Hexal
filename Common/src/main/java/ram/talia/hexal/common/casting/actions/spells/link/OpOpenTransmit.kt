@@ -13,17 +13,15 @@ object OpOpenTransmit : ConstMediaAction {
 	override val argc = 1
 
 	override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-		if (env !is PlayerBasedCastEnv)
-			throw MishapNonPlayer()
-
-		val playerLinkable = IXplatAbstractions.INSTANCE.getLinkstore(env.caster)
+		val player = env.caster ?: throw MishapNonPlayer()
+		val playerLinkable = IXplatAbstractions.INSTANCE.getLinkstore(player)
 
 		if (playerLinkable.numLinked() == 0)
 			throw MishapNoLinked(playerLinkable)
 
 		val index = args.getPositiveIntUnder(0, argc, playerLinkable.numLinked())
 
-		IXplatAbstractions.INSTANCE.setPlayerTransmittingTo(env.caster, index)
+		IXplatAbstractions.INSTANCE.setPlayerTransmittingTo(player, index)
 
 		return listOf()
 	}
