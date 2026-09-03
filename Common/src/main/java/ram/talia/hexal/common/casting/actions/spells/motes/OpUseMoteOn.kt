@@ -38,7 +38,7 @@ object OpUseMoteOn : VarargSpellAction {
     ): SpellAction.Result {
         val item = args.getMote(0, argc) ?: throw MishapInvalidIota.of(args[0], argc - 1, "mote_empty")
 
-        if ((item.count != 1L) && (item.tag != null))
+        if ((item.count != 1L) && (item.record?.components != null))
             throw MishapInvalidIota(item, 0, "hexcasting.mishap.invalid_value.mote_with_nbt_not_size_one".asTranslatedComponent)
 
         if (argc == 2) {
@@ -97,7 +97,7 @@ object OpUseMoteOn : VarargSpellAction {
             // Swap back to the old item
             caster.setItemInHand(env.castingHand, oldStack)
 
-            item.tag = itemStack.tag
+            item.record?.components = itemStack.componentsPatch
             if (itemStack.isEmpty)
                 item.removeItems(1)
         }
@@ -122,7 +122,7 @@ object OpUseMoteOn : VarargSpellAction {
             if (!isAllowed)
                 return
             itemStack.useOn(context).consumesAction()
-            item.tag = itemStack.tag
+            item.record?.components = itemStack.componentsPatch
 
             if (itemStack.isEmpty)
                 item.removeItems(1)

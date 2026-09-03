@@ -15,16 +15,13 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.math.HexPattern
 import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.common.casting.arithmetics.operator.mote.OperatorMoteAdd
-import ram.talia.hexal.common.casting.arithmetics.operator.mote.OperatorMoteExtractItem
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes.MOTE
-import at.petrak.hexcasting.common.casting.arithmetic.ItemArithmetic.EXTRACT_ITEM
 import java.util.function.Function
 
 object MoteArithmetic : Arithmetic {
     private val OPS = listOf(
         ADD,
-        ABS,
-        EXTRACT_ITEM
+        ABS
     )
 
     override fun arithName() = "mote_ops"
@@ -34,7 +31,6 @@ object MoteArithmetic : Arithmetic {
     override fun getOperator(pattern: HexPattern): Operator = when (pattern) {
         ADD -> OperatorMoteAdd
         ABS -> make1Double { it.count.toDouble() }
-        EXTRACT_ITEM -> OperatorMoteExtractItem
         else -> throw InvalidOperatorException("$pattern is not a valid operator in Arithmetic $this.")
     }
 

@@ -19,7 +19,7 @@ object OpCloseable : ConstMediaAction {
             // check if destination is null (unloaded/missing entity anchor) or outside of world
             // subtract 0,1,0 because teleporting into bedrock floor is also invalid
             val targetPos = gate.getTargetPos(env.world) ?: return false.asActionResult
-            return env.isVecInWorld(targetPos.subtract(0.0, 1.0, 0.0)).asActionResult
+            return env.isVecInWorld(targetPos.add(0.0, -1.0, 0.0)).asActionResult
         }
     }
 }

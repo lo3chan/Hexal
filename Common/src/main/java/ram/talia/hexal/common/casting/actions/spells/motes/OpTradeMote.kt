@@ -95,7 +95,7 @@ object OpTradeMote : VarargConstMediaAction {
 
                 if (outRecord == null)
                     outRecord = ItemRecord(merchantoffer.result)
-                else if (outRecord.item == merchantoffer.result.item && outRecord.tag == merchantoffer.result.tag)
+                else if (outRecord.typeMatches(merchantoffer.result))
                     outRecord.count += merchantoffer.result.count
                 else {
                     HexalAPI.LOGGER.warn("trade resulted in different Item result in different iterations of the loop, aghhhhh")

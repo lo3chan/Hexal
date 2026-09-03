@@ -64,10 +64,15 @@ object OpCloseGate : VarargSpellAction {
             cost = gatees.fold(cost) { cumCost, gatee -> cumCost + (HexalConfig.server.closeGateDistanceCostFactor * gatee.position().distanceTo(targetPos)).toLong() }
         }
 
-        // make particle effects at every teleported entity.
         var meanEyeHeight = 0.0
-        val burst = gatees.map { meanEyeHeight += it.eyeHeight; ParticleSpray.cloud(it.position().add(0.0, it.eyeHeight / 2.0, 0.0), 2.0) } as MutableList
-        meanEyeHeight /= burst.size
+        val burst = gatees.map { 
+            val h = it.getEyeHeight(it.pose).toDouble()
+            meanEyeHeight += h
+            ParticleSpray.cloud(it.position().add(0.0, h / 2.0, 0.0), 2.0) 
+        }.toMutableList()
+        if (burst.isNotEmpty()) {
+            meanEyeHeight /= burst.size
+        }
         burst.add(ParticleSpray.burst(targetPos.add(0.0, meanEyeHeight / 2.0, 0.0), 2.0))
 
         return SpellAction.Result(

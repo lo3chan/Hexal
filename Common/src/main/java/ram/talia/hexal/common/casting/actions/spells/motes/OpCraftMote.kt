@@ -68,8 +68,8 @@ object OpCraftMote : UserDataConstMediaAction {
 
         val timesToCraft = getMinCount(griddedIotas)
 
-        val moteIotaResult = MoteIota.makeIfStorageLoaded(ItemRecord(itemResult.item, itemResult.tag, itemResult.count.toLong().mulBounded(timesToCraft)), storage) ?: return emptyList<Iota>().asActionResult
-        val remainingMoteIotas = remainingItems.map { MoteIota.makeIfStorageLoaded(ItemRecord(it.item, it.tag, it.count.toLong().mulBounded(timesToCraft)), storage)!! }.toMutableList()
+        val moteIotaResult = MoteIota.makeIfStorageLoaded(ItemRecord(itemResult.item, itemResult.componentsPatch, itemResult.count.toLong().mulBounded(timesToCraft)), storage) ?: return emptyList<Iota>().asActionResult
+        val remainingMoteIotas = remainingItems.map { MoteIota.makeIfStorageLoaded(ItemRecord(it.item, it.componentsPatch, it.count.toLong().mulBounded(timesToCraft)), storage)!! }.toMutableList()
 
         for (item in griddedIotas) item?.removeItems(timesToCraft)
 
