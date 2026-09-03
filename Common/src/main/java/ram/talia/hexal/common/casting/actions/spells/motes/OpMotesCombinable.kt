@@ -14,7 +14,7 @@ object OpMotesCombinable : ConstMediaAction {
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
         val typer = args.getMote(0, argc) ?: return false.asActionResult
-        val typee = args.getMoteOrItemStackOrItemEntity(1, argc) ?: return false.asActionResult
+        val typee = args.getMoteOrItemStackOrItemEntity(env.world, 1, argc) ?: return false.asActionResult
 
         return typee.flatMap({
             (typer.itemIndex != it.itemIndex && typer.typeMatches(it))

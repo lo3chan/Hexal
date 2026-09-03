@@ -11,8 +11,6 @@ import ram.talia.hexal.common.entities.BaseCastingWisp
 
 class MishapExcessiveReproduction(val wisp: BaseCastingWisp) : Mishap() {
     override fun accentColor(ctx: CastingEnvironment, errorCtx: Context): FrozenPigment = dyeColor(DyeColor.PINK)
-
-    override fun errorMessage(ctx: CastingEnvironment, errorCtx: Context): Component = error("excessive_reproduction", wisp.displayName.string)
-
+    override fun errorMessage(ctx: CastingEnvironment, errorCtx: Context): Component = error("excessive_reproduction", wisp.name?.string ?: "Wisp")
     override fun execute(ctx: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> = stack
 }

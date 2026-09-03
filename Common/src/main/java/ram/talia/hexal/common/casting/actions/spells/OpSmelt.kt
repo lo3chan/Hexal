@@ -32,7 +32,7 @@ object OpSmelt : SpellAction {
     }
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
-        val toSmelt = args.getBlockPosOrItemEntityOrItem(0, argc)
+        val toSmelt = args.getBlockPosOrItemEntityOrItem(env.world, 0, argc)
 
         val pos = toSmelt.flatMap({ blockPos -> Vec3.atCenterOf(blockPos) }, { item -> item.position() }, { null })
         pos?.let { env.assertVecInRange(it) }

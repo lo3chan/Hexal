@@ -1,5 +1,6 @@
 package ram.talia.hexal.api
 
+import net.minecraft.server.level.ServerLevel
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.iota.DoubleIota
 import at.petrak.hexcasting.api.casting.iota.EntityIota
@@ -189,15 +190,14 @@ fun List<Iota>.getStrictlyPositiveLong(idx: Int, argc: Int = 0): Long {
     throw MishapInvalidIota.of(x, if (argc == 0) idx else argc - (idx + 1), "int.strictly_positive")
 }
 
-fun List<Iota>.getBlockPosOrItemEntityOrItem(idx: Int, argc: Int = 0): Anyone<BlockPos, ItemEntity, MoteIota> {
+fun List<Iota>.getBlockPosOrItemEntityOrItem(world: ServerLevel, idx: Int, argc: Int = 0): Anyone<BlockPos, ItemEntity, MoteIota> {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     val out = when (x) {
         is Vec3Iota -> Anyone.first(BlockPos.containing(x.vec3))
         is EntityIota -> {
-            if (x.entity.isRemoved)
-                null
-            else
-                (x.entity as? ItemEntity)?.let { Anyone.second(it) }
+            val e = x.getEntity(world)
+            if (e == null || e.isRemoved) null
+            else (e as? ItemEntity)?.let { Anyone.second(it) }
         }
         is MoteIota -> x.selfOrNull()?.let { Anyone.third(it) }
         else -> null
@@ -205,16 +205,14 @@ fun List<Iota>.getBlockPosOrItemEntityOrItem(idx: Int, argc: Int = 0): Anyone<Bl
     return out ?: throw MishapInvalidIota.of(x, if (argc == 0) idx else argc - (idx + 1), "blockitementityitem")
 }
 
-fun List<Iota>.getItemEntityOrItemFrame(idx: Int, argc: Int = 0): Either<ItemEntity, ItemFrame> {
+fun List<Iota>.getItemEntityOrItemFrame(world: ServerLevel, idx: Int, argc: Int = 0): Either<ItemEntity, ItemFrame> {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is EntityIota) {
-        val e = x.entity
-        if (e.isRemoved)
-            throw MishapInvalidIota.of(x, if (argc == 0) idx else argc - (idx + 1), "entity.itemitemframe")
-        if (e is ItemEntity)
-            return Either.left(e)
-        if (e is ItemFrame)
-            return Either.right(e)
+        val e = x.getEntity(world)
+        if (e != null && !e.isRemoved) {
+            if (e is ItemEntity) return Either.left(e)
+            if (e is ItemFrame) return Either.right(e)
+        }
     }
     throw MishapInvalidIota.of(x, if (argc == 0) idx else argc - (idx + 1), "entity.itemitemframe")
 }
@@ -248,22 +246,14 @@ fun List<Iota>.getMote(idx: Int, argc: Int = 0): MoteIota? {
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "mote")
 }
 
-fun List<Iota>.getMoteOrItemStackOrItemEntity(idx: Int, argc: Int = 0): Anyone<MoteIota, ItemStack, Entity>? {
+fun List<Iota>.getMoteOrItemStackOrItemEntity(world: ServerLevel, idx: Int, argc: Int = 0): Anyone<MoteIota, ItemStack, Entity>? {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
-    if (x is MoteIota)
-        return x.selfOrNull()?.let { Anyone.first(it) }
-    if (x is NullIota)
-        return null
-    if (x is EntityIota)
-        return null // Removed for now due to moreiotas removal
+    if (x is MoteIota) return x.selfOrNull()?.let { Anyone.first(it) }
+    if (x is NullIota) return null
     if (x is EntityIota) {
-        val e = x.entity
-        if (e is ItemEntity)
-            return Anyone.third(e)
-        if (e is ItemFrame)
-            return Anyone.third(e)
+        val e = x.getEntity(world)
+        if (e is ItemEntity || e is ItemFrame) return Anyone.third(e)
     }
-
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "moteentity.itemitemframe")
 }
 

@@ -7,27 +7,11 @@ import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.common.entities.BaseCastingWisp
 
 class WispMishapEnv(wisp: BaseCastingWisp, level: ServerLevel) : MishapEnvironment(level, wisp.caster as? ServerPlayer) {
-    override fun yeetHeldItemsTowards(pos: Vec3) {
-        // TODO
-    }
-
-    override fun dropHeldItems() {
-        // TODO
-    }
-
-    override fun drown() {
-        // TODO
-    }
-
-    override fun damage(healthProportion: Float) {
-        // TODO
-    }
-
-    override fun removeXp(amount: Int) {
-        // TODO
-    }
-
-    override fun blind(ticks: Int) {
-        // TODO
-    }
+    override fun yeetHeldItemsTowards(pos: Vec3) {}
+    override fun dropHeldItems() {}
+    override fun drown() {}
+    override fun damage(healthProportion: Float) {}
+    override fun removeXp(amount: Int) {}
+    override fun blind(ticks: Int) {}
+    override fun nauseate(ticks: Int) {}
 }

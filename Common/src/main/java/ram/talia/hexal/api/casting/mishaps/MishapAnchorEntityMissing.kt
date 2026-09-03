@@ -7,12 +7,9 @@ import at.petrak.hexcasting.api.pigment.FrozenPigment
 import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.DyeColor
-import ram.talia.hexal.api.gates.GateSavedData.Gate
 
-class MishapAnchorEntityMissing(val gate: Gate? = null) : Mishap() {
+class MishapAnchorEntityMissing(val gate: Any? = null) : Mishap() {
     override fun accentColor(ctx: CastingEnvironment, errorCtx: Context): FrozenPigment = dyeColor(DyeColor.BROWN)
-
     override fun errorMessage(ctx: CastingEnvironment, errorCtx: Context): Component = error("anchor_entity_missing")
-
     override fun execute(ctx: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> = stack
 }

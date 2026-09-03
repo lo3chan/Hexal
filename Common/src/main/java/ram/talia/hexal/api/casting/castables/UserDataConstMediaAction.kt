@@ -46,6 +46,6 @@ interface UserDataConstMediaAction : Action {
         val sideEffects = mutableListOf<OperatorSideEffect>(OperatorSideEffect.ConsumeMedia(this.mediaCost))
 
         val image2 = image.copy(stack = TreeList.from(stack), opsConsumed = image.opsConsumed + result.opCount, userData = userData)
-        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
+        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get().get())
     }
 }

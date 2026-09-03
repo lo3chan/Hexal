@@ -18,7 +18,7 @@ class MsgSingleParticleAck(val pos: Vec3, val colouriser: FrozenPigment): IMessa
         buf.writeDouble(pos.x)
         buf.writeDouble(pos.y)
         buf.writeDouble(pos.z)
-        buf.writeNbt(ram.talia.hexal.api.toNbt(colouriser))
+        buf.writeNbt(colouriser.toNbt())
     }
 
     override fun getFabricId() = ID

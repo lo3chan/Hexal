@@ -58,6 +58,6 @@ interface VarargConstMediaAction : Action {
         )
 
         val image2 = image.copy(stack = TreeList.from(stack), opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
-        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
+        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get().get())
     }
 }

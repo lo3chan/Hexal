@@ -42,7 +42,7 @@ object OpMakeMote : VarargSpellAction {
     }
 
     override fun executeWithUserdata(args: List<Iota>, argc: Int, env: CastingEnvironment, userData: CompoundTag): SpellAction.Result {
-        val iEtityEither = args.getItemEntityOrItemFrame(0, argc)
+        val iEtityEither = args.getItemEntityOrItemFrame(env.world, 0, argc)
         val iEntity = iEtityEither.map({ it }, { it })
 
         env.assertEntityInRange(iEntity)
