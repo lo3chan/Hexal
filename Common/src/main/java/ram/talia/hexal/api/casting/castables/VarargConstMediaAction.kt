@@ -11,6 +11,7 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughArgs
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughMedia
 import at.petrak.hexcasting.common.lib.hex.HexEvalSounds
+import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.nbt.CompoundTag
 
 /**
@@ -56,7 +57,7 @@ interface VarargConstMediaAction : Action {
             OperatorSideEffect.ConsumeMedia(this.mediaCost)
         )
 
-        val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
-        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE)
+        val image2 = image.copy(stack = TreeList.from(stack), opsConsumed = image.opsConsumed + newData.opCount, userData = userData)
+        return OperationResult(image2, sideEffects, continuation, HexEvalSounds.NORMAL_EXECUTE.get())
     }
 }

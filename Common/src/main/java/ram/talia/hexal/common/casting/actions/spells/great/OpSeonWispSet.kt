@@ -15,7 +15,7 @@ object OpSeonWispSet : SpellAction {
     override val argc = 1
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
-        val wisp = args.getBaseCastingWisp(0, argc)
+        val wisp = args.getBaseCastingWisp(env.world, 0, argc)
 
         if (wisp.caster != env.caster)
             throw MishapOthersWisp(wisp.caster)

@@ -131,32 +131,29 @@ inline val Map<MediafiedItemManager.Index, ItemRecord>.asActionResult get() = th
 
 fun ItemStack.asActionResult(storageUUID: UUID) = listOf(MoteIota.makeIfStorageLoaded(this, storageUUID) ?: NullIota())
 
-fun List<Iota>.getVillager(idx: Int, argc: Int = 0): Villager {
+fun List<Iota>.getVillager(world: ServerLevel, idx: Int, argc: Int = 0): Villager {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is EntityIota) {
-        val e = x.entity
-        if (e is Villager)
-            return e
+        val e = x.getEntity(world)
+        if (e is Villager) return e
     }
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "villager")
 }
 
-fun List<Iota>.getBaseWisp(idx: Int, argc: Int = 0): BaseWisp {
+fun List<Iota>.getBaseWisp(world: ServerLevel, idx: Int, argc: Int = 0): BaseWisp {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is EntityIota) {
-        val e = x.entity
-        if (e is BaseWisp)
-            return e
+        val e = x.getEntity(world)
+        if (e is BaseWisp) return e
     }
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "wisp")
 }
 
-fun List<Iota>.getBaseCastingWisp(idx: Int, argc: Int = 0): BaseCastingWisp {
+fun List<Iota>.getBaseCastingWisp(world: ServerLevel, idx: Int, argc: Int = 0): BaseCastingWisp {
     val x = this.getOrElse(idx) { throw MishapNotEnoughArgs(idx + 1, this.size) }
     if (x is EntityIota) {
-        val e = x.entity
-        if (e is BaseCastingWisp)
-            return e
+        val e = x.getEntity(world)
+        if (e is BaseCastingWisp) return e
     }
     throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "wisp.casting")
 }

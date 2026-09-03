@@ -12,7 +12,7 @@ object OpWispOwner : ConstMediaAction {
     override val argc = 2
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        val wisp = args.getBaseWisp(0, argc)
+        val wisp = args.getBaseWisp(env.world, 0, argc)
         val owner = args.getEntity(env.world, 1, argc)
 
         return (wisp is BaseCastingWisp && wisp.caster == owner).asActionResult

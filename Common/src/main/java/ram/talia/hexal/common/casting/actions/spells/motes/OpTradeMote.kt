@@ -36,7 +36,7 @@ object OpTradeMote : VarargConstMediaAction {
     }
 
     override fun execute(args: List<Iota>, argc: Int, userData: CompoundTag, env: CastingEnvironment): List<Iota> {
-        val villager = args.getVillager(0, argc)
+        val villager = args.getVillager(env.world, 0, argc)
         val toTradeItemIotas = args.getMoteOrMoteList(1, argc)?.map({ listOf(it) }, { it }) ?: return emptyList<Iota>().asActionResult
         val tradeIndex = if (args.size == 3) args.getPositiveIntUnder(2, villager.offers.size, argc) else null
 

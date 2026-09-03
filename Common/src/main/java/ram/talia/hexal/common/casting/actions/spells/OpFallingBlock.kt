@@ -61,7 +61,7 @@ object OpFallingBlock : SpellAction {
 				&& !blockstate.isAir
 				&& blockstate.getDestroySpeed(env.world, pos) >= 0f // fix being able to break bedrock &c
 				&& env.world.getBlockEntity(pos) == null
-				&& tier.isCorrectTierForDrops(blockstate)
+				
 				&& canSilkTouch(env.world, pos, blockstate, 0, env.caster)
 			) {
 				val falling: FallingBlockEntity = FallingBlockEntity.fall(env.world, pos, blockstate)

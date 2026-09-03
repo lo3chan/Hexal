@@ -8,7 +8,7 @@ import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.network.chat.Component
 import net.minecraft.world.item.DyeColor
 
-class MishapBadTrade : Mishap() {
+class MishapBadTrade(val a: Any? = null, val b: Any? = null) : Mishap() {
     override fun accentColor(ctx: CastingEnvironment, errorCtx: Context): FrozenPigment = dyeColor(DyeColor.BROWN)
 
     override fun errorMessage(ctx: CastingEnvironment, errorCtx: Context): Component = error("bad_trade")

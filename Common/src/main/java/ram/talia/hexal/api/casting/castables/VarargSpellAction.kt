@@ -11,6 +11,7 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughArgs
 import at.petrak.hexcasting.api.casting.mishaps.MishapNotEnoughMedia
 import at.petrak.hexcasting.common.lib.hex.HexEvalSounds
+import at.petrak.hexcasting.api.utils.TreeList
 import net.minecraft.nbt.CompoundTag
 
 /**
@@ -74,9 +75,9 @@ interface VarargSpellAction : Action {
         for (spray in result.particles)
             sideEffects.add(OperatorSideEffect.Particles(spray))
 
-        val image2 = image.copy(stack = stack, opsConsumed = image.opsConsumed + result.opCount, userData = userDataMut)
+        val image2 = image.copy(stack = TreeList.from(stack), opsConsumed = image.opsConsumed + result.opCount, userData = userDataMut)
 
-        val sound = if (this.hasCastingSound(env)) HexEvalSounds.SPELL else HexEvalSounds.MUTE
+        val sound = if (this.hasCastingSound(env)) HexEvalSounds.SPELL.get() else HexEvalSounds.MUTE
         return OperationResult(image2, sideEffects, continuation, sound)
     }
 }

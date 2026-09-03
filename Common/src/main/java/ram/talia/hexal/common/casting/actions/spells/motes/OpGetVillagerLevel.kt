@@ -10,6 +10,6 @@ object OpGetVillagerLevel : ConstMediaAction {
     override val argc = 1
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        return args.getVillager(0, argc).villagerData.level.asActionResult
+        return args.getVillager(env.world, 0, argc).villagerData.level.asActionResult
     }
 }

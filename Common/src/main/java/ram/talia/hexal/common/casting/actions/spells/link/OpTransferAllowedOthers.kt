@@ -16,7 +16,7 @@ class OpTransferAllowedOthers(private val setAllowed: Boolean) : SpellAction {
     override val argc = 2
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): SpellAction.Result {
-        val wispThis = args.getBaseCastingWisp(0, argc)
+        val wispThis = args.getBaseCastingWisp(env.world, 0, argc)
 
         env.assertEntityInRange(wispThis)
 

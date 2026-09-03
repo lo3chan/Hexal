@@ -15,7 +15,7 @@ object OpGetItemTrades : ConstMediaAction {
     override val argc = 1
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        val villager = args.getVillager(0, argc)
+        val villager = args.getVillager(env.world, 0, argc)
 
         villager.tradingPlayer = env.caster
 
