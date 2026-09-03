@@ -107,7 +107,7 @@ class BlockEntityMediafiedStorage(pos: BlockPos, val state: BlockState) : HexBlo
      */
     override fun getUpdateTag(registries: net.minecraft.core.HolderLookup.Provider) = CompoundTag().also { it.putBoolean(TAG_HAS_ITEMS, _storedItems.isNotEmpty()) }
 
-    override fun saveModData(tag: CompoundTag) {
+    override fun saveModData(tag: CompoundTag, holderLookup: net.minecraft.core.HolderLookup.Provider) {
         tag.putUUID(TAG_UUID, uuid)
         tag.putInt(TAG_INDEX, currentItemIndex)
 
@@ -125,7 +125,7 @@ class BlockEntityMediafiedStorage(pos: BlockPos, val state: BlockState) : HexBlo
         tag.putBoolean(TAG_HAS_ITEMS, _storedItems.isNotEmpty())
     }
 
-    override fun loadModData(tag: CompoundTag) {
+    override fun loadModData(tag: CompoundTag, holderLookup: net.minecraft.core.HolderLookup.Provider) {
         if (TAG_UUID in tag)
             uuid = tag.getUUID(TAG_UUID)
 

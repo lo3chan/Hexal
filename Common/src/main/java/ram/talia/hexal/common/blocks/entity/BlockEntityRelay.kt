@@ -1,5 +1,7 @@
 package ram.talia.hexal.common.blocks.entity
 
+import ram.talia.hexal.api.parseFrozenPigment
+import ram.talia.hexal.api.toNbt
 import at.petrak.hexcasting.api.block.HexBlockEntity
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.iota.Iota
@@ -283,9 +285,9 @@ class BlockEntityRelay(pos: BlockPos, val state: BlockState) : HexBlockEntity(He
     }
     //endregion
 
-    override fun loadModData(tag: CompoundTag) {
+    override fun loadModData(tag: CompoundTag, holderLookup: net.minecraft.core.HolderLookup.Provider) {
         if (tag.contains(TAG_PIGMENT))
-            relayNetwork.pigment = FrozenPigment.fromNBT(tag.getCompound(TAG_PIGMENT))
+            relayNetwork.pigment = parseFrozenPigment(tag.getCompound(TAG_PIGMENT))
         if (tag.contains(TAG_PIGMENT_TIME))
             relayNetwork.timeColouriserSet = tag.getLong(TAG_PIGMENT_TIME)
         if (tag.contains(TAG_LINKABLE_HOLDER))
@@ -301,8 +303,8 @@ class BlockEntityRelay(pos: BlockPos, val state: BlockState) : HexBlockEntity(He
         }
     }
 
-    override fun saveModData(tag: CompoundTag) {
-        tag.put(TAG_PIGMENT, relayNetwork.pigment.serializeToNBT())
+    override fun saveModData(tag: CompoundTag, holderLookup: net.minecraft.core.HolderLookup.Provider) {
+        tag.put(TAG_PIGMENT, relayNetwork.pigment.toNbt())
         tag.putLong(TAG_PIGMENT_TIME, relayNetwork.timeColouriserSet)
         tag.putCompound(TAG_LINKABLE_HOLDER, linkableHolder!!.writeToNbt())
         tag.putList(TAG_RELAYS_LINKED_DIRECTLY, relaysDirectlyLinkedToTag())
@@ -390,7 +392,7 @@ class BlockEntityRelay(pos: BlockPos, val state: BlockState) : HexBlockEntity(He
             }
 
         var timeColouriserSet = 0L
-        var pigment: FrozenPigment = FrozenPigment(HexItems.DYE_PIGMENTS[DyeColor.PURPLE]?.let { ItemStack(it) }, Util.NIL_UUID)
+        var pigment: FrozenPigment = FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS[DyeColor.PURPLE] ?: net.minecraft.world.item.Items.PURPLE_DYE), Util.NIL_UUID)
 
         fun setPigment(pigment: FrozenPigment, time: Long) {
             this.pigment = pigment

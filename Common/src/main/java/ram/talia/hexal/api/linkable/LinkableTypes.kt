@@ -34,7 +34,7 @@ object LinkableTypes {
 			return (env as? WispCastEnv)?.wisp
 		}
 		override val castingContextPriority = 0
-		override fun linkableFromIota(iota: Iota, level: ServerLevel): LinkableEntity? = (iota as? EntityIota)?.entity as? LinkableEntity
+		override fun linkableFromIota(iota: Iota, level: ServerLevel): LinkableEntity? = ((iota as? EntityIota)?.getEntity(level) as? LinkableEntity)
 		override val iotaPriority = 0
 	}
 
@@ -63,7 +63,7 @@ object LinkableTypes {
 		override val castingContextPriority = -100
 
 		override fun linkableFromIota(iota: Iota, level: ServerLevel)
-			= ((iota as? EntityIota)?.entity as? ServerPlayer)?.let { IXplatAbstractions.INSTANCE.getLinkstore(it) }
+			= (((iota as? EntityIota)?.getEntity(level) as? ServerPlayer)?.let { IXplatAbstractions.INSTANCE.getLinkstore(it) })
 
 		override val iotaPriority = 0
 	}

@@ -1,5 +1,8 @@
 package ram.talia.hexal.api.everbook
 
+import ram.talia.hexal.api.parseIota
+import ram.talia.hexal.api.toNbt
+import at.petrak.hexcasting.api.casting.iota.PatternIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.math.HexPattern
@@ -115,21 +118,15 @@ class MacroHolder(val everbook: Everbook) {
 	}
 
 	private fun extractList(spellListTag: CompoundTag): MutableList<CompoundTag>? {
-		return when (HexIotaTypes.REGISTRY[ResourceLocation.parse(spellListTag.getString(HexIotaTypes.KEY_TYPE))]) {
-			HexIotaTypes.LIST -> spellListTag.getList(HexIotaTypes.KEY_DATA, Tag.TAG_COMPOUND.toInt()).toCompoundTagList()
-			else -> null
-		}
+		val iota = parseIota(spellListTag)
+		return if (iota is ListIota) {
+			iota.list.map { it.toNbt() }.toMutableList()
+		} else null
 	}
 
 	private fun parseToPattern(patternTag: CompoundTag): HexPattern? {
-		val keys = patternTag.allKeys
-
-		if (keys.size != 1)
-			return null
-		return when (patternTag.getString(HexIotaTypes.KEY_TYPE)) {
-			"pattern"-> HexPattern.fromNBT(patternTag.getCompound(HexIotaTypes.KEY_DATA))
-			else -> null
-		}
+		val iota = parseIota(patternTag)
+		return if (iota is PatternIota) iota.pattern else null
 	}
 
 	private fun getKey(key: HexPattern): String {

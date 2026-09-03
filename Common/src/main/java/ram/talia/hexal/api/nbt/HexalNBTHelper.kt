@@ -1,5 +1,7 @@
 package ram.talia.hexal.api.nbt
 
+import ram.talia.hexal.api.parseIota
+import ram.talia.hexal.api.toNbt
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.utils.asCompound
@@ -24,7 +26,7 @@ fun ListTag.toIotaList(level: ServerLevel): MutableList<Iota> {
 	val out = ArrayList<Iota>()
 	for (patTag in this) {
 		val tag = patTag.asCompound
-		out.add(IotaType.deserialize(tag, level))
+		out.add(parseIota(tag))
 	}
 	return out
 }
@@ -33,7 +35,7 @@ fun ListTag.toIotaList(level: ServerLevel): MutableList<Iota> {
 fun List<Iota>.toNbtList(): ListTag {
 	val patsTag = ListTag()
 	for (pat in this) {
-		patsTag.add(IotaType.serialize(pat))
+		patsTag.add(pat.toNbt())
 	}
 	return patsTag
 }

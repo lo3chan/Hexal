@@ -1,5 +1,7 @@
 package ram.talia.hexal.api.nbt
 
+import ram.talia.hexal.api.parseIota
+import ram.talia.hexal.api.toNbt
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
@@ -40,8 +42,8 @@ class SerialisedIotaList(private var tag: ListTag?, private var iotas: MutableLi
     {
         when (iota.type) {
             HexIotaTypes.ENTITY -> {
-                val entity = (iota as EntityIota).entity
-                if (!entityList.contains(entity)) {
+                val entity = level?.let { (iota as EntityIota).getEntity(it) }
+                if (entity != null && !entityList.contains(entity)) {
                     entityList.add(entity)
                 }
             }
@@ -56,18 +58,13 @@ class SerialisedIotaList(private var tag: ListTag?, private var iotas: MutableLi
 
     private fun scanTagForEntities(tag: CompoundTag, referencedEntityUUIDs: MutableList<UUID>)
     {
-        val type = getTypeFromTag(tag) ?: return
-        val data = tag[HexIotaTypes.KEY_DATA] ?: return
-
-        when (type) {
-            HexIotaTypes.ENTITY -> {
-                val uuidTag = data.downcast(CompoundTag.TYPE)["uuid"] ?: return
-                val uuid = NbtUtils.loadUUID(uuidTag)
-                if (!referencedEntityUUIDs.contains(uuid)) {
-                    referencedEntityUUIDs.add(uuid)
-                }
+        val iota = parseIota(tag)
+        if (iota is EntityIota) {
+            val uuid = iota.entityId
+            if (!referencedEntityUUIDs.contains(uuid)) {
+                referencedEntityUUIDs.add(uuid)
             }
-            HexIotaTypes.LIST -> {
+        } else if (iota is ListIota) {
                 val listTag = data.downcast(ListTag.TYPE)
                 for (sub in listTag) {
                     scanTagForEntities(sub.downcast(CompoundTag.TYPE), referencedEntityUUIDs)

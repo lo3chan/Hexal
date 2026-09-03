@@ -127,7 +127,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 		val userData = CompoundTag()
 		cast.initialRavenmind?.let { userData.putCompound(HexAPI.RAVENMIND_USERDATA, it) }
 		val image = CastingImage().copy(
-			stack = cast.initialStack.getIotas(wisp.level() as ServerLevel),
+			stack = at.petrak.hexcasting.api.utils.TreeList.from(cast.initialStack.getIotas(wisp.level() as ServerLevel)),
 			userData = userData
 		)
 

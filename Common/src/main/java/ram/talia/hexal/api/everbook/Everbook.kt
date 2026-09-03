@@ -1,5 +1,8 @@
 package ram.talia.hexal.api.everbook
 
+import ram.talia.hexal.api.parseIota
+import ram.talia.hexal.api.toNbt
+import ram.talia.hexal.api.parseHexPattern
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.NullIota
@@ -38,7 +41,7 @@ class Everbook(val uuid: UUID, private val entries: MutableMap<String, Pair<HexP
 
 	fun getIota(key: HexPattern, level: ServerLevel): Iota {
 		val entry = entries[getKey(key)]
-		return if (entry == null) NullIota() else IotaType.deserialize(entry.second, level)
+		return if (entry == null) NullIota() else parseIota(entry.second)
 	}
 
 	internal fun getIota(key: String) : CompoundTag {
@@ -47,7 +50,7 @@ class Everbook(val uuid: UUID, private val entries: MutableMap<String, Pair<HexP
 	}
 
 	fun setIota(key: HexPattern, iota: Iota) {
-		this.setIota(key, IotaType.serialize(iota))
+		this.setIota(key, iota.toNbt())
 	}
 
 	fun setIota(key: HexPattern, iota: CompoundTag) {
@@ -97,9 +100,9 @@ class Everbook(val uuid: UUID, private val entries: MutableMap<String, Pair<HexP
 	 */
 	fun filterIotasIllegalInterworld(level: ServerLevel): Everbook {
 		entries.replaceAll { _, iotaCompound ->
-			val iota = MishapIllegalInterworldIota.replaceInNestedIota(IotaType.deserialize(iotaCompound.second, level))
+			val iota = MishapIllegalInterworldIota.replaceInNestedIota(parseIota(iotaCompound.second))
 
-			iotaCompound.first to IotaType.serialize(iota)
+			iotaCompound.first to iota.toNbt()
 		}
 
 		macroHolder.recalcMacros()
@@ -113,7 +116,7 @@ class Everbook(val uuid: UUID, private val entries: MutableMap<String, Pair<HexP
 		tag.putList(TAG_MACROS, macroHolder.serialiseToNBT())
 		entries.forEach { (key, pair) ->
 			val pairCompound = CompoundTag()
-			pairCompound.put(TAG_PATTERN, pair.first.serializeToNBT())
+			pairCompound.put(TAG_PATTERN, pair.first.toNbt())
 			pairCompound.put(TAG_IOTA, pair.second)
 			tag.put(key, pairCompound)
 		}
@@ -173,7 +176,7 @@ class Everbook(val uuid: UUID, private val entries: MutableMap<String, Pair<HexP
 					return@forEach
 				val pairCompound = tag.getCompound(it)
 				if (pairCompound.hasCompound(TAG_PATTERN) && pairCompound.hasCompound(TAG_IOTA))
-					entries[it] = Pair(HexPattern.fromNBT(pairCompound.getCompound(TAG_PATTERN)), pairCompound.getCompound(TAG_IOTA))
+					entries[it] = Pair(parseHexPattern(pairCompound.getCompound(TAG_PATTERN)), pairCompound.getCompound(TAG_IOTA))
 			}
 
 			val macros = if (tag.hasList(TAG_MACROS)) tag.getList(TAG_MACROS, Tag.TAG_STRING).map { (it as StringTag).asString } else listOf()
