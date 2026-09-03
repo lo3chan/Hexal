@@ -71,9 +71,9 @@ repositories {
 dependencies {
     compileOnly project(":Common")
 
-    implementation "at.petra-k.paucal:paucal-neoforge-$minecraftVersion:$paucalVersion"
-    implementation "at.petra-k.hexcasting:hexcasting-neoforge-$minecraftVersion:$hexcastingVersion"
-    implementation "software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:4.6.6"
+    compileOnly "at.petra-k.paucal:paucal-common-$minecraftVersion:$paucalVersion"
+    compileOnly "at.petra-k.hexcasting:hexcasting-common-$minecraftVersion:$hexcastingVersion"
+    compileOnly "software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:4.6.6"
     implementation "thedarkcolour:kotlinforforge:$kotlinForForgeVersion"
 
     // Testing dependencies:
