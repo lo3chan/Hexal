@@ -1,6 +1,6 @@
 package ram.talia.hexal.common.entities
 
-import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
+import ram.talia.hexal.api.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.utils.hasByte

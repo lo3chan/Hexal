@@ -1,7 +1,7 @@
 package ram.talia.hexal.api.linkable
 
 import at.petrak.hexcasting.api.pigment.FrozenPigment
-import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
+import ram.talia.hexal.api.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.EntityIota
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer

@@ -4,7 +4,7 @@ import ram.talia.hexal.api.caster
 import at.petrak.hexcasting.api.casting.*
 import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
-import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
+import ram.talia.hexal.api.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.Iota
 import ram.talia.hexal.api.casting.mishaps.MishapNoLinked
 import ram.talia.hexal.api.casting.mishaps.MishapNonPlayer
