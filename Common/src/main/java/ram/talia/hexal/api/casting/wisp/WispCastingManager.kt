@@ -132,10 +132,6 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 		)
 
 		val hex = cast.hex.getIotas(wisp.level() as ServerLevel)
-
-		// if we're debugging this wisp, delegate to the debugger
-		}
-
 		val harness = CastingVM(image, ctx)
 
 		val info = harness.queueExecuteAndWrapIotas(hex, wisp.level() as ServerLevel)
