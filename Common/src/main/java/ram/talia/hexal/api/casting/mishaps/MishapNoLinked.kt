@@ -1,5 +1,7 @@
 package ram.talia.hexal.api.casting.mishaps
 
+import net.minecraft.server.level.ServerPlayer
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
@@ -15,8 +17,10 @@ class MishapNoLinked(val linkable: ILinkable) : Mishap() {
     override fun errorMessage(env: CastingEnvironment, errorCtx: Context): Component =
             error("no_links", linkable.toString())
 
-    override fun execute(env: CastingEnvironment, errorCtx: Context, stack: MutableList<Iota>) {
+    override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
         val pos = linkable.getPosition()
         env.world.explode(null, pos.x, pos.y, pos.z, 0.25f, Level.ExplosionInteraction.NONE)
     }
+	return stack
+
 }

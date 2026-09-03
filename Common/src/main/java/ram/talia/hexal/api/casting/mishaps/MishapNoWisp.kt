@@ -1,5 +1,7 @@
 package ram.talia.hexal.api.casting.mishaps
 
+import net.minecraft.server.level.ServerPlayer
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.eval.env.PlayerBasedCastEnv
 import at.petrak.hexcasting.api.casting.iota.Iota
@@ -26,10 +28,10 @@ class MishapNoWisp : Mishap() {
 		}
 	}
 
-	override fun execute(env: CastingEnvironment, errorCtx: Context, stack: MutableList<Iota>) {
+	override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
 		if (env !is PlayerBasedCastEnv)
 			return
-		val caster = env.caster ?: return
+		val caster = (env.castingEntity as? ServerPlayer) ?: return
 
 		dropAll(caster, caster.inventory.items)
 		dropAll(caster, caster.inventory.offhand)
@@ -37,4 +39,6 @@ class MishapNoWisp : Mishap() {
 			!EnchantmentHelper.has(it, net.minecraft.world.item.enchantment.EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)
 		}
 	}
+	return stack
+
 }

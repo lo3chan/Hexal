@@ -104,7 +104,7 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 		private val RANDOM = Random()
 
 		fun getRandomPigment(): FrozenPigment {
-			return FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS.values.elementAt(RANDOM.nextInt(HexItems.DYE_PIGMENTS.size))), Util.NIL_UUID)
+			return FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS.values.elementAt(RANDOM.nextInt(HexItems.DYE_PIGMENTS.size)).get()), Util.NIL_UUID)
 		}
 
 		private val colours = makeColours()
@@ -115,7 +115,7 @@ class BlockEntitySlipway(pos: BlockPos, state: BlockState) : HexBlockEntity(Hexa
 
 			for (i in 0..32) {
 				for (colouriser in HexItems.DYE_PIGMENTS.values) {
-					val frozenColouriser = FrozenPigment(ItemStack(colouriser), Util.NIL_UUID)
+					val frozenColouriser = FrozenPigment(ItemStack(colouriser.get()), Util.NIL_UUID)
 					coloursList.add(frozenColouriser.nextColour(random))
 				}
 			}

@@ -1,5 +1,7 @@
 package ram.talia.hexal.api.casting.mishaps
 
+import net.minecraft.server.level.ServerPlayer
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.mishaps.Mishap
@@ -12,5 +14,7 @@ class MishapNeedsCaster : Mishap() {
 
     override fun errorMessage(env: CastingEnvironment, errorCtx: Context): Component = error("needs_caster", actionName(errorCtx.name))
 
-    override fun execute(env: CastingEnvironment, errorCtx: Context, stack: MutableList<Iota>) {}
+    override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {}
+	return stack
+
 }

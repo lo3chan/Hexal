@@ -392,7 +392,7 @@ class BlockEntityRelay(pos: BlockPos, val state: BlockState) : HexBlockEntity(He
             }
 
         var timeColouriserSet = 0L
-        var pigment: FrozenPigment = FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS[DyeColor.PURPLE] ?: net.minecraft.world.item.Items.PURPLE_DYE), Util.NIL_UUID)
+        var pigment: FrozenPigment = FrozenPigment(ItemStack(HexItems.DYE_PIGMENTS[DyeColor.PURPLE]?.get() ?: net.minecraft.world.item.Items.PURPLE_DYE), Util.NIL_UUID)
 
         fun setPigment(pigment: FrozenPigment, time: Long) {
             this.pigment = pigment

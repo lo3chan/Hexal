@@ -27,6 +27,6 @@ object OpGetContainedMotes : UserDataConstMediaAction {
             MediafiedItemManager.getItemRecordsMatching(storage, it)
         }) ?: return listOf(NullIota())
 
-        return ram.talia.hexal.api.asActionResult(results)
+        return listOf(at.petrak.hexcasting.api.casting.iota.ListIota(at.petrak.hexcasting.api.utils.TreeList.from(results.keys.map { ram.talia.hexal.api.casting.iota.MoteIota(it) })))
     }
 }

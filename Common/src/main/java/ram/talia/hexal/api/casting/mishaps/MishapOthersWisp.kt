@@ -20,4 +20,6 @@ class MishapOthersWisp(val other: Player?) : Mishap() {
 	override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
 		(env.castingEntity as? ServerPlayer)?.addEffect(MobEffectInstance(MobEffects.BLINDNESS, 20 * 60))
 	}
+	return stack
+
 }

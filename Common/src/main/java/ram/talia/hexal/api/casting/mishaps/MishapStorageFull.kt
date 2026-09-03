@@ -1,5 +1,6 @@
 package ram.talia.hexal.api.casting.mishaps
 
+import net.minecraft.server.level.ServerPlayer
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.utils.TreeList
@@ -23,7 +24,7 @@ class MishapStorageFull(val storage: UUID) : Mishap() {
     override fun execute(ctx: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
         // get a random record from in the storage
         val allRecords = MediafiedItemManager.getAllRecords(storage) ?: return stack
-        val index = allRecords.keys.randomOrNull() ?: return
+        val index = allRecords.keys.randomOrNull() ?: return stack
         val iota = MoteIota(index)
         val toDrop = iota.getStacksToDrop(iota.item.defaultMaxStackSize) // the stack to drop.
 

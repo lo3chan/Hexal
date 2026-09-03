@@ -1,5 +1,7 @@
 package ram.talia.hexal.api.casting.mishaps
 
+import net.minecraft.server.level.ServerPlayer
+import at.petrak.hexcasting.api.utils.TreeList
 import at.petrak.hexcasting.api.casting.asActionResult
 import at.petrak.hexcasting.api.casting.eval.CastingEnvironment
 import at.petrak.hexcasting.api.casting.iota.GarbageIota
@@ -19,8 +21,8 @@ class MishapIllegalInterworldIota(val iota: Iota) : Mishap() {
 
     override fun errorMessage(env: CastingEnvironment, errorCtx: Context): Component = error("illegal_interworld_iota", iota.display())
 
-    override fun execute(env: CastingEnvironment, errorCtx: Context, stack: MutableList<Iota>) {
-        env.caster?.let { it.health /= 2 } // Bad but better than freaking TODO()
+    override fun execute(env: CastingEnvironment, errorCtx: Context, stack: TreeList<Iota>): TreeList<Iota> {
+        (env.castingEntity as? ServerPlayer)?.let { it.health /= 2 } // Bad but better than freaking TODO()
     }
 
     companion object {
@@ -52,4 +54,6 @@ class MishapIllegalInterworldIota(val iota: Iota) : Mishap() {
             }
         }
     }
+	return stack
+
 }
