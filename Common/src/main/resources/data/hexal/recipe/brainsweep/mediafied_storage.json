@@ -2,7 +2,7 @@
   "type": "hexcasting:brainsweep",
   "blockIn": {
     "type": "hexcasting:tag",
-    "tag": "minecraft:shulker_boxes"
+    "tag": "#minecraft:shulker_boxes"
   },
   "cost": 1000000,
   "entityIn": {
