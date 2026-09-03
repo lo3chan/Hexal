@@ -27,7 +27,8 @@ import java.util.function.Function;
 public class ForgeClientXplatImpl implements IClientXplatAbstractions {
 	@Override
 	public void sendPacketToServer (IMessage packet) {
-		PacketDistributor.sendToServer(packet);
+		if (packet instanceof net.minecraft.network.protocol.common.custom.CustomPacketPayload payload)
+			PacketDistributor.sendToServer(payload);
 	}
 	
 	@Override

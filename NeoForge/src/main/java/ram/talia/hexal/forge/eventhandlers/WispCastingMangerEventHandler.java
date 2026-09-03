@@ -149,11 +149,11 @@ public class WispCastingMangerEventHandler {
 	 * Ticks each player's {@link WispCastingManager}, meaning that their wisps casts execute properly.
 	 */
 	@SubscribeEvent
-	public static void playerTick(TickEvent.PlayerTickEvent event) {
-		if (event.side == LogicalSide.CLIENT)
+	public static void playerTick(PlayerTickEvent.Post event) {
+		if (event.getEntity().level().isClientSide)
 			return;
 		
-		ServerPlayer player = (ServerPlayer) event.player;
+		ServerPlayer player = (ServerPlayer) event.getEntity();
 		
 		getCastingManager(player).executeCasts();
 	}

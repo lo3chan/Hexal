@@ -7,7 +7,7 @@ import com.mojang.authlib.GameProfile;
 import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -46,9 +46,7 @@ import ram.talia.hexal.forge.eventhandlers.BoundStorageEventHandler;
 import ram.talia.hexal.forge.eventhandlers.EverbookEventHandler;
 import ram.talia.hexal.forge.eventhandlers.PlayerLinkstoreEventHandler;
 import ram.talia.hexal.forge.eventhandlers.WispCastingMangerEventHandler;
-import ram.talia.hexal.forge.network.ForgePacketHandler;
 import ram.talia.hexal.xplat.IXplatAbstractions;
-import software.bernie.example.client.renderer.item.JackInTheBoxRenderer;
 
 import java.util.List;
 import java.util.UUID;
@@ -64,17 +62,20 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 
 	@Override
 	public void sendPacketToPlayer(ServerPlayer target, IMessage packet) {
-		PacketDistributor.sendToPlayer(target, packet);
+		if (packet instanceof CustomPacketPayload payload)
+			PacketDistributor.sendToPlayer(target, payload);
 	}
 	
 	@Override
 	public void sendPacketNear(Vec3 pos, double radius, ServerLevel dimension, IMessage packet) {
-		PacketDistributor.sendToPlayersNear(dimension, null, pos.x, pos.y, pos.z, radius, packet);
+		if (packet instanceof CustomPacketPayload payload)
+			PacketDistributor.sendToPlayersNear(dimension, null, pos.x, pos.y, pos.z, radius, payload);
 	}
 
 	@Override
 	public void sendPacketTracking(Entity entity, IMessage packet) {
-		PacketDistributor.sendToPlayersTrackingEntity(entity, packet);
+		if (packet instanceof CustomPacketPayload payload)
+			PacketDistributor.sendToPlayersTrackingEntity(entity, payload);
 	}
 
 	@Override
@@ -84,16 +85,18 @@ public class ForgeXplatImpl implements IXplatAbstractions {
 
 	@Override
 	public void sendPacketTracking(BlockPos pos, ServerLevel dimension, IMessage packet) {
-		PacketDistributor.sendToPlayersTrackingChunk(dimension, new ChunkPos(pos), packet);
+		if (packet instanceof CustomPacketPayload payload)
+			PacketDistributor.sendToPlayersTrackingChunk(dimension, new ChunkPos(pos), payload);
 	}
 
 	@Override
 	public void sendPacketTracking(ChunkPos pos, ServerLevel dimension, IMessage packet) {
-		PacketDistributor.sendToPlayersTrackingChunk(dimension, pos, packet);
+		if (packet instanceof CustomPacketPayload payload)
+			PacketDistributor.sendToPlayersTrackingChunk(dimension, pos, payload);
 	}
 
 	@Override
-	public Packet<?> toVanillaClientboundPacket(IMessage message) {
+	public net.minecraft.network.protocol.Packet<?> toVanillaClientboundPacket(IMessage message) {
 		return null;
 	}
 

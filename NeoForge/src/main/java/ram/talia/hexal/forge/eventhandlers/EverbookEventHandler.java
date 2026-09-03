@@ -102,7 +102,7 @@ public class EverbookEventHandler {
 		syncedLocalToServer = true;
 		
 		localEverbook = Everbook.fromDisk(event.getEntity().getUUID());
-		PacketDistributor.sendToServer(new MsgSendEverbookC2S(localEverbook));
+		ram.talia.hexal.xplat.IClientXplatAbstractions.INSTANCE.sendPacketToServer(new MsgSendEverbookC2S(localEverbook));
 	}
 	
 	@OnlyIn(Dist.CLIENT)

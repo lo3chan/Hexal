@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 public class GateSavedData extends SavedData {
     public GateSavedData() {  }
 
-    public GateSavedData(CompoundTag tag) {
+    public GateSavedData(CompoundTag tag, net.minecraft.core.HolderLookup.Provider registries) {
         GateManager.readFromNbt(tag);
     }
 

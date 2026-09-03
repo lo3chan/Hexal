@@ -27,8 +27,6 @@ import ram.talia.hexal.common.lib.hex.HexalArithmetics;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
 import ram.talia.hexal.common.network.MsgSendEverbookC2S;
 import ram.talia.hexal.common.recipe.HexalRecipeSerializers;
-import ram.talia.hexal.common.recipe.HexalRecipeTypes;
-import ram.talia.hexal.forge.datagen.HexalForgeDataGenerators;
 import ram.talia.hexal.forge.eventhandlers.*;
 import ram.talia.hexal.forge.network.ForgePacketHandler;
 import thedarkcolour.kotlinforforge.KotlinModLoadingContext;
