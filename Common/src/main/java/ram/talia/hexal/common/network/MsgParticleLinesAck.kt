@@ -11,8 +11,10 @@ import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.nextColour
+import ram.talia.hexal.api.parseFrozenPigment
 import ram.talia.hexal.api.plus
 import ram.talia.hexal.api.times
+import ram.talia.hexal.api.toNbt
 
 class MsgParticleLinesAck(val locs: List<Vec3>, val colouriser: FrozenPigment): IMessage {
     override fun serialize(buf: FriendlyByteBuf) {
@@ -22,7 +24,7 @@ class MsgParticleLinesAck(val locs: List<Vec3>, val colouriser: FrozenPigment): 
             buf.writeDouble(loc.y)
             buf.writeDouble(loc.z)
         }
-        buf.writeNbt(ram.talia.hexal.api.toNbt(colouriser))
+        buf.writeNbt(colouriser.toNbt())
     }
 
     override fun getFabricId() = ID

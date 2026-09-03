@@ -12,7 +12,8 @@ import ram.talia.hexal.xplat.IClientXplatAbstractions
 
 class MsgToggleMacroS2C(val key: HexPattern) : IMessage {
 	override fun serialize(buf: FriendlyByteBuf) {
-		HexPattern.STREAM_CODEC.encode(buf, key)
+		buf.writeEnum(key.startDir)
+		buf.writeUtf(key.anglesSignature())
 	}
 
 	override fun getFabricId() = ID
@@ -24,7 +25,10 @@ class MsgToggleMacroS2C(val key: HexPattern) : IMessage {
 		@JvmStatic
 		fun deserialise(buffer: ByteBuf): MsgToggleMacroS2C {
 			val buf = FriendlyByteBuf(buffer)
-			return MsgToggleMacroS2C(HexPattern.STREAM_CODEC.decode(buf))
+			val dir = buf.readEnum(at.petrak.hexcasting.api.casting.math.HexDir::class.java)
+			val angles = buf.readUtf()
+			val pattern = HexPattern.fromAngles(angles, dir)
+			return MsgToggleMacroS2C(pattern)
 		}
 
 		@JvmStatic

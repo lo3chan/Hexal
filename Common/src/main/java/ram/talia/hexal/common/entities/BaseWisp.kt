@@ -19,6 +19,8 @@ import net.minecraft.world.phys.Vec3
 import ram.talia.hexal.api.linkable.ILinkable
 import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.nextColour
+import ram.talia.hexal.api.parseFrozenPigment
+import ram.talia.hexal.api.toNbt
 import kotlin.math.*
 
 abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : LinkableEntity(entityType, world), IMediaEntity<BaseWisp> {
@@ -118,7 +120,7 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	fun setPigment(pigment: FrozenPigment): FrozenPigment {
-		entityData.set(PIGMENT, ram.talia.hexal.api.toNbt(pigment))
+		entityData.set(PIGMENT, pigment.toNbt())
 		return pigment
 	}
 
@@ -140,7 +142,7 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 	}
 
 	override fun defineSynchedData(builder: net.minecraft.network.syncher.SynchedEntityData.Builder) {
-		builder.define(PIGMENT, ram.talia.hexal.api.toNbt(FrozenPigment.DEFAULT.get()))
+		builder.define(PIGMENT, FrozenPigment.DEFAULT.get().toNbt())
 		builder.define(MEDIA, 20L * MediaConstants.DUST_UNIT)
 	}
 

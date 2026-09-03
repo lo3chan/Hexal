@@ -18,6 +18,7 @@ import ram.talia.hexal.api.casting.castables.VarargSpellAction
 import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.casting.mishaps.MishapNoBoundStorage
 import ram.talia.hexal.api.casting.mishaps.MishapStorageFull
+import ram.talia.hexal.api.caster
 import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.getMote
 import ram.talia.hexal.api.getItemEntityOrItemFrame
@@ -48,12 +49,12 @@ object OpMakeMote : VarargSpellAction {
         val itemStack = iEtityEither.map( { it.item }, { it.item })
         val mote = if (argc == 2) args.getMote(1, argc) else null
 
-        val storage = if (mote == null) {
-            if (userData.contains(MoteIota.TAG_TEMP_STORAGE))
+        val storage: java.util.UUID? = if (mote == null) {
+            if (userData.contains(MoteIota.TAG_TEMP_STORAGE)) {
                 userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
-            else
+            } else {
                 env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
-                        ?: throw MishapNoBoundStorage()
+            } ?: throw MishapNoBoundStorage()
         } else null
 
         if (!itemStack.isEmpty) {
@@ -111,7 +112,7 @@ object OpMakeMote : VarargSpellAction {
                 }
             }
 
-            return image.copy(stack = stack)
+            return image.copy(stack = at.petrak.hexcasting.api.utils.TreeList.of(stack))
         }
     }
 }
