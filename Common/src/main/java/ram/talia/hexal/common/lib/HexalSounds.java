@@ -288,7 +288,7 @@ public class HexalSounds {
 		}
 		
 		protected ResourceLocation getIdOf (int i) {
-			return new ResourceLocation(id.getNamespace(), i == 0 ? id.getPath() : id.getPath() + "_compounded_" + i);
+			return ResourceLocation.fromNamespaceAndPath(id.getNamespace(), i == 0 ? id.getPath() : id.getPath() + "_compounded_" + i);
 		}
 		
 		@Override
