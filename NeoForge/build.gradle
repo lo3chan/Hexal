@@ -43,7 +43,10 @@ neoForge {
 }
 
 repositories {
+    flatDir { dirs '../libs' }
     mavenCentral()
+
+    maven { url 'https://maven.blamejared.com' }
 
     maven {
         // location of the maven that hosts JEI files
@@ -68,6 +71,9 @@ repositories {
 dependencies {
     compileOnly project(":Common")
 
+    implementation "at.petra-k.paucal:paucal-neoforge-$minecraftVersion:$paucalVersion"
+    implementation "at.petra-k.hexcasting:hexcasting-neoforge-$minecraftVersion:$hexcastingVersion"
+    implementation "software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:4.6.6"
     implementation "thedarkcolour:kotlinforforge:$kotlinForForgeVersion"
 
     // Testing dependencies:
