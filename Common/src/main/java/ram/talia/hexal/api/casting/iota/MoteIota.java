@@ -85,12 +85,12 @@ public class MoteIota extends Iota {
         return Objects.requireNonNull(MediafiedItemManager.getItem(this.getItemIndex()), "MediafiedItemManager returned null for Item that has existing MoteIota.");
     }
 
-    public CompoundTag getTag() {
-        return MediafiedItemManager.getTag(this.getItemIndex());
+    public net.minecraft.core.component.DataComponentPatch getComponents() {
+        return MediafiedItemManager.getComponents(this.getItemIndex());
     }
 
-    public void setTag(CompoundTag tag) {
-        MediafiedItemManager.setTag(this.getItemIndex(), tag);
+    public void setComponents(net.minecraft.core.component.DataComponentPatch components) {
+        MediafiedItemManager.setComponents(this.getItemIndex(), components);
     }
 
     public long getCount() {

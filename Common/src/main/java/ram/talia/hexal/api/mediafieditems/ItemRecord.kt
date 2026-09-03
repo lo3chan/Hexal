@@ -16,15 +16,15 @@ import kotlin.math.min
 /**
  * Much of the structure of this class comes from AE2's [AEItemKey](https://github.com/AppliedEnergistics/Applied-Energistics-2/blob/9ff272a869508125daf5727746c9d9b8b00248bd/src/main/java/appeng/api/stacks/AEItemKey.java).
  */
-data class ItemRecord(var item: Item, var tag: CompoundTag?, var count: Long) {
-    constructor(stack: ItemStack) : this(stack.item, stack.tag, stack.count.toLong())
+data class ItemRecord(var item: Item, var components: net.minecraft.core.component.DataComponentPatch?, var count: Long) {
+    constructor(stack: ItemStack) : this(stack.item, stack.componentsPatch, stack.count.toLong())
 
     fun typeMatches(other: ItemRecord): Boolean {
-        return item == other.item && tag == other.tag
+        return item == other.item && components == other.components
     }
 
     fun typeMatches(other: ItemStack): Boolean {
-        return item == other.item && tag == other.tag
+        return item == other.item && components == other.componentsPatch
     }
 
     fun addCount(toAdd: Long) {
@@ -58,14 +58,14 @@ data class ItemRecord(var item: Item, var tag: CompoundTag?, var count: Long) {
     }
 
     fun split(amount: Long): ItemRecord {
-        val splittee = ItemRecord(item, tag?.copy(), min(count, amount))
+        val splittee = ItemRecord(item, components, min(count, amount))
         count -= splittee.count
         return splittee
     }
 
     fun getDisplayName(): Component {
         val itemStack = ItemStack(item)
-        itemStack.tag = tag // don't need to copy tag since stack isn't used for anything.
+        components?.let { itemStack.applyComponents(it) }
         return itemStack.hoverName
     }
 
@@ -77,7 +77,7 @@ data class ItemRecord(var item: Item, var tag: CompoundTag?, var count: Long) {
         }
 
         val result = ItemStack(item)
-        result.tag = tag?.copy()
+        components?.let { result.applyComponents(it) }
         result.count = count
         return result
     }
@@ -90,7 +90,7 @@ data class ItemRecord(var item: Item, var tag: CompoundTag?, var count: Long) {
                 HexalAPI.LOGGER.warn("Tried dropping an excessive amount of items, ignoring $leftToTake $item")
                 break
             }
-            val taken = min(leftToTake, item.maxStackSize.toLong())
+            val taken = min(leftToTake, item.defaultMaxStackSize.toLong())
             leftToTake -= taken
             drops.add(toStack(taken.toInt()))
         }
@@ -106,13 +106,13 @@ data class ItemRecord(var item: Item, var tag: CompoundTag?, var count: Long) {
 
     fun writeToTag(tag: CompoundTag) {
         tag.putString(TAG_ITEM_ID, BuiltInRegistries.ITEM.getKey(this.item).toString())
-        this.tag?.let { tag.putCompound(TAG_NBT, it) }
+        this.components?.let { tag.put(TAG_COMPONENTS, net.minecraft.core.component.DataComponentPatch.CODEC.encodeStart(net.minecraft.nbt.NbtOps.INSTANCE, it).getOrThrow { IllegalStateException(it) }) }
         tag.putLong(TAG_COUNT, count)
     }
 
     companion object {
         const val TAG_ITEM_ID = "id"
-        const val TAG_NBT = "nbt"
+        const val TAG_COMPONENTS = "components"
         const val TAG_COUNT = "count"
 
         /**
@@ -120,8 +120,8 @@ data class ItemRecord(var item: Item, var tag: CompoundTag?, var count: Long) {
          */
         fun readFromTag(tag: CompoundTag): ItemRecord? {
             return try {
-                val item = BuiltInRegistries.ITEM.getOptional(ResourceLocation(tag.getString(TAG_ITEM_ID))).orElseThrow { IllegalArgumentException("Unknown item id.") }
-                val extraTag = if (tag.contains(TAG_NBT)) tag.getCompound(TAG_NBT) else null
+                val item = BuiltInRegistries.ITEM.getOptional(ResourceLocation.parse(tag.getString(TAG_ITEM_ID))).orElseThrow { IllegalArgumentException("Unknown item id.") }
+                val extraTag = if (tag.contains(TAG_COMPONENTS)) net.minecraft.core.component.DataComponentPatch.CODEC.parse(net.minecraft.nbt.NbtOps.INSTANCE, tag.get(TAG_COMPONENTS)).getOrThrow { IllegalStateException(it) } else null
                 val count = tag.getLong(TAG_COUNT)
                 ItemRecord(item, extraTag, count)
             } catch (e: Exception) {

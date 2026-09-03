@@ -56,23 +56,23 @@ class BlockRelay(properties: Properties) : Block(properties), EntityBlock, IForg
         }
     }
 
-    override fun use(state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hit: BlockHitResult): InteractionResult {
+    override fun useItemOn(stack: ItemStack, state: BlockState, level: Level, pos: BlockPos, player: Player, hand: InteractionHand, hit: BlockHitResult): net.minecraft.world.ItemInteractionResult {
         if (state.block !is BlockRelay)
-            return InteractionResult.PASS
-        val relay = level.getBlockEntity(pos) as? BlockEntityRelay ?: return InteractionResult.PASS
+            return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
+        val relay = level.getBlockEntity(pos) as? BlockEntityRelay ?: return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
 
-        val stack = player.getItemInHand(hand).copy()
-        if (!IXplatAbstractions.INSTANCE.isPigment(stack)) {
+        val playerStack = player.getItemInHand(hand).copy()
+        if (!IXplatAbstractions.INSTANCE.isPigment(playerStack)) {
             relay.debug()
-            return InteractionResult.PASS
+            return net.minecraft.world.ItemInteractionResult.PASS_TO_DEFAULT_BLOCK_INTERACTION
         }
 
-        if (removeItem(player, stack, 1)) {
-            relay.setPigment(FrozenPigment(stack, player.uuid), level)
-            return InteractionResult.SUCCESS
+        if (removeItem(player, playerStack, 1)) {
+            relay.setPigment(FrozenPigment(playerStack, player.uuid), level)
+            return net.minecraft.world.ItemInteractionResult.SUCCESS
         }
 
-        return InteractionResult.FAIL
+        return net.minecraft.world.ItemInteractionResult.FAIL
     }
 
     @Suppress("DEPRECATION")
@@ -99,7 +99,7 @@ class BlockRelay(properties: Properties) : Block(properties), EntityBlock, IForg
         }
 
         fun matches(stack: ItemStack): Boolean =
-                !stack.isEmpty && ItemStack.isSameItemSameTags(operativeItem, stack)
+                !stack.isEmpty && ItemStack.isSameItemSameComponents(operativeItem, stack)
 
         val presentCount = stacksToExamine.fold(0) { acc, stack ->
             acc + if (matches(stack)) stack.count else 0

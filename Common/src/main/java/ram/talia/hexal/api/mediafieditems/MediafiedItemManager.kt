@@ -91,11 +91,11 @@ object MediafiedItemManager {
     fun getItem(index: Index): Item? = access(index)?.item
 
     @JvmStatic
-    fun getTag(index: Index): CompoundTag? = access(index)?.tag
+    fun getComponents(index: Index): net.minecraft.core.component.DataComponentPatch? = access(index)?.components
 
     @JvmStatic
-    fun setTag(index: Index, tag: CompoundTag?) {
-        access(index)?.tag = tag
+    fun setComponents(index: Index, components: net.minecraft.core.component.DataComponentPatch?) {
+        access(index)?.components = components
     }
 
     @JvmStatic
@@ -170,7 +170,7 @@ object MediafiedItemManager {
     fun templateOff(index: Index, stack: ItemStack, count: Long?) {
         val record = access(index) ?: return
         record.item = stack.item
-        record.tag = stack.tag?.copy()
+        record.components = stack.componentsPatch
         count?.let { record.count = it }
     }
 

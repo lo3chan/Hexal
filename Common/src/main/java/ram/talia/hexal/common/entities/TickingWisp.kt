@@ -289,15 +289,15 @@ class TickingWisp : BaseCastingWisp {
 		compound.putFloat(TAG_MAXIMUM_MOVE_MULTIPLIER, entityData.get(MAXIMUM_MOVE_MULTIPLIER))
 	}
 
-	override fun defineSynchedData() {
-		super.defineSynchedData()
+	override fun defineSynchedData(builder: net.minecraft.network.syncher.SynchedEntityData.Builder) {
+		super.defineSynchedData(builder)
 
-		entityData.define(HAS_TARGET_MOVE_POS, false)
-		entityData.define(TARGET_MOVE_POS_X, position().x.toFloat())
-		entityData.define(TARGET_MOVE_POS_Y, position().y.toFloat())
-		entityData.define(TARGET_MOVE_POS_Z, position().z.toFloat())
-		entityData.define(CURRENT_MOVE_MULTIPLIER, 1f)
-		entityData.define(MAXIMUM_MOVE_MULTIPLIER, 1f)
+		builder.define(HAS_TARGET_MOVE_POS, false)
+		builder.define(TARGET_MOVE_POS_X, position().x.toFloat())
+		builder.define(TARGET_MOVE_POS_Y, position().y.toFloat())
+		builder.define(TARGET_MOVE_POS_Z, position().z.toFloat())
+		builder.define(CURRENT_MOVE_MULTIPLIER, 1f)
+		builder.define(MAXIMUM_MOVE_MULTIPLIER, 1f)
 	}
 
 	companion object {

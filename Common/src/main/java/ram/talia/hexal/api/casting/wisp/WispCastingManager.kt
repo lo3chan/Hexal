@@ -127,11 +127,11 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 		val userData = CompoundTag()
 		cast.initialRavenmind?.let { userData.putCompound(HexAPI.RAVENMIND_USERDATA, it) }
 		val image = CastingImage().copy(
-			stack = cast.initialStack.getIotas(ctx.world),
+			stack = cast.initialStack.getIotas(wisp.level() as ServerLevel),
 			userData = userData
 		)
 
-		val hex = cast.hex.getIotas(ctx.world)
+		val hex = cast.hex.getIotas(wisp.level() as ServerLevel)
 
 		// if we're debugging this wisp, delegate to the debugger
 		}
@@ -275,7 +275,7 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 
 		init {
 			// if a wisp is bound, it should skip the queue.
-			specialHandlers.add { _, cast -> cast.wisp?.seon == true }
+			specialHandlers.add { _: WispCastingManager, cast: WispCast -> cast.wisp?.seon == true }
 		}
 	}
 }

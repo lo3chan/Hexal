@@ -131,12 +131,12 @@ class WanderingWisp(entityType: EntityType<out WanderingWisp>, level: Level) : B
 		compound.putLong(TAG_START_TICK, startTick)
 	}
 
-	override fun defineSynchedData() {
-		super.defineSynchedData()
+	override fun defineSynchedData(builder: net.minecraft.network.syncher.SynchedEntityData.Builder) {
+		super.defineSynchedData(builder)
 
-		entityData.define(ACCELERATION_X, 0f)
-		entityData.define(ACCELERATION_Y, 0f)
-		entityData.define(ACCELERATION_Z, 0f)
+		builder.define(ACCELERATION_X, 0f)
+		builder.define(ACCELERATION_Y, 0f)
+		builder.define(ACCELERATION_Z, 0f)
 	}
 
 	companion object {

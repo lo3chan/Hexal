@@ -437,13 +437,13 @@ abstract class BaseCastingWisp(entityType: EntityType<out BaseCastingWisp>, worl
 		compound.put(TAG_WHITELIST_MEDIA_TRANSFER, whiteListTransferMedia.getUnloaded())
 	}
 
-	override fun defineSynchedData() {
-		super.defineSynchedData()
+	override fun defineSynchedData(builder: net.minecraft.network.syncher.SynchedEntityData.Builder) {
+		super.defineSynchedData(builder)
 
 		// defines the entry in SynchedEntityData associated with the EntityDataAccessor COLOURISER, and gives it a default value
 //		HexalAPI.LOGGER.info("defineSynchedData for $uuid called!")
-		entityData.define(SCHEDULED_CAST, false)
-		entityData.define(SEON, false)
+		builder.define(SCHEDULED_CAST, false)
+		builder.define(SEON, false)
 	}
 
 	override fun getAddEntityPacket(): Packet<ClientGamePacketListener> {

@@ -71,7 +71,7 @@ object OpTradeMote : VarargConstMediaAction {
 
         do {
             // have to recompute this each time since the merchantoffer will eat some items from each stack.
-            val toTradeItemStacks = toTradeItemIotas.map { it.record?.toStack(it.item.maxStackSize) }
+            val toTradeItemStacks = toTradeItemIotas.map { it.record?.toStack(it.item.defaultMaxStackSize) }
             val toTrade0 = toTradeItemStacks.getOrElse(0) { ItemStack.EMPTY } ?: ItemStack.EMPTY
             val toTrade1 = toTradeItemStacks.getOrElse(1) { ItemStack.EMPTY } ?: ItemStack.EMPTY
             val offers = villager.offers
@@ -102,8 +102,8 @@ object OpTradeMote : VarargConstMediaAction {
                     break
                 }
 
-                toTradeItemIotas.getOrNull(0)?.removeItems(toTradeItemIotas[0].item.maxStackSize - toTrade0.count)
-                toTradeItemIotas.getOrNull(1)?.removeItems(toTradeItemIotas[1].item.maxStackSize - toTrade1.count)
+                toTradeItemIotas.getOrNull(0)?.removeItems(toTradeItemIotas[0].item.defaultMaxStackSize - toTrade0.count)
+                toTradeItemIotas.getOrNull(1)?.removeItems(toTradeItemIotas[1].item.defaultMaxStackSize - toTrade1.count)
             }
 
         } while (!merchantoffer.isOutOfStock)

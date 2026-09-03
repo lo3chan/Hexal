@@ -101,7 +101,7 @@ object OpCloseGate : VarargSpellAction {
                 // having to rearrange those. Also it makes sense for LORE REASONS probably, since the caster is more
                 // aware of items they use often.
                 for (armorItem in teleportee.inventory.armor) {
-                    if (EnchantmentHelper.hasBindingCurse(armorItem))
+                    if (EnchantmentHelper.has(armorItem, net.minecraft.world.item.enchantment.EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE))
                         continue
 
                     if (Math.random() < baseDropChance * 0.25) {

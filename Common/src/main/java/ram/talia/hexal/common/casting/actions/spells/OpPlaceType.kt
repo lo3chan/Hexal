@@ -67,7 +67,7 @@ object OpPlaceType : SpellAction {
             val bstate = env.world.getBlockState(pos)
             val placeeStack = blockOrMoteIota.flatMap(
                     { block -> env.queryForMatchingStack { it.item is BlockItem && (it.item as BlockItem).block == block }?.copy() },
-                    { itemStack -> env.queryForMatchingStack { ItemStack.isSameItemSameTags(it, itemStack) }?.copy() },
+                    { itemStack -> env.queryForMatchingStack { ItemStack.isSameItemSameComponents(it, itemStack) }?.copy() },
                     { itemIota -> if (itemIota.item is BlockItem) itemIota.record?.toStack()?.takeUnless { it.isEmpty } else null }
             )  ?: return
 
@@ -98,7 +98,7 @@ object OpPlaceType : SpellAction {
 
             blockOrMoteIota.map(
                 { env.withdrawItem({ ItemStack.isSameItem(it, placeeStack) }, 1, true) },
-                { env.withdrawItem({ ItemStack.isSameItemSameTags(it, placeeStack) }, 1, true) },
+                { env.withdrawItem({ ItemStack.isSameItemSameComponents(it, placeeStack) }, 1, true) },
                 { it.removeItems(1) } )
 
             env.world.playSound(

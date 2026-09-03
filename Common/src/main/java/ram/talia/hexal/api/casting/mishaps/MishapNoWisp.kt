@@ -34,7 +34,7 @@ class MishapNoWisp : Mishap() {
 		dropAll(caster, caster.inventory.items)
 		dropAll(caster, caster.inventory.offhand)
 		dropAll(caster, caster.inventory.armor) {
-			!EnchantmentHelper.hasBindingCurse(it)
+			!EnchantmentHelper.has(it, net.minecraft.world.item.enchantment.EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)
 		}
 	}
 }

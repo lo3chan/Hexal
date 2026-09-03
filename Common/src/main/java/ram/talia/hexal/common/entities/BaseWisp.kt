@@ -140,9 +140,9 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 		compound.putLong(TAG_MEDIA, media)
 	}
 
-	override fun defineSynchedData() {
-		entityData.define(PIGMENT, FrozenPigment.DEFAULT.get().serializeToNBT())
-		entityData.define(MEDIA, 20L * MediaConstants.DUST_UNIT)
+	override fun defineSynchedData(builder: net.minecraft.network.syncher.SynchedEntityData.Builder) {
+		builder.define(PIGMENT, FrozenPigment.DEFAULT.get().serializeToNBT())
+		builder.define(MEDIA, 20L * MediaConstants.DUST_UNIT)
 	}
 
 	companion object {
