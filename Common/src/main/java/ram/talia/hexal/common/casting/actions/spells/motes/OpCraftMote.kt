@@ -78,12 +78,11 @@ object OpCraftMote : UserDataConstMediaAction {
     }
 
     internal fun getCraftResult(container: TransientCraftingContainer, env: CastingEnvironment): Pair<ItemStack, List<ItemStack>>? {
-        val recman = env.world.recipeManager
-        val recipes = recman.getAllRecipesFor(RecipeType.CRAFTING)
-        val recipe = recipes.find { it.matches(container, env.world) } ?: return null
+        val craftingInput = container.asCraftInput()
+        val recipeHolder = env.world.recipeManager.getRecipeFor(RecipeType.CRAFTING, craftingInput, env.world).orElse(null) ?: return null
 
-        val itemResult = recipe.assemble(container, env.world.registryAccess())
-        val remainingItems = recipe.getRemainingItems(container).filter { item -> !item.isEmpty }
+        val itemResult = recipeHolder.value.assemble(craftingInput, env.world.registryAccess())
+        val remainingItems = recipeHolder.value.getRemainingItems(craftingInput).filter { !it.isEmpty }
 
         return itemResult to remainingItems
     }

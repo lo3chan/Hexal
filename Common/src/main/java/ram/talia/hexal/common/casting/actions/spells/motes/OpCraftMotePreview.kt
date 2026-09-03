@@ -34,29 +34,26 @@ object OpCraftMotePreview : ConstMediaAction {
 
         val timesToCraft = getMinCount(griddedStacks)
 
-        val stackResult = EntityIota(null)itemResult.copyWithCount(itemResult.count.mulBounded(timesToCraft)))
-        val remainingIotas = remainingItems.map { EntityIota(null)it.copyWithCount(it.count.mulBounded(timesToCraft))) }.toMutableList()
+        val stackResult = NullIota()
+        val remainingIotas = remainingItems.map { NullIota() }.toMutableList()
 
         remainingIotas.add(0, stackResult)
         return remainingIotas.asActionResult
     }
 
-    private fun makeCraftingGrid(input: Anyone<EntityIota, MoteIota, SpellList>): Array<ItemStack?> {
+    private fun makeCraftingGrid(input: Anyone<NullIota, MoteIota, SpellList>): Array<ItemStack?> {
         val out = Array<ItemStack?>(9) { _ -> null }
 
         for ((idy, iota) in input.flatMap({ listOf(IndexedValue(0, it)) }, { listOf(IndexedValue(0, it)) }, { it.withIndex() })) {
             when (iota) {
-                is EntityIota -> out[idy * 3] = iota.itemStack.copyWithCount(1)
                 is MoteIota -> out[idy * 3] = iota.record?.toStack()
                 is ListIota -> {
-                    for ((idx, iota) in iota.list.withIndex()) {
-                        when (iota) {
-                            is EntityIota -> out[idy * 3 + idx] = iota.itemStack.copyWithCount(1)
-                            is MoteIota -> out[idy * 3 + idx] = iota.record?.toStack()
+                    for ((idx, subIota) in iota.list.withIndex()) {
+                        when (subIota) {
+                            is MoteIota -> out[idy * 3 + idx] = subIota.record?.toStack()
                             is NullIota -> out[idy * 3 + idx] = null
                             else -> throw MishapInvalidIota.of(input.flatMap({ it }, { it }, { ListIota(it) }), 0, "crafting_recipe")
                         }
-
                     }
                 }
                 is NullIota -> out[idy * 3] = null
