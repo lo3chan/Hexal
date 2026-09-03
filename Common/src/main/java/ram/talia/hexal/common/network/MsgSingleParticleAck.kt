@@ -16,8 +16,7 @@ class MsgSingleParticleAck(val pos: Vec3, val colouriser: FrozenPigment): IMessa
         buf.writeDouble(pos.x)
         buf.writeDouble(pos.y)
         buf.writeDouble(pos.z)
-        buf.writeItem(colouriser.item)
-        buf.writeUUID(colouriser.owner)
+        buf.writeNbt(ram.talia.hexal.api.toNbt(colouriser))
     }
 
     override fun getFabricId() = ID
@@ -30,9 +29,8 @@ class MsgSingleParticleAck(val pos: Vec3, val colouriser: FrozenPigment): IMessa
         fun deserialise(buffer: ByteBuf): MsgSingleParticleAck {
             val buf = FriendlyByteBuf(buffer)
             val pos = Vec3(buf.readDouble(), buf.readDouble(), buf.readDouble())
-            val item = buf.readItem()
-            val owner = buf.readUUID()
-            return MsgSingleParticleAck(pos, FrozenPigment(item, owner))
+            val colouriser = ram.talia.hexal.api.parseFrozenPigment(buf.readNbt()!!)
+            return MsgSingleParticleAck(pos, colouriser)
         }
 
         @JvmStatic

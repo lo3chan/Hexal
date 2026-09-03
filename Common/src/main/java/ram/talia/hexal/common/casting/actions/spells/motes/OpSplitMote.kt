@@ -5,9 +5,9 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import net.minecraft.nbt.CompoundTag
 import ram.talia.hexal.api.casting.castables.UserDataConstMediaAction
-import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.casting.mishaps.MishapNoBoundStorage
 import ram.talia.hexal.api.casting.mishaps.MishapStorageFull
+import ram.talia.hexal.api.getBoundStorage
 import ram.talia.hexal.api.getMote
 import ram.talia.hexal.api.getStrictlyPositiveLong
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
@@ -19,14 +19,10 @@ object OpSplitMote : UserDataConstMediaAction {
         val item = args.getMote(0, argc) ?: return listOf(NullIota())
         val toSplitOff = args.getStrictlyPositiveLong(1, argc)
 
-        val storage: java.util.UUID = if (userData.contains(MoteIota.TAG_TEMP_STORAGE)) {
-            userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
-        } else {
-            env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
-        } ?: throw MishapNoBoundStorage()
+        val storage = getBoundStorage(userData, env)
         if (!MediafiedItemManager.isStorageLoaded(storage))
             throw MishapNoBoundStorage("storage_unloaded")
-        if (MediafiedItemManager.isStorageFull(storage) != false) // if this is somehow null we should still throw an error here, things have gone pretty wrong
+        if (MediafiedItemManager.isStorageFull(storage) != false)
             throw MishapStorageFull(storage)
 
         val split = item.splitOff(toSplitOff, storage) ?: return listOf(item.copy(), NullIota())

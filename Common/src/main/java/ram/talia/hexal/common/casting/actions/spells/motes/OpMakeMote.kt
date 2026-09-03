@@ -49,12 +49,8 @@ object OpMakeMote : VarargSpellAction {
         val itemStack = iEtityEither.map( { it.item }, { it.item })
         val mote = if (argc == 2) args.getMote(1, argc) else null
 
-        val storage: java.util.UUID? = if (mote == null) {
-            if (userData.contains(MoteIota.TAG_TEMP_STORAGE)) {
-                userData.getUUID(MoteIota.TAG_TEMP_STORAGE)
-            } else {
-                env.caster?.let { MediafiedItemManager.getBoundStorage(it) }
-            } ?: throw MishapNoBoundStorage()
+        val storage = if (mote == null) {
+            getBoundStorage(userData, env)
         } else null
 
         if (!itemStack.isEmpty) {
@@ -112,7 +108,7 @@ object OpMakeMote : VarargSpellAction {
                 }
             }
 
-            return image.copy(stack = at.petrak.hexcasting.api.utils.TreeList.of(stack))
+            return image.copy(stack = at.petrak.hexcasting.api.utils.TreeList.from(stack))
         }
     }
 }
