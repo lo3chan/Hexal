@@ -30,11 +30,15 @@ import ram.talia.hexal.api.linkable.LinkableTypes
 import ram.talia.hexal.api.linkable.ServerLinkableHolder
 import ram.talia.hexal.common.blocks.BlockRelay
 import ram.talia.hexal.common.lib.HexalBlockEntities
+import software.bernie.geckolib.animatable.GeoAnimatable
 import software.bernie.geckolib.animatable.GeoBlockEntity
-import software.bernie.geckolib.core.animatable.GeoAnimatable
-import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache
-import software.bernie.geckolib.core.animation.*
-import software.bernie.geckolib.core.`object`.PlayState
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache
+import software.bernie.geckolib.animation.AnimatableManager
+import software.bernie.geckolib.animation.Animation
+import software.bernie.geckolib.animation.AnimationController
+import software.bernie.geckolib.animation.AnimationState
+import software.bernie.geckolib.animation.PlayState
+import software.bernie.geckolib.animation.RawAnimation
 import software.bernie.geckolib.util.GeckoLibUtil
 import java.util.*
 import kotlin.math.min
@@ -275,9 +279,7 @@ class BlockEntityRelay(pos: BlockPos, val state: BlockState) : HexBlockEntity(He
     }
 
     private fun getBobberPosition(): Vec3 {
-        val manager = instanceCache.getManagerForId<BlockEntityRelay>(0)
-        val bobber = manager.boneSnapshotCollection["Bobber"] ?: return Vec3.ZERO
-        return (bobber.offsetY + 10) / 16.0 * Vec3.atLowerCornerOf(state.getValue(BlockRelay.FACING).normal)
+        return Vec3.ZERO
     }
     //endregion
 
@@ -307,8 +309,8 @@ class BlockEntityRelay(pos: BlockPos, val state: BlockState) : HexBlockEntity(He
         tag.putList(TAG_NON_RELAYS_LINKED_DIRECTLY, nonRelaysLinkedDirectlyToTag())
     }
 
-    override fun getUpdateTag(): CompoundTag {
-        val tag = super.getUpdateTag()
+    override fun getUpdateTag(registries: net.minecraft.core.HolderLookup.Provider): CompoundTag {
+        val tag = super.getUpdateTag(registries)
         tag.putList(TAG_SYNC_NETWORK_ROOT, blockPosToListTag(relayNetwork.root.pos))
         return tag
     }
