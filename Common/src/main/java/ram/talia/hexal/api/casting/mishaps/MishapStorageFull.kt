@@ -20,7 +20,7 @@ class MishapStorageFull(val storage: UUID) : Mishap() {
         val allRecords = MediafiedItemManager.getAllRecords(storage) ?: return stack
         val index = allRecords.keys.randomOrNull() ?: return stack
         val iota = MoteIota(index)
-        val toDrop = iota.getStacksToDrop(iota.item.defaultMaxStackSize)
+        val toDrop = iota.getStacksToDrop((iota.item?.defaultMaxStackSize ?: 64).toLong())
         // drop item if level available
         return stack
     }

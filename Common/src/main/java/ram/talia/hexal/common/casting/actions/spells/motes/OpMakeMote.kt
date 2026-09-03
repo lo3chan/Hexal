@@ -87,11 +87,11 @@ object OpMakeMote : VarargSpellAction {
                 if (mote != null) {
                     if (!mote.typeMatches(itemStack))
                         return null // FAILSAFE: just. don't do anything, this is better than crashing
-                    val countRemaining = mote.absorb(itemStack)
+                    val countRemaining = MediafiedItemManager.merge(mote.itemIndex, itemStack)
                     if (countRemaining == 0)
                         iEntityEither.map( { it.discard() }, { it.item = ItemStack.EMPTY } )
                     else
-                        iEntityEither.map( { it.item.count = countRemaining }, { it.item.count = countRemaining } )
+                        iEntityEither.map( { it.item.count = countRemaining.toInt() }, { it.item.count = countRemaining.toInt() } )
                     stack.add(mote)
                 } else {
                     val storage = storage ?: return null // FAILSAFE: just. don't do anything, this is better than crashing

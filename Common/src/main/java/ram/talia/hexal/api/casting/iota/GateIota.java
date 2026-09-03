@@ -10,15 +10,12 @@ import io.netty.buffer.ByteBuf;
 import kotlin.Pair;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.UUIDUtil;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import ram.talia.hexal.api.gates.GateManager;
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes;
@@ -29,14 +26,6 @@ import java.util.Set;
 import java.util.UUID;
 
 public class GateIota extends Iota {
-
-    public static String TAG_INDEX = "index";
-    public static String TAG_TARGET_TYPE = "target_type";
-    public static String TAG_TARGET_X = "target_x";
-    public static String TAG_TARGET_Y = "target_y";
-    public static String TAG_TARGET_Z = "target_z";
-    public static String TAG_TARGET_UUID = "target_uuid";
-    public static String TAG_TARGET_NAME = "target_name";
 
     public record Payload(int index, @Nullable Either<Vec3, EntityAnchor> target) {
         public static final Codec<Payload> CODEC = RecordCodecBuilder.create(instance -> instance.group(
@@ -107,6 +96,10 @@ public class GateIota extends Iota {
             if (entity != null) out.add(entity);
         }
         return out;
+    }
+
+    public boolean isMarked(Entity entity) {
+        return GateManager.isMarked(this.getGateIndex(), entity);
     }
 
     public void mark(Entity entity) {

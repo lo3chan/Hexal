@@ -70,47 +70,36 @@ public class MoteIota extends Iota {
     }
 
     public List<ItemStack> getStacksToDrop(int maxStackSize) {
-        return MediafiedItemManager.getStacksToDrop(this.itemIndex, maxStackSize);
+        return MediafiedItemManager.getStacksToDrop(this.itemIndex, (long) maxStackSize);
     }
 
-    public List<ItemStack> getStacksToDrop(int count, int maxStackSize) {
-        return MediafiedItemManager.getStacksToDrop(this.itemIndex, count, maxStackSize);
+    public List<ItemStack> getStacksToDrop(long count) {
+        return MediafiedItemManager.getStacksToDrop(this.itemIndex, count);
     }
 
-    public long absorb(MoteIota other) {
-        return MediafiedItemManager.mergeStores(this.itemIndex, other.itemIndex);
+    public boolean typeMatches(MoteIota other) {
+        return MediafiedItemManager.typeMatches(this.itemIndex, other.itemIndex);
     }
 
-    public long absorb(MoteIota other, long count) {
-        return MediafiedItemManager.mergeStores(this.itemIndex, other.itemIndex, count);
+    public boolean typeMatches(ItemStack other) {
+        return MediafiedItemManager.typeMatches(this.itemIndex, other);
     }
 
-    public @Nullable MoteIota split(long count) {
-        var index = MediafiedItemManager.splitStore(this.itemIndex, count);
+    public @Nullable MoteIota splitOff(long count, @Nullable UUID storage) {
+        var index = MediafiedItemManager.splitOff(this.itemIndex, count, storage);
         return index != null ? new MoteIota(index) : null;
     }
 
-    public @Nullable MoteIota template() {
-        var index = MediafiedItemManager.templateIndex(this.itemIndex);
-        return index != null ? new MoteIota(index) : null;
+    public void templateOff(ItemStack stack, @Nullable Long count) {
+        MediafiedItemManager.templateOff(this.itemIndex, stack, count);
     }
 
-    public boolean isTemplate() {
-        return this.itemIndex.getUuid().equals(MediafiedItemManager.TEMPLATE_STORAGE);
+    public long removeItems(long count) {
+        return MediafiedItemManager.removeItems(this.itemIndex, count);
     }
 
-    public boolean isSameType(MoteIota other) {
-        var rec1 = this.getRecord();
-        var rec2 = other.getRecord();
-        return rec1 != null && rec2 != null && rec1.itemEquals(rec2);
-    }
-
-    public boolean isSameStorage(MoteIota other) {
-        return this.itemIndex.getUuid().equals(other.itemIndex.getUuid());
-    }
-
-    public boolean isSameStorage(UUID storageUUID) {
-        return this.itemIndex.getUuid().equals(storageUUID);
+    public @Nullable MoteIota setStorage(UUID storage) {
+        return this.splitOff(this.getCount(), storage);
     }
 
     @Override
@@ -138,7 +127,7 @@ public class MoteIota extends Iota {
     }
 
     public static final Codec<MediafiedItemManager.Index> INDEX_CODEC = RecordCodecBuilder.create(instance -> instance.group(
-            UUIDUtil.CODEC.fieldOf("storage").forGetter(MediafiedItemManager.Index::getUuid),
+            UUIDUtil.CODEC.fieldOf("storage").forGetter(MediafiedItemManager.Index::getStorage),
             Codec.INT.fieldOf("index").forGetter(MediafiedItemManager.Index::getIndex)
     ).apply(instance, MediafiedItemManager.Index::new));
 

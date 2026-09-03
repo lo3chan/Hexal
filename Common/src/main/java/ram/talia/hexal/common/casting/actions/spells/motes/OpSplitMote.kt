@@ -25,7 +25,7 @@ object OpSplitMote : UserDataConstMediaAction {
         if (MediafiedItemManager.isStorageFull(storage) != false)
             throw MishapStorageFull(storage)
 
-        val split = item.splitOff(toSplitOff, storage) ?: return listOf(item.copy(), NullIota())
-        return listOf(item.copy(), split.copy())
+        val split = item.splitOff(toSplitOff, storage) ?: return listOf(item, NullIota())
+        return listOf(item, split)
     }
 }

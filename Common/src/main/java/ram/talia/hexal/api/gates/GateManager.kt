@@ -26,6 +26,10 @@ object GateManager {
     val allMarked: MutableMap<Int, MutableSet<UUID>> = mutableMapOf()
 
     @JvmStatic
+    fun isMarked(gateIndex: Int, entity: net.minecraft.world.entity.Entity): Boolean {
+        return allMarked[gateIndex]?.contains(entity.uuid) ?: false
+    }
+
     fun mark(gate: Int, entity: Entity) = mark(gate, entity.uuid)
 
     @JvmStatic

@@ -81,7 +81,8 @@ object OpSmelt : SpellAction {
                 env.world.addFreshEntity(ItemEntity(env.world, itemEntity.x, itemEntity.y, itemEntity.z, result.copy()))
                 itemEntity.remove(Entity.RemovalReason.DISCARDED)
             }, {item -> // runs this code if the player passed a mote
-                val result = smeltResult(item.item, env) ?: return@map
+                val itemType = item.item ?: return@map
+                val result = smeltResult(itemType, env) ?: return@map
 
                 item.templateOff(result, item.count * result.count)
             })
