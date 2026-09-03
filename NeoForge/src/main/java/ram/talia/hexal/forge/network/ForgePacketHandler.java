@@ -11,15 +11,16 @@ public class ForgePacketHandler {
 
 	public static void register(RegisterPayloadHandlersEvent event) {
 		PayloadRegistrar registrar = event.registrar(HexalAPI.MOD_ID);
-		registrar.playToClient(
+		registrar.playBidirectional(
 			HexalPacketPayload.TYPE,
 			HexalPacketPayload.STREAM_CODEC,
-			HexalPacketPayload::handleClient
-		);
-		registrar.playToServer(
-			HexalPacketPayload.TYPE,
-			HexalPacketPayload.STREAM_CODEC,
-			HexalPacketPayload::handleServer
+			(payload, context) -> {
+				if (context.flow().isClientbound()) {
+					HexalPacketPayload.handleClient(payload, context);
+				} else {
+					HexalPacketPayload.handleServer(payload, context);
+				}
+			}
 		);
 	}
 }
