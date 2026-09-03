@@ -73,6 +73,7 @@ dependencies {
 
     compileOnly "at.petra-k.paucal:paucal-common-$minecraftVersion:$paucalVersion"
     compileOnly files("${rootDir}/libs/hexcasting-neoforge-1.21.1-0.12.0-devel.jar")
+    compileOnly files("${rootDir}/libs/Patchouli-1.21.1-93-NEOFORGE.jar")
     compileOnly "software.bernie.geckolib:geckolib-neoforge-$minecraftVersion:4.6.6"
     implementation "thedarkcolour:kotlinforforge:$kotlinForForgeVersion"
 
