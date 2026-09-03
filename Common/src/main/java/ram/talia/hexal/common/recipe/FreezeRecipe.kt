@@ -15,39 +15,51 @@ import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
 
-data class FreezeRecipe(val resId: ResourceLocation, val blockIn: StateIngredient, val result: BlockState) : Recipe<Container> {
-	override fun matches(pContainer: Container, pLevel: Level) = false
+import com.mojang.serialization.MapCodec
+import com.mojang.serialization.codecs.RecordCodecBuilder
+import net.minecraft.core.HolderLookup
+import net.minecraft.network.RegistryFriendlyByteBuf
+import net.minecraft.network.codec.StreamCodec
+import net.minecraft.world.item.crafting.RecipeSerializer
+import net.minecraft.world.item.crafting.RecipeType
+import net.minecraft.world.item.crafting.SingleRecipeInput
+
+data class FreezeRecipe(val blockIn: StateIngredient, val result: BlockState) : Recipe<SingleRecipeInput> {
+	override fun matches(input: SingleRecipeInput, level: Level) = false
 
 	fun matches(blockIn: BlockState) = this.blockIn.test(blockIn)
 
-	override fun assemble(pContainer: Container, access: RegistryAccess): ItemStack = ItemStack.EMPTY
+	override fun assemble(input: SingleRecipeInput, registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY
 
 	override fun canCraftInDimensions(pWidth: Int, pHeight: Int) = false
 
-	override fun getResultItem(access: RegistryAccess): ItemStack = ItemStack.EMPTY.copy()
+	override fun getResultItem(registries: HolderLookup.Provider): ItemStack = ItemStack.EMPTY.copy()
 
-	override fun getId() = resId
+	override fun getSerializer(): RecipeSerializer<*> = HexalRecipeSerializers.FREEZE
 
-	override fun getSerializer() = HexalRecipeSerializers.FREEZE
+	override fun getType(): RecipeType<*> = HexalRecipeTypes.FREEZE_TYPE
 
-	override fun getType() = HexalRecipeTypes.FREEZE_TYPE
-
-	class Serializer : RecipeSerializerBase<FreezeRecipe>() {
-		override fun fromJson(recipeID: ResourceLocation, json: JsonObject): FreezeRecipe {
-			val blockIn = StateIngredientHelper.deserialize(GsonHelper.getAsJsonObject(json, "blockIn"))
-			val result = StateIngredientHelper.readBlockState(GsonHelper.getAsJsonObject(json, "result"))
-			return FreezeRecipe(recipeID, blockIn, result)
+	class Serializer : RecipeSerializer<FreezeRecipe> {
+		private val CODEC: MapCodec<FreezeRecipe> = RecordCodecBuilder.mapCodec { instance ->
+			instance.group(
+				StateIngredientHelper.CODEC.fieldOf("blockIn").forGetter { it.blockIn },
+				BlockState.CODEC.fieldOf("result").forGetter { it.result }
+			).apply(instance, ::FreezeRecipe)
 		}
 
-		override fun toNetwork(buf: FriendlyByteBuf, recipe: FreezeRecipe) {
-			recipe.blockIn.write(buf)
-			buf.writeVarInt(Block.getId(recipe.result))
-		}
+		private val STREAM_CODEC: StreamCodec<RegistryFriendlyByteBuf, FreezeRecipe> = StreamCodec.of(
+			{ buf, recipe ->
+				recipe.blockIn.write(buf)
+				buf.writeVarInt(Block.getId(recipe.result))
+			},
+			{ buf ->
+				val blockIn = StateIngredientHelper.read(buf)
+				val result = Block.stateById(buf.readVarInt())
+				FreezeRecipe(blockIn, result)
+			}
+		)
 
-		override fun fromNetwork(recipeID: ResourceLocation, buf: FriendlyByteBuf): FreezeRecipe {
-			val blockIn = StateIngredientHelper.read(buf)
-			val result = Block.stateById(buf.readVarInt())
-			return FreezeRecipe(recipeID, blockIn, result)
-		}
+		override fun codec(): MapCodec<FreezeRecipe> = CODEC
+		override fun streamCodec(): StreamCodec<RegistryFriendlyByteBuf, FreezeRecipe> = STREAM_CODEC
 	}
 }

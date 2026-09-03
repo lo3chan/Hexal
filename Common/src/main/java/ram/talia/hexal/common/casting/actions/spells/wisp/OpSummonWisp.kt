@@ -86,10 +86,6 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
             wisp.setHex(hex.toMutableList())
             wisp.setRavenmind(ravenmind)
             env.world.addFreshEntity(wisp)
-
-            // if the current cast is being debugged, try to spawn the wisp in debug mode too
-                wisp.setDebugEnv(debugEnv)
-            }
         }
     }
 }

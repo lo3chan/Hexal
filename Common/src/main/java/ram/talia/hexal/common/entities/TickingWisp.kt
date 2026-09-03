@@ -22,8 +22,7 @@ import ram.talia.hexal.api.config.HexalConfig
 import ram.talia.hexal.api.minus
 import ram.talia.hexal.api.nbt.SerialisedIotaList
 import ram.talia.hexal.api.plus
-import ram.talia.hexal.api.times
-
+import ram.talia.hexal.common.lib.HexalEntities
 import java.lang.Double.min
 import java.util.UUID
 
@@ -131,11 +130,6 @@ class TickingWisp : BaseCastingWisp {
 			}
 		}
 
-		// if the debug session has ended, destroy the wisp
-		// TODO: this can result in a zombie session when the player dies (https://github.com/object-Object/HexDebug/issues/64)
-		if (isDebugging && caster != null && getDebugEnv() == null) {
-			discard()
-		}
 
 		super.tick()
 	}

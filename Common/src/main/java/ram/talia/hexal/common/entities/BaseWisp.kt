@@ -35,7 +35,6 @@ abstract class BaseWisp(entityType: EntityType<out BaseWisp>, world: Level)  : L
 
 	override fun pigment(): FrozenPigment = FrozenPigment.fromNBT(entityData.get(PIGMENT))
 
-	override fun getDefaultEyeHeight(pose: Pose, dim: EntityDimensions) = 0f
 
 	override fun makeBoundingBox(): AABB {
 		return super.makeBoundingBox().move(0.0, -getDimensions(Pose.STANDING).height*0.5, 0.0)

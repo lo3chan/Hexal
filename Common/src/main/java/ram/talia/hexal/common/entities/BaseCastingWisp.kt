@@ -446,9 +446,9 @@ abstract class BaseCastingWisp(entityType: EntityType<out BaseCastingWisp>, worl
 		builder.define(SEON, false)
 	}
 
-	override fun getAddEntityPacket(): Packet<ClientGamePacketListener> {
-		super.getAddEntityPacket() // called to call LinkableEntity.linkableHolder.syncAll()
-		return ClientboundAddEntityPacket(this, caster?.id ?: 0)
+	override fun getAddEntityPacket(serverEntity: net.minecraft.server.level.ServerEntity): Packet<ClientGamePacketListener> {
+		super.getAddEntityPacket(serverEntity) // called to call LinkableEntity.linkableHolder.syncAll()
+		return ClientboundAddEntityPacket(this, serverEntity, caster?.id ?: 0)
 	}
 
 	override fun recreateFromPacket(packet: ClientboundAddEntityPacket) {
