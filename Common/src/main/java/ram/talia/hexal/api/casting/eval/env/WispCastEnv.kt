@@ -53,7 +53,7 @@ class WispCastEnv(val wisp: BaseCastingWisp, level: ServerLevel) : CastingEnviro
         val caster = castingEntity as? ServerPlayer
         if (caster != null) {
             val sentinel = HexAPI.instance().getSentinel(caster)
-            if (sentinel != null && sentinel.extendsRange() && caster.level().dimension() === sentinel.dimension() && vec.distanceToSqr(sentinel.position()) <= PlayerBasedCastEnv.SENTINEL_RADIUS * PlayerBasedCastEnv.SENTINEL_RADIUS) {
+            if (sentinel != null && sentinel.extendsRange() && caster.level().dimension() === sentinel.dimension() && vec.distanceToSqr(sentinel.position()) <= 16.0 * 16.0) {
                 return true
             }
         }
@@ -61,8 +61,10 @@ class WispCastEnv(val wisp: BaseCastingWisp, level: ServerLevel) : CastingEnviro
         return vec.distanceToSqr(wisp.position()) <= wisp.maxSqrCastingDistance()
     }
 
-    override fun hasEditPermissionsAtEnvironment(pos: BlockPos): Boolean
-        = caster?.gameMode?.gameModeForPlayer != GameType.ADVENTURE && caster?.let { world.mayInteract(it, pos) } ?: true
+    override fun hasEditPermissionsAtEnvironment(pos: BlockPos): Boolean {
+        val player = (wisp.caster as? ServerPlayer) ?: return true
+        return player.gameMode.gameModeForPlayer != GameType.ADVENTURE && world.mayInteract(player, pos)
+    }
 
     override fun getCastingHand(): InteractionHand = InteractionHand.MAIN_HAND
 
