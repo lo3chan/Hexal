@@ -8,14 +8,13 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import net.minecraft.world.item.ItemStack
 import ram.talia.hexal.api.toIntCapped
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes.MOTE
-import ram.talia.moreiotas.api.casting.iota.ItemStackIota
 
 fun apply(iota: Iota): Iota {
     val mote = downcast(iota, MOTE)
     val stack = ItemStack(mote.item, mote.count.toIntCapped())
     stack.tag = mote.tag
 
-    return ItemStackIota.createFiltered(stack)
+    return EntityIota(net.minecraft.world.entity.item.ItemEntity(net.minecraft.world.entity.EntityType.ITEM, null))
 }
 
 object OperatorMoteExtractItem : OperatorUnary(all(ofType(MOTE)), ::apply)

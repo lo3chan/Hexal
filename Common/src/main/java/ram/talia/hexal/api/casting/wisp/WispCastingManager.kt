@@ -7,8 +7,6 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType.isTooLargeToSerialize
 import at.petrak.hexcasting.api.utils.asCompound
 import at.petrak.hexcasting.api.utils.putCompound
-import gay.`object`.hexdebug.core.api.HexDebugCoreAPI
-import gay.`object`.hexdebug.core.api.exceptions.DebugException
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.server.MinecraftServer
@@ -136,16 +134,6 @@ class WispCastingManager(private val casterUUID: UUID, private var cachedServer:
 		val hex = cast.hex.getIotas(ctx.world)
 
 		// if we're debugging this wisp, delegate to the debugger
-		if (wisp is TickingWisp && wisp.isDebugging) {
-			wisp.getDebugEnv()?.let { debugEnv ->
-				debugEnv.isPaused = true
-				try {
-					HexDebugCoreAPI.INSTANCE.startDebuggingIotas(debugEnv, ctx, hex, image)
-				} catch (e: DebugException) {
-					HexalAPI.LOGGER.warn("Failed to start debugging wisp hex", e)
-				}
-			}
-			return WispCastResult(wisp, succeeded = true, image = image, cancelled = true)
 		}
 
 		val harness = CastingVM(image, ctx)

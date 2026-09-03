@@ -65,10 +65,10 @@ object WispTriggerRegistry {
 	 */
 	fun fromNbt(tag: CompoundTag, level: ServerLevel): IWispTrigger? {
 		val typeId = tag.getString(TAG_TYPE)
-		if (!ResourceLocation.isValidResourceLocation(typeId))
+		if (ResourceLocation.tryParse(typeId) == null)
 			throw InvalidWispTriggerTypeException("$typeId is not a valid resource location")
 
-		val type = triggerTypes[ResourceLocation(typeId)] ?: throw InvalidWispTriggerTypeException("no WispTriggerType registered for $typeId")
+		val type = triggerTypes[ResourceLocation.parse(typeId)] ?: throw InvalidWispTriggerTypeException("no WispTriggerType registered for $typeId")
 
 		return type.fromNbt(tag.get(TAG_WISP_TRIGGER)!!, level)
 	}

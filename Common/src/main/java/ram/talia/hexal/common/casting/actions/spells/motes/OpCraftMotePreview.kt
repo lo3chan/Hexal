@@ -11,16 +11,15 @@ import at.petrak.hexcasting.api.casting.mishaps.MishapInvalidIota
 import net.minecraft.world.inventory.TransientCraftingContainer
 import net.minecraft.world.item.ItemStack
 import ram.talia.hexal.api.casting.iota.MoteIota
-import ram.talia.hexal.api.getItemStackIotaOrMoteOrList
+import ram.talia.hexal.api.getItemIotaOrMoteOrList
 import ram.talia.hexal.api.mulBounded
 import ram.talia.hexal.api.util.Anyone
-import ram.talia.moreiotas.api.casting.iota.ItemStackIota
 
 object OpCraftMotePreview : ConstMediaAction {
     override val argc = 1
 
     override fun execute(args: List<Iota>, env: CastingEnvironment): List<Iota> {
-        val input = args.getItemStackIotaOrMoteOrList(0, OpCraftMote.argc) ?: return listOf<Iota>().asActionResult
+        val input = args.getItemIotaOrMoteOrList(0, OpCraftMote.argc) ?: return listOf<Iota>().asActionResult
 
         val griddedStacks = makeCraftingGrid(input)
 
@@ -35,24 +34,24 @@ object OpCraftMotePreview : ConstMediaAction {
 
         val timesToCraft = getMinCount(griddedStacks)
 
-        val stackResult = ItemStackIota.createFiltered(itemResult.copyWithCount(itemResult.count.mulBounded(timesToCraft)))
-        val remainingIotas = remainingItems.map { ItemStackIota.createFiltered(it.copyWithCount(it.count.mulBounded(timesToCraft))) }.toMutableList()
+        val stackResult = EntityIota(null)itemResult.copyWithCount(itemResult.count.mulBounded(timesToCraft)))
+        val remainingIotas = remainingItems.map { EntityIota(null)it.copyWithCount(it.count.mulBounded(timesToCraft))) }.toMutableList()
 
         remainingIotas.add(0, stackResult)
         return remainingIotas.asActionResult
     }
 
-    private fun makeCraftingGrid(input: Anyone<ItemStackIota, MoteIota, SpellList>): Array<ItemStack?> {
+    private fun makeCraftingGrid(input: Anyone<EntityIota, MoteIota, SpellList>): Array<ItemStack?> {
         val out = Array<ItemStack?>(9) { _ -> null }
 
         for ((idy, iota) in input.flatMap({ listOf(IndexedValue(0, it)) }, { listOf(IndexedValue(0, it)) }, { it.withIndex() })) {
             when (iota) {
-                is ItemStackIota -> out[idy * 3] = iota.itemStack.copyWithCount(1)
+                is EntityIota -> out[idy * 3] = iota.itemStack.copyWithCount(1)
                 is MoteIota -> out[idy * 3] = iota.record?.toStack()
                 is ListIota -> {
                     for ((idx, iota) in iota.list.withIndex()) {
                         when (iota) {
-                            is ItemStackIota -> out[idy * 3 + idx] = iota.itemStack.copyWithCount(1)
+                            is EntityIota -> out[idy * 3 + idx] = iota.itemStack.copyWithCount(1)
                             is MoteIota -> out[idy * 3 + idx] = iota.record?.toStack()
                             is NullIota -> out[idy * 3 + idx] = null
                             else -> throw MishapInvalidIota.of(input.flatMap({ it }, { it }, { ListIota(it) }), 0, "crafting_recipe")

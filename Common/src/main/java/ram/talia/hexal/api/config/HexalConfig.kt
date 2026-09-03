@@ -186,8 +186,8 @@ object HexalConfig {
     @JvmStatic
     fun anyMatch(keys: MutableList<out String>, key: ResourceLocation): Boolean {
         for (s in keys) {
-            if (ResourceLocation.isValidResourceLocation(s)) {
-                val rl = ResourceLocation(s)
+            if (ResourceLocation.tryParse(s) != null) {
+                val rl = ResourceLocation.parse(s)
                 if (rl == key) {
                     return true
                 }

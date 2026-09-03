@@ -9,7 +9,7 @@ import ram.talia.hexal.api.casting.castables.UserDataConstMediaAction
 import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.api.mediafieditems.MediafiedItemManager
 import ram.talia.hexal.api.casting.mishaps.MishapNoBoundStorage
-import ram.talia.moreiotas.api.asActionResult
+import at.petrak.hexcasting.api.casting.asActionResult
 
 object OpGetContainedItemTypes : UserDataConstMediaAction {
     override val argc = 0

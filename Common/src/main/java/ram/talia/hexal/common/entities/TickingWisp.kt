@@ -5,7 +5,6 @@ import at.petrak.hexcasting.api.casting.iota.EntityIota
 import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.utils.hasByte
 import at.petrak.hexcasting.api.utils.hasFloat
-import gay.`object`.hexdebug.core.api.HexDebugCoreAPI
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.nbt.ListTag
 import net.minecraft.network.chat.Component
@@ -88,7 +87,7 @@ class TickingWisp : BaseCastingWisp {
 	fun getDebugEnv(): WispDebugEnv? {
 		val debugSessionId = debugSessionId ?: return null
 		val caster = caster as? ServerPlayer ?: return null
-		return HexDebugCoreAPI.INSTANCE.getDebugEnv(caster, debugSessionId) as? WispDebugEnv
+		return null
 	}
 
 	fun setDebugEnv(debugEnv: WispDebugEnv) {
@@ -236,7 +235,6 @@ class TickingWisp : BaseCastingWisp {
 
 	override fun remove(reason: RemovalReason) {
 		if (reason.shouldDestroy()) {
-			getDebugEnv()?.let { HexDebugCoreAPI.INSTANCE.removeDebugThread(it) }
 		}
 		super.remove(reason)
 	}

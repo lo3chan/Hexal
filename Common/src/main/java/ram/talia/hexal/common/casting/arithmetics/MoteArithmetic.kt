@@ -17,7 +17,7 @@ import ram.talia.hexal.api.casting.iota.MoteIota
 import ram.talia.hexal.common.casting.arithmetics.operator.mote.OperatorMoteAdd
 import ram.talia.hexal.common.casting.arithmetics.operator.mote.OperatorMoteExtractItem
 import ram.talia.hexal.common.lib.hex.HexalIotaTypes.MOTE
-import ram.talia.moreiotas.common.casting.arithmetic.ItemArithmetic.EXTRACT_ITEM
+import at.petrak.hexcasting.common.casting.arithmetic.ItemArithmetic.EXTRACT_ITEM
 import java.util.function.Function
 
 object MoteArithmetic : Arithmetic {

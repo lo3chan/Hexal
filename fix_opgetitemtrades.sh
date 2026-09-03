@@ -1,3 +1,5 @@
+#!/bin/bash
+cat << 'INNER_EOF' > Common/src/main/java/ram/talia/hexal/common/casting/actions/spells/motes/OpGetItemTrades.kt
 package ram.talia.hexal.common.casting.actions.spells.motes
 
 import at.petrak.hexcasting.api.casting.castables.ConstMediaAction
@@ -36,3 +38,4 @@ object OpGetItemTrades : ConstMediaAction {
         return result.asActionResult
     }
 }
+INNER_EOF

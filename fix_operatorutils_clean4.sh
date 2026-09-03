@@ -1,3 +1,5 @@
+#!/bin/bash
+cat << 'INNER_EOF' > Common/src/main/java/ram/talia/hexal/api/OperatorUtils.kt
 package ram.talia.hexal.api
 
 import at.petrak.hexcasting.api.casting.asActionResult
@@ -322,3 +324,4 @@ fun List<Iota>.getMoteOrMoteList(idx: Int, argc: Int = 0): Either<MoteIota, List
         else -> throw MishapInvalidIota.ofType(x, if (argc == 0) idx else argc - (idx + 1), "motemotelist")
     }
 }
+INNER_EOF

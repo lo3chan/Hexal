@@ -21,7 +21,7 @@ import java.util.*
 import java.util.function.Consumer
 import javax.annotation.ParametersAreNonnullByDefault
 
-class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.server, level, name) {
+class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.server, level, name, net.minecraft.server.level.ClientInformation.createDefault()) {
 
 	private val sendMessageListeners: MutableList<Consumer<Component>> = mutableListOf()
 	init {
@@ -42,7 +42,6 @@ class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.ser
 	override fun canHarmPlayer(player: Player) = false
 	override fun die(source: DamageSource) { }
 	override fun tick() { }
-	override fun updateOptions(pkt: ServerboundClientInformationPacket) { }
 	override fun getServer() = level().server
 
 	override fun getAdvancements(): PlayerAdvancements {
@@ -64,7 +63,7 @@ class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.ser
 
 	@ParametersAreNonnullByDefault
 	private class FakePlayerNetHandler(server: MinecraftServer, player: ServerPlayer) :
-		ServerGamePacketListenerImpl(server, DUMMY_CONNECTION, player) {
+		ServerGamePacketListenerImpl(server, DUMMY_CONNECTION, player, net.minecraft.server.network.CommonListenerCookie.createInitial(player.gameProfile)) {
 		override fun tick() {}
 		override fun resetPosition() {}
 		override fun disconnect(message: Component) {}
@@ -85,17 +84,13 @@ class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.ser
 		override fun handleJigsawGenerate(packet: ServerboundJigsawGeneratePacket) {}
 		override fun handleSelectTrade(packet: ServerboundSelectTradePacket) {}
 		override fun handleEditBook(packet: ServerboundEditBookPacket) {}
-		override fun handleEntityTagQuery(packet: ServerboundEntityTagQuery) {}
-		override fun handleBlockEntityTagQuery(packet: ServerboundBlockEntityTagQuery) {}
 		override fun handleMovePlayer(packet: ServerboundMovePlayerPacket) {}
 		override fun teleport(x: Double, y: Double, z: Double, yaw: Float, pitch: Float) {}
 		override fun handlePlayerAction(packet: ServerboundPlayerActionPacket) {}
 		override fun handleUseItemOn(packet: ServerboundUseItemOnPacket) {}
 		override fun handleUseItem(packet: ServerboundUseItemPacket) {}
 		override fun handleTeleportToEntityPacket(packet: ServerboundTeleportToEntityPacket) {}
-		override fun handleResourcePackResponse(packet: ServerboundResourcePackPacket) {}
 		override fun handlePaddleBoat(packet: ServerboundPaddleBoatPacket) {}
-		override fun onDisconnect(message: Component) {}
 		override fun send(packet: Packet<*>) {}
 		override fun handleSetCarriedItem(packet: ServerboundSetCarriedItemPacket) {}
 		override fun handleChat(packet: ServerboundChatPacket) {}
@@ -109,10 +104,7 @@ class FakePlayer(level: ServerLevel, name: GameProfile) : ServerPlayer(level.ser
 		override fun handleContainerButtonClick(packet: ServerboundContainerButtonClickPacket) {}
 		override fun handleSetCreativeModeSlot(packet: ServerboundSetCreativeModeSlotPacket) {}
 		override fun handleSignUpdate(packet: ServerboundSignUpdatePacket) {}
-		override fun handleKeepAlive(packet: ServerboundKeepAlivePacket) {}
 		override fun handlePlayerAbilities(packet: ServerboundPlayerAbilitiesPacket) {}
-		override fun handleClientInformation(packet: ServerboundClientInformationPacket) {}
-		override fun handleCustomPayload(packet: ServerboundCustomPayloadPacket) {}
 		override fun handleChangeDifficulty(packet: ServerboundChangeDifficultyPacket) {}
 		override fun handleLockDifficulty(packet: ServerboundLockDifficultyPacket) {}
 

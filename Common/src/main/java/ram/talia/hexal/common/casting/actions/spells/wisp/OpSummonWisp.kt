@@ -9,8 +9,6 @@ import at.petrak.hexcasting.api.casting.iota.Iota
 import at.petrak.hexcasting.api.casting.iota.IotaType
 import at.petrak.hexcasting.api.casting.iota.NullIota
 import at.petrak.hexcasting.api.misc.MediaConstants
-import gay.`object`.hexdebug.core.api.HexDebugCoreAPI
-import gay.`object`.hexdebug.core.api.exceptions.DebugException
 import net.minecraft.nbt.CompoundTag
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.phys.Vec3
@@ -90,15 +88,6 @@ class OpSummonWisp(val ticking: Boolean) : SpellAction {
             env.world.addFreshEntity(wisp)
 
             // if the current cast is being debugged, try to spawn the wisp in debug mode too
-            if (HexDebugCoreAPI.INSTANCE.getDebugEnv(env) != null && wisp is TickingWisp) {
-                val debugEnv = WispDebugEnv(player, wisp.uuid, ravenmind)
-                try {
-                    HexDebugCoreAPI.INSTANCE.createDebugThread(debugEnv, null)
-                } catch (e: DebugException) {
-                    // if there are no threads available, just spawn the wisp in normal mode
-                    HexalAPI.LOGGER.debug("Not starting wisp in debug mode", e)
-                    return
-                }
                 wisp.setDebugEnv(debugEnv)
             }
         }

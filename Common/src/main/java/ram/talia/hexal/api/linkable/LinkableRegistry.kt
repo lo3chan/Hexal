@@ -150,10 +150,10 @@ object LinkableRegistry {
 	@JvmStatic
 	fun fromNbt(tag: CompoundTag, level: ServerLevel): Result<ILinkable> {
 		val typeId = tag.getString(TAG_TYPE)
-		if (!ResourceLocation.isValidResourceLocation(typeId))
+		if (ResourceLocation.tryParse(typeId) == null)
 			return Result.failure(InvalidLinkableTypeException("$typeId is not a valid resource location"))
 
-		val type = linkableTypes[ResourceLocation(typeId)] ?: return Result.failure(InvalidLinkableTypeException("$typeId is not a valid resource location"))
+		val type = linkableTypes[ResourceLocation.parse(typeId)] ?: return Result.failure(InvalidLinkableTypeException("$typeId is not a valid resource location"))
 
 		return when (val linkable = type.fromNbt(tag.get(TAG_LINKABLE)!!, level)) {
 			null -> Result.failure(NullLinkableException("linkable for $tag returned null."))
@@ -174,10 +174,10 @@ object LinkableRegistry {
 	@JvmStatic
 	fun fromSync(tag: CompoundTag, level: Level): ILinkable.IRenderCentre? {
 		val typeId = tag.getString(TAG_TYPE)
-		if (!ResourceLocation.isValidResourceLocation(typeId))
+		if (ResourceLocation.tryParse(typeId) == null)
 			throw InvalidLinkableTypeException("$typeId is not a valid resource location")
 
-		val type = linkableTypes[ResourceLocation(typeId)] ?: throw InvalidLinkableTypeException("no LinkableType registered for $typeId")
+		val type = linkableTypes[ResourceLocation.parse(typeId)] ?: throw InvalidLinkableTypeException("no LinkableType registered for $typeId")
 
 		return type.fromSync(tag.get(TAG_LINKABLE)!!, level)
 	}
@@ -185,10 +185,10 @@ object LinkableRegistry {
 	@JvmStatic
 	fun matchSync(centre: ILinkable.IRenderCentre, tag: CompoundTag): Boolean {
 		val typeId = tag.getString(TAG_TYPE)
-		if (!ResourceLocation.isValidResourceLocation(typeId))
+		if (ResourceLocation.tryParse(typeId) == null)
 			throw InvalidLinkableTypeException("$typeId is not a valid resource location")
 
-		val type = linkableTypes[ResourceLocation(typeId)] ?: throw InvalidLinkableTypeException("no LinkableType registered for $typeId")
+		val type = linkableTypes[ResourceLocation.parse(typeId)] ?: throw InvalidLinkableTypeException("no LinkableType registered for $typeId")
 
 		return type == centre.getLinkableType() && type.matchSync(centre, tag.get(TAG_LINKABLE)!!)
 	}
