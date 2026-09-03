@@ -41,7 +41,7 @@ object OpCraftMotePreview : ConstMediaAction {
         return remainingIotas.asActionResult
     }
 
-    private fun makeCraftingGrid(input: Anyone<NullIota, MoteIota, SpellList>): Array<ItemStack?> {
+    private fun makeCraftingGrid(input: Anyone<EntityIota, MoteIota, SpellList>): Array<ItemStack?> {
         val out = Array<ItemStack?>(9) { _ -> null }
 
         for ((idy, iota) in input.flatMap({ listOf(IndexedValue(0, it)) }, { listOf(IndexedValue(0, it)) }, { it.withIndex() })) {

@@ -24,6 +24,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer
 import net.minecraft.world.item.crafting.RecipeType
 import net.minecraft.world.item.crafting.SingleRecipeInput
 
+import com.mojang.serialization.Codec
+import com.mojang.serialization.Dynamic
+import com.mojang.serialization.JsonOps
+
 data class FreezeRecipe(val blockIn: StateIngredient, val result: BlockState) : Recipe<SingleRecipeInput> {
 	override fun matches(input: SingleRecipeInput, level: Level) = false
 
@@ -42,7 +46,10 @@ data class FreezeRecipe(val blockIn: StateIngredient, val result: BlockState) : 
 	class Serializer : RecipeSerializer<FreezeRecipe> {
 		private val CODEC: MapCodec<FreezeRecipe> = RecordCodecBuilder.mapCodec { instance ->
 			instance.group(
-				StateIngredient.CODEC.fieldOf("blockIn").forGetter { it.blockIn },
+				Codec.PASSTHROUGH.xmap(
+					{ dynamic -> StateIngredientHelper.deserialize(dynamic.convert(JsonOps.INSTANCE).value.asJsonObject) },
+					{ ingredient -> Dynamic(JsonOps.INSTANCE, ingredient.serialize()) }
+				).fieldOf("blockIn").forGetter { it.blockIn },
 				BlockState.CODEC.fieldOf("result").forGetter { it.result }
 			).apply(instance, ::FreezeRecipe)
 		}
