@@ -41,6 +41,7 @@ import java.util.List;
 @Mixin(CastingVM.class)
 public abstract class MixinCastingVM {
 	private static final String TAG_USINGMACRO = HexalAPI.MOD_ID + ":using_macro";
+	private static final ThreadLocal<Boolean> HEXAL$IN_EXECUTE = ThreadLocal.withInitial(() -> false);
 
 	@Shadow(remap = false) @Final private CastingImage image;
 
@@ -51,6 +52,9 @@ public abstract class MixinCastingVM {
 
 	@Inject(method = "queueExecuteAndWrapIotas", at = @At("HEAD"), cancellable = true, remap = false)
 	private void queueExecuteAndWrapIotas(List<? extends Iota> iotas, ServerLevel world, CallbackInfoReturnable<ExecutionClientView> cir) {
+		if (HEXAL$IN_EXECUTE.get())
+			return;
+
 		if (iotas.isEmpty())
 			return;
 
@@ -108,7 +112,13 @@ public abstract class MixinCastingVM {
 		}
 
 		boolean wasTransmitting = transmitting;
-		var ret = harness.queueExecuteAndWrapIotas(toExecute, world);
+		ExecutionClientView ret;
+		try {
+			HEXAL$IN_EXECUTE.set(true);
+			ret = harness.queueExecuteAndWrapIotas(toExecute, world);
+		} finally {
+			HEXAL$IN_EXECUTE.set(false);
+		}
 		if (isExecutingMacro) {
 			Vec3 soundPos = caster.position();
 			SoundEvent sound = HexSounds.ADD_TO_PATTERN.value();
