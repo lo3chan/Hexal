@@ -94,7 +94,8 @@
       "anchor": "moreiotas:type/to_item",
       "input": "mote",
       "output": "item stack",
-      "text": "hexal.page.motes.mote/item/get"
+      "text": "hexal.page.motes.mote/item/get",
+      "flag": "mod:moreiotas"
     },
     {
       "type": "hexcasting:pattern",
